@@ -1,24 +1,47 @@
 #' @title Get friction surface
-#' @details Wrapper function to download friction surfaces via `malariaAtlas::getRaster``
+#' @description Wrapper function to download friction surfaces via
+#' `malariaAtlas::getRaster`
 #'
-#' @param surface
-#' @param file_name
-#' @param overwrite
-#' @param extent
+#' @param surface `"motor2020"` or `"walk2020`
+#' @param file_name Character of file name to write raster to disc
+#' @param overwrite Overwrite `file_name` if exists
+#' @param extent Extent to pass to `malariaAtlas::getRaster`: 2x2 matrix
+#'   specifying the spatial extent within which raster data is desired, as
+#'   returned by sf::st_bbox() - the first column has the minimum, the second
+#'   the maximum values; rows 1 & 2 represent the x & y dimensions respectively
+#'   (matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames =
+#'   list(c("x", "y"), c("min", "max")))) (use either shp OR extent; if neither
+#'   is specified global raster is returned).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
+#' ext <- matrix(
+#'   data = c("111", "0", "112", 1),
+#'   nrow = 2,
+#'   ncol = 2,
+#'   dimnames = list(
+#'     c("x", "y"),
+#'     c("min", "max")
+#'    )
+#'  )
+#'
+#'  get_friction_surface(
+#'    surface = "motor2020",
+#'    file_name = tempfile(fileext = ".tif"),
+#'    extent = ext
+#'  )
+#'
+#' @details Additional details...
+#'
 get_friction_surface <- function(
   surface = c("motor2020", "walk2020"),
   file_name = "friction_surface.tif",
   overwrite = FALSE,
   extent = NULL
 ){
-
-  #matrix(c("0", "0", "1", "1"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))
-  # function goes and downloads a friction surface
   surface <- match.arg(surface)
 
   if(!overwrite & file.exists(file_name)){
@@ -42,7 +65,6 @@ get_friction_surface <- function(
     dataset_id = surface_name,
     extent = extent
   ) |>
-    terra::rast() |>
     sdmtools::writereadrast(filename = file_name)
 
 }
