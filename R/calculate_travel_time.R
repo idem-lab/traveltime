@@ -5,7 +5,7 @@
 #'
 #' @param friction_surface
 #' @param points
-#' @param travel_time_filename
+#' @param file_name
 #' @param overwrite_raster
 #'
 #' @return
@@ -15,19 +15,19 @@
 calculate_travel_time <- function(
     friction_surface,
     points,
-    travel_time_filename = "outputs/travel_time.tif",
+    file_name = "outputs/travel_time.tif",
     overwrite_raster = FALSE
 ){
 
-  if(file.exists(travel_time_filename) & !overwrite_raster){
+  if(file.exists(file_name) & !overwrite_raster){
 
     warning(sprintf(
       "%s exists\nUsing existing file\nto re-generate, change overwrite_raster to TRUE %s",
-      travel_time_filename,
-      travel_time_filename
+      file_name,
+      file_name
     ))
 
-    return(terra::rast(travel_time_filename))
+    return(terra::rast(file_name))
 
   }
 
@@ -47,10 +47,10 @@ calculate_travel_time <- function(
 
   raster::writeRaster(
     travel_time,
-    travel_time_filename,
+    file_name,
     overwrite = overwrite_raster
   )
 
-  terra::rast(travel_time_filename)
+  terra::rast(file_name)
 
 }
