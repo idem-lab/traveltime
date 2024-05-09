@@ -61,10 +61,16 @@ get_friction_surface <- function(
     surface_name <- "Explorer__2020_walking_only_friction_surface"
   }
 
-  malariaAtlas::getRaster(
+  fs <- malariaAtlas::getRaster(
     dataset_id = surface_name,
     extent = extent
-  ) |>
-    sdmtools::writereadrast(filename = file_name)
+  )
+
+  names(fs) <- "friction_surface"
+
+  sdmtools::writereadrast(
+    x = fs,
+    filename = file_name
+  )
 
 }
