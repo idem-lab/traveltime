@@ -7,7 +7,7 @@
 calculate_travel_time(
   friction_surface,
   points,
-  travel_time_filename = "outputs/travel_time.tif",
+  file_name = "outputs/travel_time.tif",
   overwrite_raster = FALSE
 )
 }
