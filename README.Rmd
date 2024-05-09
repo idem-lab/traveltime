@@ -1,0 +1,78 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# traveltime
+
+
+![GitHub License](https://img.shields.io/github/license/geryan/traveltime)
+[![Lifecycle:](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/geryan/traveltime)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/geryan/traveltime/total)
+![GitHub last commit](https://img.shields.io/github/last-commit/geryan/traveltime)
+![GitHub R package version](https://img.shields.io/github/r-package/v/geryan/traveltime)
+![GitHub commits since latest release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
+
+
+## Installation
+
+You can install the development version of traveltime from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("geryan/traveltime")
+```
+
+## Example
+
+
+
+```{r example}
+library(traveltime)
+library(terra)
+library(sdmtools)
+
+friction_surface <- get_friction_surface(
+    surface = "motor2020",
+    file_name = temptif(),
+    extent = matrix(
+      data = c("111", "0", "112", 1),
+      nrow = 2,
+      ncol = 2,
+      dimnames = list(
+        c("x", "y"),
+        c("min", "max")
+      )
+    )
+  )
+
+plot(friction_surface)
+```
+
+```{r}
+from_here <- tibble::tibble(
+  x = c(111.2, 111.9),
+  y = c(0.2, 0.35)
+)
+
+travel_time <- calculate_travel_time(
+  friction_surface = friction_surface,
+  points = from_here,
+  file_name = temptif()
+)
+
+plot(travel_time)
+points(from_here, pch = 19, add = TRUE)
+```
+
