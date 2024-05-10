@@ -44,17 +44,18 @@ doi:10.1038/nature25181.
 
 ## Installation
 
-You can install the development version of traveltime from [GitHub](https://github.com/) with:
+You can install the development version of traveltime from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("geryan/traveltime")
 ```
 
-## Example
+## Let's calculate some travel times
 
-
-
+First download a friction surface — here using the motorised travel time from
+Weiss *et al.* 2020.
 ```{r example}
 library(traveltime)
 library(terra)
@@ -74,10 +75,12 @@ friction_surface <- get_friction_surface(
 friction_surface
 ```
 
+Let's have a look at that
 ```{r}
 plot(friction_surface)
 ```
 
+Prepare points we would like to calculate travel time from
 ```{r}
 from_here <- tibble::tibble(
   x = c(111.2, 111.9),
@@ -86,6 +89,7 @@ from_here <- tibble::tibble(
 from_here
 ```
 
+And calculate the travel time
 ```{r}
 travel_time <- calculate_travel_time(
   friction_surface = friction_surface,
@@ -94,6 +98,7 @@ travel_time <- calculate_travel_time(
 travel_time
 ```
 
+Et voila!
 ```{r}
 plot(travel_time)
 points(from_here, pch = 19, add = TRUE)
