@@ -119,7 +119,7 @@ plot(sin)
 ```
 Get the extent of that `SpatVector` in the format we need it.
 ```{r}
-sin_ext <- ext_from_spatraster(sin)
+sin_ext <- ext_from_terra(sin)
 sin_ext
 ```
 

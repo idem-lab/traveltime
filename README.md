@@ -158,7 +158,7 @@ plot(sin)
 the extent of that `SpatVector` in the format we need it.
 
 ``` r
-sin_ext <- ext_from_spatraster(sin)
+sin_ext <- ext_from_terra(sin)
 sin_ext
 #>        min      max
 #> x 103.6383 104.0900

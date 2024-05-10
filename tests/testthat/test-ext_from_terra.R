@@ -4,7 +4,7 @@ testthat::test_that("extent is extent", {
      extent = terra::ext(c(111, 112, 0, 1))
    )
 
-  x <- ext_from_spatraster(r)
+  x <- ext_from_terra(r)
 
   testthat::expect_is(x, "matrix")
 
