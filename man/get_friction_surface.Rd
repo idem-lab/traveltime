@@ -6,15 +6,15 @@
 \usage{
 get_friction_surface(
   surface = c("motor2020", "walk2020"),
-  file_name = "friction_surface.tif",
+  file_name = NULL,
   overwrite = FALSE,
   extent = NULL
 )
 }
 \arguments{
-\item{surface}{\code{"motor2020"} or \verb{"walk2020}}
+\item{surface}{\code{"motor2020"} or \verb{"walk2020}.}
 
-\item{file_name}{Character of file name to write raster to disc}
+\item{file_name}{\code{character}. File name for output layer.}
 
 \item{overwrite}{Overwrite \code{file_name} if exists}
 
@@ -24,13 +24,37 @@ returned by sf::st_bbox() - the first column has the minimum, the second
 the maximum values; rows 1 & 2 represent the x & y dimensions respectively
 (matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames =
 list(c("x", "y"), c("min", "max")))) (use either shp OR extent; if neither
-is specified global raster is returned).}
+is specified global raster is returned). \code{NULL} extent downloads (large)
+global layer}
+}
+\value{
+\code{SpatRaster}
 }
 \description{
 Wrapper function to download friction surfaces via
 \code{malariaAtlas::getRaster}
 }
 \details{
+Convenience wrapper to \code{malariaAtlas::getRaster} to access motorised and
+walking travel friction layers per Weiss et al. 2020, that adds safety to
+check existing files before download. Surfaces can be downloaded directly
+from:
+https://malariaatlas.org/project-resources/accessibility-to-healthcare/
+
+\code{surface = "motor2020"} downloads
+\code{"Explorer__2020_motorized_friction_surface"}.
+
+\code{surface = "walk2020"} downloads
+\code{"Explorer__2020_walking_only_friction_surface"}.
+
+D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
+Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
+Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
+Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
+T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
+maps of travel time to healthcare facilities. (2020) Nature Medicine.
+https://doi.org/10.1038/s41591-020-1059-1
+
 Additional details...
 }
 \examples{
@@ -47,7 +71,6 @@ ext <- matrix(
 
  get_friction_surface(
    surface = "motor2020",
-   file_name = tempfile(fileext = ".tif"),
    extent = ext
  )
 

@@ -2,8 +2,8 @@
 #' @description Wrapper function to download friction surfaces via
 #' `malariaAtlas::getRaster`
 #'
-#' @param surface `"motor2020"` or `"walk2020`
-#' @param file_name Character of file name to write raster to disc
+#' @param surface `"motor2020"` or `"walk2020`.
+#' @param file_name `character`. File name for output layer.
 #' @param overwrite Overwrite `file_name` if exists
 #' @param extent Extent to pass to `malariaAtlas::getRaster`: 2x2 matrix
 #'   specifying the spatial extent within which raster data is desired, as
@@ -11,9 +11,32 @@
 #'   the maximum values; rows 1 & 2 represent the x & y dimensions respectively
 #'   (matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames =
 #'   list(c("x", "y"), c("min", "max")))) (use either shp OR extent; if neither
-#'   is specified global raster is returned).
+#'   is specified global raster is returned). `NULL` extent downloads (large)
+#'   global layer
 #'
-#' @return
+#' @details
+#'  Convenience wrapper to `malariaAtlas::getRaster` to access motorised and
+#'  walking travel friction layers per Weiss et al. 2020, that adds safety to
+#'  check existing files before download. Surfaces can be downloaded directly
+#'  from:
+#'  https://malariaatlas.org/project-resources/accessibility-to-healthcare/
+#'
+#'  `surface = "motor2020"` downloads
+#'  `"Explorer__2020_motorized_friction_surface"`.
+#'
+#'  `surface = "walk2020"` downloads
+#'  `"Explorer__2020_walking_only_friction_surface"`.
+#'
+#' D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
+#' Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
+#' Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
+#' Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
+#' T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
+#' maps of travel time to healthcare facilities. (2020) Nature Medicine.
+#' https://doi.org/10.1038/s41591-020-1059-1
+#'
+#'
+#' @return `SpatRaster`
 #' @export
 #'
 #' @examples
@@ -30,7 +53,6 @@
 #'
 #'  get_friction_surface(
 #'    surface = "motor2020",
-#'    file_name = tempfile(fileext = ".tif"),
 #'    extent = ext
 #'  )
 #'
@@ -38,21 +60,23 @@
 #'
 get_friction_surface <- function(
   surface = c("motor2020", "walk2020"),
-  file_name = "friction_surface.tif",
+  file_name = NULL,
   overwrite = FALSE,
   extent = NULL
 ){
   surface <- match.arg(surface)
 
-  if(!overwrite & file.exists(file_name)){
+  if(!is.null(file_name)){
+    if(!overwrite & file.exists(file_name)){
 
-    warning(sprintf(
-      "%s exists\n Returning %s. To replace, change overwrite_raster to TRUE",
-      file_name,
-      file_name
-    ))
+      warning(sprintf(
+        "%s exists\n Returning %s. To replace, change overwrite_raster to TRUE",
+        file_name,
+        file_name
+      ))
 
-    return(terra::rast(file_name))
+      return(terra::rast(file_name))
+    }
   }
 
   if(surface == "motor2020"){
@@ -68,9 +92,13 @@ get_friction_surface <- function(
 
   names(fs) <- "friction_surface"
 
-  sdmtools::writereadrast(
-    x = fs,
-    filename = file_name
-  )
+  if(!is.null(file_name)){
+    sdmtools::writereadrast(
+      x = fs,
+      filename = file_name
+    )
+  } else{
+    fs
+  }
 
 }
