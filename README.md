@@ -73,27 +73,57 @@ friction_surface <- get_friction_surface(
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 0 111
 #> ....|-- upperCorner: 1 112
+friction_surface
+#> class       : SpatRaster 
+#> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
+#> resolution  : 0.008333333, 0.008333333  (x, y)
+#> extent      : 111, 112, 0, 1  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+#> source      : Explorer__2020_motorized_friction_surface_0,111,1,112.tif 
+#> name        : friction_surface
+```
 
+``` r
 plot(friction_surface)
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
 from_here <- tibble::tibble(
   x = c(111.2, 111.9),
   y = c(0.2, 0.35)
 )
+from_here
+#> # A tibble: 2 × 2
+#>       x     y
+#>   <dbl> <dbl>
+#> 1  111.  0.2 
+#> 2  112.  0.35
+```
 
+``` r
 travel_time <- calculate_travel_time(
   friction_surface = friction_surface,
   points = from_here
 )
+travel_time
+#> class       : SpatRaster 
+#> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
+#> resolution  : 0.008333333, 0.008333333  (x, y)
+#> extent      : 111, 112, 0, 1  (xmin, xmax, ymin, ymax)
+#> coord. ref. :  
+#> source(s)   : memory
+#> name        : travel_time 
+#> min value   :      0.0000 
+#> max value   :    582.1882
+```
 
+``` r
 plot(travel_time)
 points(from_here, pch = 19, add = TRUE)
 #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "add" is not a graphical
 #> parameter
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />

@@ -71,7 +71,10 @@ friction_surface <- get_friction_surface(
       )
     )
   )
+friction_surface
+```
 
+```{r}
 plot(friction_surface)
 ```
 
@@ -80,12 +83,18 @@ from_here <- tibble::tibble(
   x = c(111.2, 111.9),
   y = c(0.2, 0.35)
 )
+from_here
+```
 
+```{r}
 travel_time <- calculate_travel_time(
   friction_surface = friction_surface,
   points = from_here
 )
+travel_time
+```
 
+```{r}
 plot(travel_time)
 points(from_here, pch = 19, add = TRUE)
 ```
