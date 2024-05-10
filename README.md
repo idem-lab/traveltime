@@ -42,7 +42,7 @@ You can install the development version of traveltime from
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("geryan/traveltime")
+remotes::install_github("idem-lab/traveltime")
 ```
 
 ## Let’s calculate some travel times
