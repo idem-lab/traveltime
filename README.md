@@ -93,7 +93,7 @@ Let’s have a look at that
 plot(friction_surface)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 Prepare points we would like to calculate travel time from
 
@@ -134,8 +134,120 @@ Et voila!
 ``` r
 plot(travel_time)
 points(from_here, pch = 19, add = TRUE)
-#> Warning in plot.xy(xy.coords(x, y), type = type, ...): "add" is not a graphical
-#> parameter
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+## Let’s go to Singapore
+
+Here it is:
+
+``` r
+library(sdmtools)
+sin <- sdmtools::make_africa_mask(
+  type = "vector",
+  countries = "SGP"
+)
+#> Please Note: Because you did not provide a version, by default the version being used is 202403 (This is the most recent version of admin unit shape data. To see other version options use function listShpVersions)
+#> although coordinates are longitude/latitude, st_union assumes that they are
+#> planar
+plot(sin)
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" /> Get
+the extent of that `SpatVector` in the format we need it.
+
+``` r
+sin_ext <- ext_from_spatraster(sin)
+sin_ext
+#>        min      max
+#> x 103.6383 104.0900
+#> y   1.1640   1.4713
+```
+
+We’re going to see how long it takes to walk home from Changi Airport.
+So we’ll download the walking-only friction surface this time.
+
+``` r
+library(traveltime)
+library(terra)
+
+friction_singapore <- get_friction_surface(
+    surface = "walk2020",
+    extent = sin_ext
+  )|> 
+  mask(sin)
+#> Checking if the following Surface-Year combinations are available to download:
+#> 
+#>     DATASET ID  YEAR
+#>   - Explorer__2020_walking_only_friction_surface:  DEFAULT
+#> 
+#> <GMLEnvelope>
+#> ....|-- lowerCorner: 1.164 103.6383
+#> ....|-- upperCorner: 1.4713 104.09
+
+friction_singapore
+#> class       : SpatRaster 
+#> dimensions  : 37, 54, 1  (nrow, ncol, nlyr)
+#> resolution  : 0.008333333, 0.008333333  (x, y)
+#> extent      : 103.6417, 104.0917, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+#> source(s)   : memory
+#> varname     : Explorer__2020_walking_only_friction_surface_1.164,103.6383,1.4713,104.09 
+#> name        : friction_surface 
+#> min value   :       0.01200000 
+#> max value   :       0.06192715
+```
+
+And where is Changi Airport?
+
+``` r
+changi_airport <- tibble::tibble(
+  x = c(103.984),
+  y = c(1.355)
+)
+changi_airport
+#> # A tibble: 1 × 2
+#>       x     y
+#>   <dbl> <dbl>
+#> 1  104.  1.36
+```
+
+Let’s look at those.
+
+``` r
+plot(friction_singapore)
+plot(sin, add = TRUE)
+points(changi_airport, pch = 19, add = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+
+And calculate the travel time
+
+``` r
+travel_time_sin <- calculate_travel_time(
+  friction_surface = friction_singapore,
+  points = changi_airport
+)
+travel_time_sin
+#> class       : SpatRaster 
+#> dimensions  : 37, 54, 1  (nrow, ncol, nlyr)
+#> resolution  : 0.008333333, 0.008333333  (x, y)
+#> extent      : 103.6417, 104.0917, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
+#> coord. ref. :  
+#> source(s)   : memory
+#> name        : travel_time 
+#> min value   :           0 
+#> max value   :         Inf
+```
+
+Et voi*lah*!
+
+``` r
+plot(travel_time_sin)
+points(changi_airport, pch = 19, add = TRUE)
+plot(sin, add = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />

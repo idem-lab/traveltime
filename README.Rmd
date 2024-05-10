@@ -9,7 +9,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  warning = NA
 )
 ```
 
@@ -57,7 +58,7 @@ remotes::install_github("geryan/traveltime")
 
 First download a friction surface — here using the motorised travel time from
 Weiss *et al.* 2020.
-```{r example}
+```{r }
 library(traveltime)
 library(terra)
 
@@ -103,5 +104,69 @@ Et voila!
 ```{r}
 plot(travel_time)
 points(from_here, pch = 19, add = TRUE)
+```
+
+## Let's go to Singapore
+
+Here it is:
+```{r}
+library(sdmtools)
+sin <- sdmtools::make_africa_mask(
+  type = "vector",
+  countries = "SGP"
+)
+plot(sin)
+```
+Get the extent of that `SpatVector` in the format we need it.
+```{r}
+sin_ext <- ext_from_spatraster(sin)
+sin_ext
+```
+
+
+We're going to see how long it takes to walk home from Changi Airport. So we'll 
+download the walking-only friction surface this time.
+```{r }
+library(traveltime)
+library(terra)
+
+friction_singapore <- get_friction_surface(
+    surface = "walk2020",
+    extent = sin_ext
+  )|> 
+  mask(sin)
+
+friction_singapore
+```
+
+And where is Changi Airport?
+```{r}
+changi_airport <- tibble::tibble(
+  x = c(103.984),
+  y = c(1.355)
+)
+changi_airport
+```
+Let's look at those.
+```{r}
+plot(friction_singapore)
+plot(sin, add = TRUE)
+points(changi_airport, pch = 19, add = TRUE)
+```
+
+And calculate the travel time
+```{r}
+travel_time_sin <- calculate_travel_time(
+  friction_surface = friction_singapore,
+  points = changi_airport
+)
+travel_time_sin
+```
+
+Et voi*lah*!
+```{r}
+plot(travel_time_sin)
+points(changi_airport, pch = 19, add = TRUE)
+plot(sin, add = TRUE)
 ```
 
