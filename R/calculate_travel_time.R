@@ -1,41 +1,94 @@
 #' @title Calculate travel time
-#' @description
-#' Implements Weiss et al method to calculate travel time given a
+#' @description Calculate the travel time from a set of points over a friction
+#' surface.
 #'
 #'
-#' @param friction_surface
-#' @param points
-#' @param file_name
-#' @param overwrite_raster
+#' @param friction_surface A `SpatRaster` friction surface layer
+#' @param points A two-column `data.frame` or `tibble` with longitude (x) in the
+#'   first column and latitude (y) in the second in the came coordinate
+#'   reference system
+#' @param file_name `character`. Output file name with extension suitable for
+#'   `terra::writeRaster`
+#' @param overwrite_raster `logical`. If `TRUE` `file_name` is overwritten.
 #'
-#' @return
+#' @details Implements methods from Weiss et al. 2018, 2020 to calculate travel
+#' time from given locations over a friction surface.
+#'
+#' Over large areas this function can require significant RAM and will be slow.
+#'
+#' Citations:
+#' D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
+#' Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
+#' Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
+#' Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
+#' T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
+#' maps of travel time to healthcare facilities. (2020) Nature Medicine.
+#' https://doi.org/10.1038/s41591-020-1059-1
+#'
+#' D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber, M.
+#' Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U. Dalrymple, J.
+#' Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang, E. Cameron, D.
+#' Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething. A global map of travel
+#' time to cities to assess inequalities in accessibility in 2015. (2018).
+#' Nature. doi:10.1038/nature25181.
+#'
+#'
+#' @return `SpatRaster`
 #' @export
 #'
 #' @examples
+#'
+#' ext <- matrix(
+#'   data = c("111", "0", "112", 1),
+#'   nrow = 2,
+#'   ncol = 2,
+#'   dimnames = list(
+#'     c("x", "y"),
+#'     c("min", "max")
+#'    )
+#'  )
+#'
+#'  friction_surface <- get_friction_surface(
+#'    surface = "motor2020",
+#'    extent = ext
+#'  )
+#'
+#'  from_here <- data.frame(
+#'    x = c(111.2, 111.9),
+#'    y = c(0.2, 0.35)
+#'  )
+#'
+#'  calculate_travel_time(
+#'   friction_surface = friction_surface,
+#'   points = from_here
+#'  )
+#'
 calculate_travel_time <- function(
     friction_surface,
     points,
-    file_name = "outputs/travel_time.tif",
+    file_name = NULL,
     overwrite_raster = FALSE
 ){
 
-  if(file.exists(file_name) & !overwrite_raster){
+  if(!is.null(file_name)){
+    if(file.exists(file_name) & !overwrite_raster){
 
-    warning(sprintf(
-      "%s exists\nUsing existing file\nto re-generate, change overwrite_raster to TRUE %s",
-      file_name,
-      file_name
-    ))
+      warning(sprintf(
+        "%s exists\nUsing existing file\nto re-generate, change overwrite_raster to TRUE %s",
+        file_name,
+        file_name
+      ))
 
-    return(terra::rast(file_name))
+      return(terra::rast(file_name))
 
+    }
   }
 
   npoints <- nrow(points)
 
   friction <- raster::raster(friction_surface)
 
-  tsn <- gdistance::transition(friction, function(x) 1/mean(x), 8) # RAM intensive, can be very slow for large areas
+  tsn <- gdistance::transition(friction, function(x) 1/mean(x), 8)
   tgc <- gdistance::geoCorrection(tsn)
 
   xy.data.frame <- data.frame()
@@ -44,13 +97,18 @@ calculate_travel_time <- function(
   xy.matrix <- as.matrix(xy.data.frame)
 
   travel_time <- gdistance::accCost(tgc, xy.matrix)
+  names(travel_time) <- "travel_time"
 
-  raster::writeRaster(
-    travel_time,
-    file_name,
-    overwrite = overwrite_raster
-  )
+  if(!is.null(file_name)){
+    raster::writeRaster(
+      travel_time,
+      file_name,
+      overwrite = overwrite_raster
+    )
 
-  terra::rast(file_name)
+    return(terra::rast(file_name))
+  } else {
+    terra::rast(travel_time)
+  }
 
 }

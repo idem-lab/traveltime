@@ -7,13 +7,76 @@
 calculate_travel_time(
   friction_surface,
   points,
-  file_name = "outputs/travel_time.tif",
+  file_name = NULL,
   overwrite_raster = FALSE
 )
 }
 \arguments{
-\item{overwrite_raster}{}
+\item{friction_surface}{A \code{SpatRaster} friction surface layer}
+
+\item{points}{A two-column \code{data.frame} or \code{tibble} with longitude (x) in the
+first column and latitude (y) in the second in the came coordinate
+reference system}
+
+\item{file_name}{\code{character}. Output file name with extension suitable for
+\code{terra::writeRaster}}
+
+\item{overwrite_raster}{\code{logical}. If \code{TRUE} \code{file_name} is overwritten.}
+}
+\value{
+\code{SpatRaster}
 }
 \description{
-Implements Weiss et al method to calculate travel time given a
+Calculate the travel time from a set of points over a friction
+surface.
+}
+\details{
+Implements methods from Weiss et al. 2018, 2020 to calculate travel
+time from given locations over a friction surface.
+
+Over large areas this function can require significant RAM and will be slow.
+
+Citations:
+D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
+Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
+Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
+Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
+T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
+maps of travel time to healthcare facilities. (2020) Nature Medicine.
+https://doi.org/10.1038/s41591-020-1059-1
+
+D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber, M.
+Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U. Dalrymple, J.
+Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang, E. Cameron, D.
+Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething. A global map of travel
+time to cities to assess inequalities in accessibility in 2015. (2018).
+Nature. doi:10.1038/nature25181.
+}
+\examples{
+
+ext <- matrix(
+  data = c("111", "0", "112", 1),
+  nrow = 2,
+  ncol = 2,
+  dimnames = list(
+    c("x", "y"),
+    c("min", "max")
+   )
+ )
+
+ friction_surface <- get_friction_surface(
+   surface = "motor2020",
+   extent = ext
+ )
+
+ from_here <- data.frame(
+   x = c(111.2, 111.9),
+   y = c(0.2, 0.35)
+ )
+
+ calculate_travel_time(
+  friction_surface = friction_surface,
+  points = from_here
+ )
+
 }
