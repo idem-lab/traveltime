@@ -27,34 +27,36 @@ Implements methods from Weiss et al. 2018, 2020 to calculate travel time from
 given locations over a friction surface.
 
 Citations:
-D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
+
+*D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
 Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C. Kamath,
 A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H. Keddie, S.
 Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar, T. L. Symons,
-E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global maps of travel
-time to healthcare facilities. (2020) Nature Medicine.
+E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething.* **Global maps of travel
+time to healthcare facilities.** (2020) Nature Medicine.
 https://doi.org/10.1038/s41591-020-1059-1
 
-D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber, M.
+*D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber, M.
 Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U. Dalrymple, J. Rozier,
 T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang, E. Cameron, D. Bisanzio, K.E.
-Battle, S. Bhatt, and P.W. Gething. A global map of travel time to cities to
-assess inequalities in accessibility in 2015. (2018). Nature.
+Battle, S. Bhatt, and P.W. Gething.* **A global map of travel time to cities to
+assess inequalities in accessibility in 2015.** (2018). Nature.
 doi:10.1038/nature25181.
 
 ## Installation
 
-You can install the development version of traveltime from [GitHub](https://github.com/) with:
+You can install the development version of traveltime from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("geryan/traveltime")
 ```
 
-## Example
+## Let's calculate some travel times
 
-
-
+First download a friction surface — here using the motorised travel time from
+Weiss *et al.* 2020.
 ```{r example}
 library(traveltime)
 library(terra)
@@ -74,10 +76,12 @@ friction_surface <- get_friction_surface(
 friction_surface
 ```
 
+Let's have a look at that
 ```{r}
 plot(friction_surface)
 ```
 
+Prepare points we would like to calculate travel time from
 ```{r}
 from_here <- tibble::tibble(
   x = c(111.2, 111.9),
@@ -86,6 +90,7 @@ from_here <- tibble::tibble(
 from_here
 ```
 
+And calculate the travel time
 ```{r}
 travel_time <- calculate_travel_time(
   friction_surface = friction_surface,
@@ -94,6 +99,7 @@ travel_time <- calculate_travel_time(
 travel_time
 ```
 
+Et voila!
 ```{r}
 plot(travel_time)
 points(from_here, pch = 19, add = TRUE)

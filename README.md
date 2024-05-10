@@ -18,21 +18,22 @@ release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
 Implements methods from Weiss et al. 2018, 2020 to calculate travel time
 from given locations over a friction surface.
 
-Citations: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S.,
-Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson,
-T., Shekel, C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija,
-A. K. Nandi, S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G.
-Chestnutt, J. J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S.
-Bhatt, and P. W. Gething. Global maps of travel time to healthcare
-facilities. (2020) Nature Medicine.
-<https://doi.org/10.1038/s41591-020-1059-1>
+Citations:
 
-D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A.
+*D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar,
+E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel,
+C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi,
+S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J.
+J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W.
+Gething.* **Global maps of travel time to healthcare facilities.**
+(2020) Nature Medicine. <https://doi.org/10.1038/s41591-020-1059-1>
+
+*D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A.
 Lieber, M. Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U.
 Dalrymple, J. Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang,
-E. Cameron, D. Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething. A
+E. Cameron, D. Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething.* **A
 global map of travel time to cities to assess inequalities in
-accessibility in 2015. (2018). Nature. <doi:10.1038/nature25181>.
+accessibility in 2015.** (2018). Nature. <doi:10.1038/nature25181>.
 
 ## Installation
 
@@ -44,7 +45,10 @@ You can install the development version of traveltime from
 remotes::install_github("geryan/traveltime")
 ```
 
-## Example
+## Let’s calculate some travel times
+
+First download a friction surface — here using the motorised travel time
+from Weiss *et al.* 2020.
 
 ``` r
 library(traveltime)
@@ -83,11 +87,15 @@ friction_surface
 #> name        : friction_surface
 ```
 
+Let’s have a look at that
+
 ``` r
 plot(friction_surface)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+Prepare points we would like to calculate travel time from
 
 ``` r
 from_here <- tibble::tibble(
@@ -101,6 +109,8 @@ from_here
 #> 1  111.  0.2 
 #> 2  112.  0.35
 ```
+
+And calculate the travel time
 
 ``` r
 travel_time <- calculate_travel_time(
@@ -118,6 +128,8 @@ travel_time
 #> min value   :      0.0000 
 #> max value   :    582.1882
 ```
+
+Et voila!
 
 ``` r
 plot(travel_time)
