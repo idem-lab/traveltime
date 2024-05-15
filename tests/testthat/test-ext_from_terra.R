@@ -1,4 +1,4 @@
-testthat::test_that("extent is extent", {
+test_that("extent is extent", {
 
   r <- terra::rast(
      extent = terra::ext(c(111, 112, 0, 1))
@@ -6,7 +6,7 @@ testthat::test_that("extent is extent", {
 
   x <- ext_from_terra(r)
 
-  testthat::expect_is(x, "matrix")
+  expect_is(x, "matrix")
 
-  testthat::expect_equal(dim(x), c(2, 2))
+  expect_equal(dim(x), c(2, 2))
 })
