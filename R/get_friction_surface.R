@@ -93,10 +93,13 @@ get_friction_surface <- function(
   names(fs) <- "friction_surface"
 
   if(!is.null(file_name)){
-    sdmtools::writereadrast(
+    terra::writeRaster(
       x = fs,
       filename = file_name
     )
+
+    fs <- terra::rast(file_name)
+
   } else{
     fs
   }

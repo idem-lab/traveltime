@@ -12,7 +12,6 @@ Imports:
     gdistance,
     malariaAtlas,
     raster,
-    sdmtools,
     terra
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
