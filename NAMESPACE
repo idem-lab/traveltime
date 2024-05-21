@@ -2,4 +2,5 @@
 
 export(calculate_travel_time)
 export(ext_from_terra)
+export(ext_vect_to_matrix)
 export(get_friction_surface)

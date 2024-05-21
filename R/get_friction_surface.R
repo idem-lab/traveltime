@@ -1,31 +1,25 @@
 #' @title Get friction surface
 #' @description Wrapper function to download friction surfaces via
-#' `malariaAtlas::getRaster`
+#'   `malariaAtlas::getRaster`
 #'
 #' @param surface `"motor2020"` or `"walk2020`.
 #' @param file_name `character`. File name for output layer.
 #' @param overwrite Overwrite `file_name` if exists
-#' @param extent Extent to pass to `malariaAtlas::getRaster`: 2x2 matrix
-#'   specifying the spatial extent within which raster data is desired, as
-#'   returned by sf::st_bbox() - the first column has the minimum, the second
-#'   the maximum values; rows 1 & 2 represent the x & y dimensions respectively
-#'   (matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames =
-#'   list(c("x", "y"), c("min", "max")))) (use either shp OR extent; if neither
-#'   is specified global raster is returned). `NULL` extent downloads (large)
-#'   global layer
+#' @param extent Spatial extent as either numeric vector specifying `c(xmin,
+#'   xmax, ymin, ymax)`, `SpatExtent`, `SpatRaster` (from which the extent will
+#'   be taken), or 2x2 matrix (see details).
 #'
-#' @details
-#'  Convenience wrapper to `malariaAtlas::getRaster` to access motorised and
-#'  walking travel friction layers per Weiss et al. 2020, that adds safety to
-#'  check existing files before download. Surfaces can be downloaded directly
-#'  from:
-#'  https://malariaatlas.org/project-resources/accessibility-to-healthcare/
+#' @details Convenience wrapper to `malariaAtlas::getRaster` to access motorised
+#' and walking travel friction layers per Weiss et al. 2020, that adds safety to
+#' check existing files before download. Surfaces can be downloaded directly
+#' from:
+#' \url{https://malariaatlas.org/project-resources/accessibility-to-healthcare/}
 #'
-#'  `surface = "motor2020"` downloads
-#'  `"Explorer__2020_motorized_friction_surface"`.
+#' `surface = "motor2020"` downloads
+#' `"Explorer__2020_motorized_friction_surface"`.
 #'
-#'  `surface = "walk2020"` downloads
-#'  `"Explorer__2020_walking_only_friction_surface"`.
+#' `surface = "walk2020"` downloads
+#' `"Explorer__2020_walking_only_friction_surface"`.
 #'
 #' D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
 #' Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
@@ -33,7 +27,17 @@
 #' Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
 #' T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
 #' maps of travel time to healthcare facilities. (2020) Nature Medicine.
-#' https://doi.org/10.1038/s41591-020-1059-1
+#' \url{https://doi.org/10.1038/s41591-020-1059-1}
+#'
+#' `extent` is passed through is to pass to `malariaAtlas::getRaster` as a 2x2
+#' matrix. If passed in as a numeric vector, `SpatExtent` or `SpatRaster`, it is
+#' converted into a matrix using `ext_vect_to_matrix` and `ext_from_terra`.
+#' `matrix` format is  as returned by sf::st_bbox() - the first column has the
+#' minimum, the second the maximum values; rows 1 & 2 represent the x & y
+#' dimensions respectively (`matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2,
+#' ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))`) (use either shp OR
+#' extent; if neither is specified global raster is returned). `NULL` extent
+#' downloads (large) global layer.
 #'
 #'
 #' @return `SpatRaster`
@@ -42,7 +46,7 @@
 #' @examples
 #'
 #' ext <- matrix(
-#'   data = c("111", "0", "112", 1),
+#'   data = c(111, 0, 112, 1),
 #'   nrow = 2,
 #'   ncol = 2,
 #'   dimnames = list(
@@ -79,11 +83,34 @@ get_friction_surface <- function(
     }
   }
 
-  if(surface == "motor2020"){
+  if (surface == "motor2020") {
     surface_name <- "Explorer__2020_motorized_friction_surface"
   } else if (surface == "walk2020"){
     surface_name <- "Explorer__2020_walking_only_friction_surface"
   }
+
+  if (is.null(extent)) {
+    stop("extent missing")
+  } else if (is.vector(extent)) {
+    if(length(extent) == 4){
+      extent <- ext_vect_to_matrix(extent)
+    } else {
+      stop("extent as numeric must be length 4")
+    }
+  } else if(any(class(extent) == "SpatExtent")) {
+    extent <- ext_vect_to_matrix(extent)
+  } else if(any(class(extent) == "SpatRaster")){
+    extent <- ext_from_terra(extent)
+  } else if(is.matrix(extent)){
+    if(!all(dim(extent) == c(2,2))){
+      stop("Matrix must be 2x2")
+    } else {
+      extent <- extent
+    }
+  } else {
+    stop("extent must me numeric, matrix, SpatExtent or SpatRaster")
+  }
+
 
   fs <- malariaAtlas::getRaster(
     dataset_id = surface_name,
@@ -93,10 +120,13 @@ get_friction_surface <- function(
   names(fs) <- "friction_surface"
 
   if(!is.null(file_name)){
-    sdmtools::writereadrast(
+    terra::writeRaster(
       x = fs,
       filename = file_name
     )
+
+    fs <- terra::rast(file_name)
+
   } else{
     fs
   }

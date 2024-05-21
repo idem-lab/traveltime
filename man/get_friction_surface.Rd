@@ -18,14 +18,8 @@ get_friction_surface(
 
 \item{overwrite}{Overwrite \code{file_name} if exists}
 
-\item{extent}{Extent to pass to \code{malariaAtlas::getRaster}: 2x2 matrix
-specifying the spatial extent within which raster data is desired, as
-returned by sf::st_bbox() - the first column has the minimum, the second
-the maximum values; rows 1 & 2 represent the x & y dimensions respectively
-(matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames =
-list(c("x", "y"), c("min", "max")))) (use either shp OR extent; if neither
-is specified global raster is returned). \code{NULL} extent downloads (large)
-global layer}
+\item{extent}{Spatial extent as either numeric vector specifying \code{c(xmin, xmax, ymin, ymax)}, \code{SpatExtent}, \code{SpatRaster} (from which the extent will
+be taken), or 2x2 matrix (see details).}
 }
 \value{
 \code{SpatRaster}
@@ -35,11 +29,11 @@ Wrapper function to download friction surfaces via
 \code{malariaAtlas::getRaster}
 }
 \details{
-Convenience wrapper to \code{malariaAtlas::getRaster} to access motorised and
-walking travel friction layers per Weiss et al. 2020, that adds safety to
+Convenience wrapper to \code{malariaAtlas::getRaster} to access motorised
+and walking travel friction layers per Weiss et al. 2020, that adds safety to
 check existing files before download. Surfaces can be downloaded directly
 from:
-https://malariaatlas.org/project-resources/accessibility-to-healthcare/
+\url{https://malariaatlas.org/project-resources/accessibility-to-healthcare/}
 
 \code{surface = "motor2020"} downloads
 \code{"Explorer__2020_motorized_friction_surface"}.
@@ -53,14 +47,23 @@ Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
 Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
 T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
 maps of travel time to healthcare facilities. (2020) Nature Medicine.
-https://doi.org/10.1038/s41591-020-1059-1
+\url{https://doi.org/10.1038/s41591-020-1059-1}
+
+\code{extent} is passed through is to pass to \code{malariaAtlas::getRaster} as a 2x2
+matrix. If passed in as a numeric vector, \code{SpatExtent} or \code{SpatRaster}, it is
+converted into a matrix using \code{ext_vect_to_matrix} and \code{ext_from_terra}.
+\code{matrix} format is  as returned by sf::st_bbox() - the first column has the
+minimum, the second the maximum values; rows 1 & 2 represent the x & y
+dimensions respectively (\code{matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))}) (use either shp OR
+extent; if neither is specified global raster is returned). \code{NULL} extent
+downloads (large) global layer.
 
 Additional details...
 }
 \examples{
 
 ext <- matrix(
-  data = c("111", "0", "112", 1),
+  data = c(111, 0, 112, 1),
   nrow = 2,
   ncol = 2,
   dimnames = list(
