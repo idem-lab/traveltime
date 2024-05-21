@@ -45,12 +45,10 @@ accessibility in 2015.** (2018). Nature. <doi:10.1038/nature25181>.
 
 ## Installation
 
-You can install the development version of traveltime from
-[GitHub](https://github.com/) with:
+You can install `traveltime` with:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("idem-lab/traveltime")
+install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 ```
 
 ## Let’s calculate some travel times
