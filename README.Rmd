@@ -67,15 +67,7 @@ library(terra)
 
 friction_surface <- get_friction_surface(
     surface = "motor2020",
-    extent = matrix(
-      data = c("111", "0", "112", 1),
-      nrow = 2,
-      ncol = 2,
-      dimnames = list(
-        c("x", "y"),
-        c("min", "max")
-      )
-    )
+    extent = c(111,112,0,1)
   )
 friction_surface
 ```
@@ -120,22 +112,18 @@ sin <- sdmtools::make_africa_mask(
 )
 plot(sin)
 ```
-Get the extent of that `SpatVector` in the format we need it.
-```{r}
-sin_ext <- ext_from_terra(sin)
-sin_ext
-```
-
 
 We're going to see how long it takes to walk home from Changi Airport. So we'll 
 download the walking-only friction surface this time.
+
+We can feed in our `sin` `SpatVector` directly as the `extent`, instead of specifying by hand as above. 
 ```{r }
 library(traveltime)
 library(terra)
 
 friction_singapore <- get_friction_surface(
     surface = "walk2020",
-    extent = sin_ext
+    extent = sin
   )|> 
   mask(sin)
 
