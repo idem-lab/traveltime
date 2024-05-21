@@ -3,11 +3,6 @@
 
 # traveltime
 
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/idem-lab/traveltime/branch/main/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime?branch=main)
 ![GitHub
 License](https://img.shields.io/github/license/geryan/traveltime)
 [![Lifecycle:](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -19,7 +14,6 @@ releases)](https://img.shields.io/github/downloads/geryan/traveltime/total)
 commit](https://img.shields.io/github/last-commit/geryan/traveltime)
 ![GitHub commits since latest
 release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
-<!-- badges: end -->
 
 Implements methods from Weiss et al. 2018, 2020 to calculate travel time
 from given locations over a friction surface.
@@ -63,15 +57,7 @@ library(terra)
 
 friction_surface <- get_friction_surface(
     surface = "motor2020",
-    extent = matrix(
-      data = c("111", "0", "112", 1),
-      nrow = 2,
-      ncol = 2,
-      dimnames = list(
-        c("x", "y"),
-        c("min", "max")
-      )
-    )
+    extent = c(111,112,0,1)
   )
 #> Checking if the following Surface-Year combinations are available to download:
 #> 
@@ -160,19 +146,13 @@ sin <- sdmtools::make_africa_mask(
 plot(sin)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" /> Get
-the extent of that `SpatVector` in the format we need it.
-
-``` r
-sin_ext <- ext_from_terra(sin)
-sin_ext
-#>        min      max
-#> x 103.6383 104.0900
-#> y   1.1640   1.4713
-```
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 We’re going to see how long it takes to walk home from Changi Airport.
 So we’ll download the walking-only friction surface this time.
+
+We can feed in our `sin` `SpatVector` directly as the `extent`, instead
+of specifying by hand as above.
 
 ``` r
 library(traveltime)
@@ -180,7 +160,7 @@ library(terra)
 
 friction_singapore <- get_friction_surface(
     surface = "walk2020",
-    extent = sin_ext
+    extent = sin
   )|> 
   mask(sin)
 #> Checking if the following Surface-Year combinations are available to download:
@@ -227,7 +207,7 @@ plot(sin, add = TRUE)
 points(changi_airport, pch = 19, add = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 And calculate the travel time
 
@@ -256,4 +236,4 @@ points(changi_airport, pch = 19, add = TRUE)
 plot(sin, add = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
