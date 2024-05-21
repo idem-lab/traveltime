@@ -18,14 +18,6 @@ ext_from_terra <- function(r){
 
   x <- terra::ext(r)
 
-  matrix(
-    data = c(x[1], x[3], x[2], x[4]),
-    nrow = 2,
-    ncol = 2,
-    dimnames = list(
-      c("x", "y"),
-      c("min", "max")
-    )
-  )
+  ext_vect_to_matrix(x)
 
 }
