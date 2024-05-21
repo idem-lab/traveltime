@@ -3,6 +3,13 @@
 
 # traveltime
 
+<!-- badges: start -->
+
+[![traveltime status
+badge](https://idem-lab.r-universe.dev/badges/traveltime)](https://idem-lab.r-universe.dev/traveltime)
+[![R-CMD-check](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/idem-lab/traveltime/branch/main/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime?branch=main)
 ![GitHub
 License](https://img.shields.io/github/license/geryan/traveltime)
 [![Lifecycle:](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -14,6 +21,7 @@ releases)](https://img.shields.io/github/downloads/geryan/traveltime/total)
 commit](https://img.shields.io/github/last-commit/geryan/traveltime)
 ![GitHub commits since latest
 release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
+<!-- badges: end -->
 
 Implements methods from Weiss et al. 2018, 2020 to calculate travel time
 from given locations over a friction surface.

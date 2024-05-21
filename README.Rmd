@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 # traveltime
 
 <!-- badges: start -->
+[![traveltime status badge](https://idem-lab.r-universe.dev/badges/traveltime)](https://idem-lab.r-universe.dev/traveltime)
 [![R-CMD-check](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/idem-lab/traveltime/branch/main/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime?branch=main)
 ![GitHub License](https://img.shields.io/github/license/geryan/traveltime)
