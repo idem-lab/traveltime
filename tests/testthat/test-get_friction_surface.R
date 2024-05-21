@@ -1,5 +1,4 @@
-testthat::test_that("Are SpatRasters", {
-  library(traveltime)
+test_that("Are SpatRasters", {
   ext <- matrix(
     data = c("111", "0", "112", 1),
     nrow = 2,
@@ -16,13 +15,13 @@ testthat::test_that("Are SpatRasters", {
     file_name = tempfile(fileext = ".tif")
   )
 
-  testthat::expect_s4_class(mfs, "SpatRaster")
+  expect_s4_class(mfs, "SpatRaster")
 
   wfs <- get_friction_surface(
     surface = "walk2020",
     extent = ext
   )
 
-  testthat::expect_s4_class(wfs, "SpatRaster")
+  expect_s4_class(wfs, "SpatRaster")
 
 })
