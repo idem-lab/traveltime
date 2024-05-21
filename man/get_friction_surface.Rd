@@ -18,8 +18,8 @@ get_friction_surface(
 
 \item{overwrite}{Overwrite \code{file_name} if exists}
 
-\item{extent}{Spatial extent as either numeric vector specifying \code{c(xmin, xmax, ymin, ymax)}, \code{SpatExtent}, \code{SpatRaster} (from which the extent will
-be taken), or 2x2 matrix (see details).}
+\item{extent}{Spatial extent as either numeric vector specifying \code{c(xmin, xmax, ymin, ymax)}, \code{SpatExtent}, \code{SpatVector} or \code{SpatRaster} (from which
+the extent will be taken), or 2x2 \code{matrix} (see details).}
 }
 \value{
 \code{SpatRaster}
@@ -50,13 +50,13 @@ maps of travel time to healthcare facilities. (2020) Nature Medicine.
 \url{https://doi.org/10.1038/s41591-020-1059-1}
 
 \code{extent} is passed through is to pass to \code{malariaAtlas::getRaster} as a 2x2
-matrix. If passed in as a numeric vector, \code{SpatExtent} or \code{SpatRaster}, it is
-converted into a matrix using \code{ext_vect_to_matrix} and \code{ext_from_terra}.
-\code{matrix} format is  as returned by sf::st_bbox() - the first column has the
-minimum, the second the maximum values; rows 1 & 2 represent the x & y
-dimensions respectively (\code{matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))}) (use either shp OR
-extent; if neither is specified global raster is returned). \code{NULL} extent
-downloads (large) global layer.
+matrix. If passed in as a numeric vector, \code{SpatExtent}, \code{SpatVector}, or
+\code{SpatRaster}, it is converted into a matrix using \code{ext_vect_to_matrix} and
+\code{ext_from_terra}. \code{matrix} format is  as returned by sf::st_bbox() - the
+first column has the minimum, the second the maximum values; rows 1 & 2
+represent the x & y dimensions respectively (\code{matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))})
+(use either shp OR extent; if neither is specified global raster is
+returned). \code{NULL} extent downloads (large) global layer.
 
 Additional details...
 }
