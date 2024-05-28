@@ -74,7 +74,7 @@ get_friction_surface <- function(
     if(!overwrite & file.exists(filename)){
 
       warning(sprintf(
-        "%s exists\n Returning %s. To replace, change overwrite_raster to TRUE",
+        "%s exists\n Returning %s. To replace, change overwrite to TRUE",
         filename,
         filename
       ))

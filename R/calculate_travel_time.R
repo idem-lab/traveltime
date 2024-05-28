@@ -9,7 +9,7 @@
 #'   reference system
 #' @param filename `character`. Output file name with extension suitable for
 #'   `terra::writeRaster`
-#' @param overwrite_raster `logical`. If `TRUE` `filename` is overwritten.
+#' @param overwrite `logical`. If `TRUE` `filename` is overwritten.
 #'
 #' @details Implements methods from Weiss et al. 2018, 2020 to calculate travel
 #' time from given locations over a friction surface.
@@ -67,14 +67,14 @@ calculate_travel_time <- function(
     friction_surface,
     points,
     filename = NULL,
-    overwrite_raster = FALSE
+    overwrite = FALSE
 ){
 
   if(!is.null(filename)){
-    if(file.exists(filename) & !overwrite_raster){
+    if(file.exists(filename) & !overwrite){
 
       warning(sprintf(
-        "%s exists\nUsing existing file\nto re-generate, change overwrite_raster to TRUE %s",
+        "%s exists\nUsing existing file\nto re-generate, change overwrite to TRUE %s",
         filename,
         filename
       ))
@@ -103,7 +103,7 @@ calculate_travel_time <- function(
     raster::writeRaster(
       travel_time,
       filename,
-      overwrite = overwrite_raster
+      overwrite = overwrite
     )
 
     return(terra::rast(filename))

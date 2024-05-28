@@ -8,7 +8,7 @@ calculate_travel_time(
   friction_surface,
   points,
   filename = NULL,
-  overwrite_raster = FALSE
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ reference system}
 \item{filename}{\code{character}. Output file name with extension suitable for
 \code{terra::writeRaster}}
 
-\item{overwrite_raster}{\code{logical}. If \code{TRUE} \code{filename} is overwritten.}
+\item{overwrite}{\code{logical}. If \code{TRUE} \code{filename} is overwritten.}
 }
 \value{
 \code{SpatRaster}
