@@ -124,7 +124,8 @@ get_friction_surface <- function(
   if(!is.null(file_name)){
     terra::writeRaster(
       x = fs,
-      filename = file_name
+      filename = file_name,
+      overwrite = overwrite
     )
 
     fs <- terra::rast(file_name)
