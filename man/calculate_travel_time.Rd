@@ -7,7 +7,7 @@
 calculate_travel_time(
   friction_surface,
   points,
-  file_name = NULL,
+  filename = NULL,
   overwrite_raster = FALSE
 )
 }
@@ -18,10 +18,10 @@ calculate_travel_time(
 first column and latitude (y) in the second in the came coordinate
 reference system}
 
-\item{file_name}{\code{character}. Output file name with extension suitable for
+\item{filename}{\code{character}. Output file name with extension suitable for
 \code{terra::writeRaster}}
 
-\item{overwrite_raster}{\code{logical}. If \code{TRUE} \code{file_name} is overwritten.}
+\item{overwrite_raster}{\code{logical}. If \code{TRUE} \code{filename} is overwritten.}
 }
 \value{
 \code{SpatRaster}

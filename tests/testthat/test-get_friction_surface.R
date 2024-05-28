@@ -12,7 +12,7 @@ test_that("Are SpatRasters", {
   mfs <- get_friction_surface(
     surface = "motor2020",
     extent = ext,
-    file_name = tempfile(fileext = ".tif")
+    filename = tempfile(fileext = ".tif")
   )
 
   expect_s4_class(mfs, "SpatRaster")

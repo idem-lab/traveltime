@@ -7,9 +7,9 @@
 #' @param points A two-column `data.frame` or `tibble` with longitude (x) in the
 #'   first column and latitude (y) in the second in the came coordinate
 #'   reference system
-#' @param file_name `character`. Output file name with extension suitable for
+#' @param filename `character`. Output file name with extension suitable for
 #'   `terra::writeRaster`
-#' @param overwrite_raster `logical`. If `TRUE` `file_name` is overwritten.
+#' @param overwrite_raster `logical`. If `TRUE` `filename` is overwritten.
 #'
 #' @details Implements methods from Weiss et al. 2018, 2020 to calculate travel
 #' time from given locations over a friction surface.
@@ -66,20 +66,20 @@
 calculate_travel_time <- function(
     friction_surface,
     points,
-    file_name = NULL,
+    filename = NULL,
     overwrite_raster = FALSE
 ){
 
-  if(!is.null(file_name)){
-    if(file.exists(file_name) & !overwrite_raster){
+  if(!is.null(filename)){
+    if(file.exists(filename) & !overwrite_raster){
 
       warning(sprintf(
         "%s exists\nUsing existing file\nto re-generate, change overwrite_raster to TRUE %s",
-        file_name,
-        file_name
+        filename,
+        filename
       ))
 
-      return(terra::rast(file_name))
+      return(terra::rast(filename))
 
     }
   }
@@ -99,14 +99,14 @@ calculate_travel_time <- function(
   travel_time <- gdistance::accCost(tgc, xy.matrix)
   names(travel_time) <- "travel_time"
 
-  if(!is.null(file_name)){
+  if(!is.null(filename)){
     raster::writeRaster(
       travel_time,
-      file_name,
+      filename,
       overwrite = overwrite_raster
     )
 
-    return(terra::rast(file_name))
+    return(terra::rast(filename))
   } else {
     terra::rast(travel_time)
   }

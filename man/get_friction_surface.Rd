@@ -6,7 +6,7 @@
 \usage{
 get_friction_surface(
   surface = c("motor2020", "walk2020"),
-  file_name = NULL,
+  filename = NULL,
   overwrite = FALSE,
   extent = NULL
 )
@@ -14,9 +14,9 @@ get_friction_surface(
 \arguments{
 \item{surface}{\code{"motor2020"} or \verb{"walk2020}.}
 
-\item{file_name}{\code{character}. File name for output layer.}
+\item{filename}{\code{character}. File name for output layer.}
 
-\item{overwrite}{Overwrite \code{file_name} if exists}
+\item{overwrite}{Overwrite \code{filename} if exists}
 
 \item{extent}{Spatial extent as either numeric vector specifying \code{c(xmin, xmax, ymin, ymax)}, \code{SpatExtent}, \code{SpatVector} or \code{SpatRaster} (from which
 the extent will be taken), or 2x2 \code{matrix} (see details).}

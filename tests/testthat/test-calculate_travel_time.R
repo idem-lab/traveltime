@@ -32,7 +32,7 @@ test_that("Is SpatRaster", {
   tt2 <- calculate_travel_time(
     friction_surface = wfs,
     points = from_here,
-    file_name = tempfile(fileext = ".tif")
+    filename = tempfile(fileext = ".tif")
   )
 
   expect_s4_class(tt2, "SpatRaster")

@@ -3,8 +3,8 @@
 #'   `malariaAtlas::getRaster`
 #'
 #' @param surface `"motor2020"` or `"walk2020`.
-#' @param file_name `character`. File name for output layer.
-#' @param overwrite Overwrite `file_name` if exists
+#' @param filename `character`. File name for output layer.
+#' @param overwrite Overwrite `filename` if exists
 #' @param extent Spatial extent as either numeric vector specifying `c(xmin,
 #'   xmax, ymin, ymax)`, `SpatExtent`, `SpatVector` or `SpatRaster` (from which
 #'   the extent will be taken), or 2x2 `matrix` (see details).
@@ -64,22 +64,22 @@
 #'
 get_friction_surface <- function(
   surface = c("motor2020", "walk2020"),
-  file_name = NULL,
+  filename = NULL,
   overwrite = FALSE,
   extent = NULL
 ){
   surface <- match.arg(surface)
 
-  if(!is.null(file_name)){
-    if(!overwrite & file.exists(file_name)){
+  if(!is.null(filename)){
+    if(!overwrite & file.exists(filename)){
 
       warning(sprintf(
         "%s exists\n Returning %s. To replace, change overwrite_raster to TRUE",
-        file_name,
-        file_name
+        filename,
+        filename
       ))
 
-      return(terra::rast(file_name))
+      return(terra::rast(filename))
     }
   }
 
@@ -121,14 +121,14 @@ get_friction_surface <- function(
 
   names(fs) <- "friction_surface"
 
-  if(!is.null(file_name)){
+  if(!is.null(filename)){
     terra::writeRaster(
       x = fs,
-      filename = file_name,
+      filename = filename,
       overwrite = overwrite
     )
 
-    fs <- terra::rast(file_name)
+    fs <- terra::rast(filename)
 
   } else{
     fs
