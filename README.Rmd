@@ -97,7 +97,7 @@ travel_time
 Et voila!
 ```{r}
 plot(travel_time)
-points(from_here, pch = 19, add = TRUE)
+points(from_here, pch = 19)
 ```
 
 ## Let's go to Singapore
@@ -141,7 +141,7 @@ Let's look at those.
 ```{r}
 plot(friction_singapore)
 plot(sin, add = TRUE)
-points(changi_airport, pch = 19, add = TRUE)
+points(changi_airport, pch = 19)
 ```
 
 And calculate the travel time
@@ -156,7 +156,37 @@ travel_time_sin
 Et voi*lah*!
 ```{r}
 plot(travel_time_sin)
-points(changi_airport, pch = 19, add = TRUE)
+points(changi_airport, pch = 19)
 plot(sin, add = TRUE)
 ```
+
+
+### I want my plots to be nicer
+```{r}
+library(tidyterra)
+library(ggplot2)
+
+ggplot() +
+  # plot the spatraster first
+  geom_spatraster(
+    data = travel_time_sin
+  ) +
+  theme_minimal() +
+  scale_fill_whitebox_c(palette = "deep") +
+  # overlay the vector outline
+  geom_spatvector(
+    data = sin,
+    colour = "khaki3",
+    linewidth = 1,
+    fill = NA
+  ) +
+  # add the points from tibble
+   geom_point(
+     data = changi_airport,
+     aes(x = x, y = y)
+   ) +
+  labs(x = NULL, y = NULL, fill = "Travel time\n(minutes)") 
+
+```
+
 

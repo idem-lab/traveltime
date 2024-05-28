@@ -131,7 +131,7 @@ Et voila!
 
 ``` r
 plot(travel_time)
-points(from_here, pch = 19, add = TRUE)
+points(from_here, pch = 19)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -210,7 +210,7 @@ Let’s look at those.
 ``` r
 plot(friction_singapore)
 plot(sin, add = TRUE)
-points(changi_airport, pch = 19, add = TRUE)
+points(changi_airport, pch = 19)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
@@ -238,8 +238,46 @@ Et voi*lah*!
 
 ``` r
 plot(travel_time_sin)
-points(changi_airport, pch = 19, add = TRUE)
+points(changi_airport, pch = 19)
 plot(sin, add = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+
+### I want my plots to be nicer
+
+``` r
+library(tidyterra)
+#> Registered S3 method overwritten by 'tidyterra':
+#>   method              from        
+#>   autoplot.SpatRaster malariaAtlas
+#> 
+#> Attaching package: 'tidyterra'
+#> The following object is masked from 'package:stats':
+#> 
+#>     filter
+library(ggplot2)
+
+ggplot() +
+  # plot the spatraster first
+  geom_spatraster(
+    data = travel_time_sin
+  ) +
+  theme_minimal() +
+  scale_fill_whitebox_c(palette = "deep") +
+  # overlay the vector outline
+  geom_spatvector(
+    data = sin,
+    colour = "khaki3",
+    linewidth = 1,
+    fill = NA
+  ) +
+  # add the points from tibble
+   geom_point(
+     data = changi_airport,
+     aes(x = x, y = y)
+   ) +
+  labs(x = NULL, y = NULL, fill = "Travel time\n(minutes)") 
+```
+
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
