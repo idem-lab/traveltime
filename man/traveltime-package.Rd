@@ -9,7 +9,7 @@
 Calculate travel time over a friction surface from a specified set of locations.
 }
 \author{
-\strong{Maintainer}: Gerry Ryan \email{casanova@rom.com} (\href{https://orcid.org/0000-0003-0183-7630}{ORCID})
+\strong{Maintainer}: Gerry Ryan \email{gerard.ryan@telethonkids.org.au} (\href{https://orcid.org/0000-0003-0183-7630}{ORCID})
 
 Authors:
 \itemize{
