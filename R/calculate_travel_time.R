@@ -3,10 +3,11 @@
 #' surface.
 #'
 #'
-#' @param friction_surface A `SpatRaster` friction surface layer
+#' @param friction_surface A `SpatRaster` friction surface layer. See
+#'  `?get_friction_surface`
 #' @param points A two-column `data.frame` or `tibble` with longitude (x) in the
-#'   first column and latitude (y) in the second in the came coordinate
-#'   reference system
+#'   first column and latitude (y) in the second in the same coordinate
+#'   reference system as `friction_surface`
 #' @param filename `character`. Output file name with extension suitable for
 #'   `terra::writeRaster`
 #' @param overwrite `logical`. If `TRUE` `filename` is overwritten.
