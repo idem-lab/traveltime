@@ -59,7 +59,10 @@ from Weiss *et al.* 2020.
 ``` r
 library(traveltime)
 library(terra)
-#> terra 1.7.71
+#> terra 1.7.79
+```
+
+``` r
 
 friction_surface <- get_friction_surface(
     surface = "motor2020",
@@ -71,15 +74,18 @@ friction_surface <- get_friction_surface(
 #>   - Explorer__2020_motorized_friction_surface:  DEFAULT
 #> 
 #> Loading required package: sf
-#> Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is FALSE
+#> Linking to GEOS 3.12.1, GDAL 3.9.0, PROJ 9.4.0; sf_use_s2() is FALSE
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 0 111
 #> ....|-- upperCorner: 1 112
+```
+
+``` r
 friction_surface
 #> class       : SpatRaster 
 #> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : 111, 112, 0, 1  (xmin, xmax, ymin, ymax)
+#> extent      : 111, 112, 1.387779e-17, 1  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
 #> source      : Explorer__2020_motorized_friction_surface_0,111,1,112.tif 
 #> name        : friction_surface
@@ -119,7 +125,7 @@ travel_time
 #> class       : SpatRaster 
 #> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : 111, 112, 0, 1  (xmin, xmax, ymin, ymax)
+#> extent      : 111, 112, 1.387779e-17, 1  (xmin, xmax, ymin, ymax)
 #> coord. ref. :  
 #> source(s)   : memory
 #> name        : travel_time 
@@ -149,6 +155,9 @@ sin <- sdmtools::make_africa_mask(
 #> Please Note: Because you did not provide a version, by default the version being used is 202403 (This is the most recent version of admin unit shape data. To see other version options use function listShpVersions)
 #> although coordinates are longitude/latitude, st_union assumes that they are
 #> planar
+```
+
+``` r
 plot(sin)
 ```
 
@@ -177,6 +186,9 @@ friction_singapore <- get_friction_surface(
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 1.164 103.6383
 #> ....|-- upperCorner: 1.4713 104.09
+```
+
+``` r
 
 friction_singapore
 #> class       : SpatRaster 
@@ -256,6 +268,9 @@ library(tidyterra)
 #> The following object is masked from 'package:stats':
 #> 
 #>     filter
+```
+
+``` r
 library(ggplot2)
 
 ggplot() +
@@ -268,14 +283,15 @@ ggplot() +
   # overlay the vector outline
   geom_spatvector(
     data = sin,
-    colour = "khaki3",
+    colour = "grey70",
     linewidth = 1,
     fill = NA
   ) +
   # add the points from tibble
    geom_point(
      data = changi_airport,
-     aes(x = x, y = y)
+     aes(x = x, y = y),
+     colour = "hotpink"
    ) +
   labs(x = NULL, y = NULL, fill = "Travel time\n(minutes)") 
 ```

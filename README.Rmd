@@ -176,14 +176,15 @@ ggplot() +
   # overlay the vector outline
   geom_spatvector(
     data = sin,
-    colour = "khaki3",
+    colour = "grey70",
     linewidth = 1,
     fill = NA
   ) +
   # add the points from tibble
    geom_point(
      data = changi_airport,
-     aes(x = x, y = y)
+     aes(x = x, y = y),
+     colour = "hotpink"
    ) +
   labs(x = NULL, y = NULL, fill = "Travel time\n(minutes)") 
 
