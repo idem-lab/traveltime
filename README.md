@@ -147,7 +147,8 @@ points(from_here, pch = 19)
 Here it is:
 
 ``` r
-library(sdmtools)
+# install.packages("sdmtools", repos = "https://idem-lab.r-universe.dev")
+library(sdmtools) 
 sin <- sdmtools::make_africa_mask(
   type = "vector",
   countries = "SGP"
