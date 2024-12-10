@@ -39,14 +39,14 @@ A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H. Keddie, S.
 Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar, T. L. Symons,
 E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething.* **Global maps of travel
 time to healthcare facilities.** (2020) Nature Medicine.
-https://doi.org/10.1038/s41591-020-1059-1
+<https://doi.org/10.1038/s41591-020-1059-1>
 
 *D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber, M.
 Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U. Dalrymple, J. Rozier,
 T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang, E. Cameron, D. Bisanzio, K.E.
 Battle, S. Bhatt, and P.W. Gething.* **A global map of travel time to cities to
 assess inequalities in accessibility in 2015.** (2018). Nature.
-doi:10.1038/nature25181.
+<https://doi.org/10.1038/nature25181>
 
 ## Installation
 
@@ -107,7 +107,8 @@ points(from_here, pch = 19, col = "hotpink")
 
 ## A more tangible example: Walking in Singapore
 
-Let's create a map of the walking time across the island of Singapore from the nearest
+Let's create a map of the walking time across the island of Singapore from the 
+nearest
 [MRT or LRT](https://en.wikipedia.org/wiki/Transport_in_Singapore#Rail_transport)
 station.
 
@@ -116,8 +117,8 @@ To do this, we need:
 - a map of Singapore
 - locations of the stations
 
-
 Here's our basemap via `geodata`:
+
 ```{r}
 #install.packages("geodata")
 library(geodata)
