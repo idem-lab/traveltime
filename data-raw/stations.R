@@ -9,6 +9,7 @@ library(terra)
 mrt_vect <- vect("data-raw/LTAMRTStationExitGEOJSON.geojson")
 
 
-stations <-geom(mrt_vect)[,c("x", "y")]
+stations <- geom(mrt_vect)[,c("x", "y")]
+
 
 usethis::use_data(stations, overwrite = TRUE)
