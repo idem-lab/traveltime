@@ -107,7 +107,8 @@ points(from_here, pch = 19, col = "hotpink")
 
 ## A more tangible example: Walking in Singapore
 
-Let's create a map of the walking time across the island of Singapore from the nearest
+Let's create a map of the walking time across the island of Singapore from the 
+nearest
 [MRT or LRT](https://en.wikipedia.org/wiki/Transport_in_Singapore#Rail_transport)
 station.
 
@@ -116,8 +117,8 @@ To do this, we need:
 - a map of Singapore
 - locations of the stations
 
-
 Here's our basemap via `geodata`:
+
 ```{r}
 #install.packages("geodata")
 library(geodata)
