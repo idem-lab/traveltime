@@ -58,8 +58,10 @@ install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 
 ## Let's calculate some travel times
 
-First download a friction surface — here using the motorised travel time from
-Weiss *et al.* 2020.
+First download a friction surface --— here we are using the motorised travel
+time from Weiss *et al.* 2020. We use the function
+`traveltime::get_friction_surface`, specify the surface (type) as `"motor2020"`,
+ and provide the spatial extent of interest:
 ```{r }
 library(traveltime)
 library(terra)
@@ -71,12 +73,12 @@ friction_surface <- get_friction_surface(
 friction_surface
 ```
 
-Let's have a look at that
+Let's have a look at that `SpatRaster`:
 ```{r}
 plot(friction_surface)
 ```
 
-Prepare points we would like to calculate travel time from
+Now, prepare points that we would like to calculate travel time from:
 ```{r}
 from_here <- tibble::tibble(
   x = c(111.2, 111.9),
@@ -85,7 +87,9 @@ from_here <- tibble::tibble(
 from_here
 ```
 
-And calculate the travel time
+And calculate the travel time from our points `from_here` over the friction 
+surface `friction_surface` using the function
+`traveltime::calculate_travel_time`:
 ```{r}
 travel_time <- calculate_travel_time(
   friction_surface = friction_surface,
@@ -94,29 +98,48 @@ travel_time <- calculate_travel_time(
 travel_time
 ```
 
-Et voila!
+Et voila! Here is the motorised travel time in minutes for each cell, with our
+points in pink.
 ```{r}
 plot(travel_time)
-points(from_here, pch = 19)
+points(from_here, pch = 19, col = "hotpink")
 ```
 
-## Let's go to Singapore
+## A more tangible example: Walking in Singapore
 
-Here it is:
+Let's create a map of the walking time across the island of Singapore from the 
+nearest
+[MRT or LRT](https://en.wikipedia.org/wiki/Transport_in_Singapore#Rail_transport)
+station.
+
+To do this, we need:
+
+- a map of Singapore
+- locations of the stations
+
+Here's our basemap via `geodata`:
+
 ```{r}
-# install.packages("sdmtools", repos = "https://idem-lab.r-universe.dev")
-library(sdmtools)
-sin <- sdmtools::make_africa_mask(
-  type = "vector",
-  countries = "SGP"
+#install.packages("geodata")
+library(geodata)
+sin <- gadm(
+  country = "Singapore",
+  level = 0,
+  path = tempdir(),
+  resolution = 2
 )
 plot(sin)
 ```
 
-We're going to see how long it takes to walk home from Changi Airport. So we'll 
-download the walking-only friction surface this time.
+We're going to see how long it takes to walk home from a station, so we'll
+download the walking-only friction surface this time by specifying 
+`surface = "walk2020`. 
 
-We can feed in our `sin` `SpatVector` directly as the `extent`, instead of specifying by hand as above. 
+We can also pass in our basemap `sin`, a `SpatVector`, directly as the `extent`,
+instead of specifying by hand as above. We're also only interested in walking 
+*on land* so we mask out areas outside of `sin`, that are within the extent of 
+the raster:
+
 ```{r }
 library(traveltime)
 library(terra)
@@ -130,65 +153,76 @@ friction_singapore <- get_friction_surface(
 friction_singapore
 ```
 
-And where is Changi Airport?
+The the `stations` data set in this package contains the longitude and latitude
+of all LRT and MRT station exits in Singapore[^1].
+
 ```{r}
-changi_airport <- tibble::tibble(
-  x = c(103.984),
-  y = c(1.355)
-)
-changi_airport
-```
-Let's look at those.
-```{r}
-plot(friction_singapore)
-plot(sin, add = TRUE)
-points(changi_airport, pch = 19)
+head(stations)
 ```
 
-And calculate the travel time
-```{r}
-travel_time_sin <- calculate_travel_time(
-  friction_surface = friction_singapore,
-  points = changi_airport
-)
-travel_time_sin
-```
+Let's look at our data now.
 
-Et voi*lah*!
-```{r}
-plot(travel_time_sin)
-points(changi_airport, pch = 19)
-plot(sin, add = TRUE)
-```
+Below we plot the friction surface raster `friction_singapore`, with the vector
+boundary of `sin` as a dashed grey line, and `stations` as grey points:
 
-
-### I want my plots to be nicer
 ```{r}
 library(tidyterra)
 library(ggplot2)
 
 ggplot() +
-  # plot the spatraster first
   geom_spatraster(
-    data = travel_time_sin
+    data = friction_singapore
   ) +
-  theme_minimal() +
-  scale_fill_whitebox_c(palette = "deep") +
-  # overlay the vector outline
   geom_spatvector(
     data = sin,
-    colour = "grey70",
-    linewidth = 1,
-    fill = NA
+    fill = "transparent",
+    col = "grey50",
+    lty = 2
   ) +
-  # add the points from tibble
-   geom_point(
-     data = changi_airport,
-     aes(x = x, y = y),
-     colour = "hotpink"
-   ) +
-  labs(x = NULL, y = NULL, fill = "Travel time\n(minutes)") 
+  geom_point(
+    data = stations,
+    aes(
+      x = x,
+      y = y
+    ),
+    col = "grey60",
+    size = 0.5
+  ) +
+  scale_fill_viridis_c(
+    option = "A",
+    na.value = "transparent",
+    direction = -1
+  ) +
+  labs(
+    fill = "Friction"
+  )
+
 
 ```
+
+OK, now we want to calculate the walking travel time in minutes across the 
+friction surface from the nearest station exit:
+
+```{r}
+travel_time_sin <- calculate_travel_time(
+  friction_surface = friction_singapore,
+  points = stations
+)
+travel_time_sin
+```
+
+Et voi*lah* --- a raster of walking time from the nearest station.
+```{r}
+contour(
+  x = travel_time_sin,
+  filled = TRUE,
+  nlevels = 20,
+  col = viridis::magma(19, direction = -1)
+)
+```
+
+[^1]: Land Transport Authority. (2019). LTA MRT Station Exit (GEOJSON) (2024)
+[Dataset]. data.gov.sg. Retrieved December 10, 2024 from
+https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view
 
 

@@ -53,16 +53,15 @@ install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 
 ## Let’s calculate some travel times
 
-First download a friction surface — here using the motorised travel time
-from Weiss *et al.* 2020.
+First download a friction surface –— here we are using the motorised
+travel time from Weiss *et al.* 2020. We use the function
+`traveltime::get_friction_surface`, specify the surface (type) as
+`"motor2020"`, and provide the spatial extent of interest:
 
 ``` r
 library(traveltime)
 library(terra)
-#> terra 1.7.79
-```
-
-``` r
+#> terra 1.7.83
 
 friction_surface <- get_friction_surface(
     surface = "motor2020",
@@ -78,9 +77,6 @@ friction_surface <- get_friction_surface(
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 0 111
 #> ....|-- upperCorner: 1 112
-```
-
-``` r
 friction_surface
 #> class       : SpatRaster 
 #> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
@@ -91,7 +87,7 @@ friction_surface
 #> name        : friction_surface
 ```
 
-Let’s have a look at that
+Let’s have a look at that `SpatRaster`:
 
 ``` r
 plot(friction_surface)
@@ -99,7 +95,7 @@ plot(friction_surface)
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
-Prepare points we would like to calculate travel time from
+Now, prepare points that we would like to calculate travel time from:
 
 ``` r
 from_here <- tibble::tibble(
@@ -114,7 +110,9 @@ from_here
 #> 2  112.  0.35
 ```
 
-And calculate the travel time
+And calculate the travel time from our points `from_here` over the
+friction surface `friction_surface` using the function
+`traveltime::calculate_travel_time`:
 
 ``` r
 travel_time <- calculate_travel_time(
@@ -133,42 +131,52 @@ travel_time
 #> max value   :    582.1882
 ```
 
-Et voila!
+Et voila! Here is the motorised travel time in minutes for each cell,
+with our points in pink.
 
 ``` r
 plot(travel_time)
-points(from_here, pch = 19)
+points(from_here, pch = 19, col = "hotpink")
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
-## Let’s go to Singapore
+## A more tangible example: Walking in Singapore
 
-Here it is:
+Let’s create a map of the walking time across the island of Singapore
+from the nearest [MRT or
+LRT](https://en.wikipedia.org/wiki/Transport_in_Singapore#Rail_transport)
+station.
+
+To do this, we need:
+
+- a map of Singapore
+- locations of the stations
+
+Here’s our basemap via `geodata`:
 
 ``` r
-# install.packages("sdmtools", repos = "https://idem-lab.r-universe.dev")
-library(sdmtools) 
-sin <- sdmtools::make_africa_mask(
-  type = "vector",
-  countries = "SGP"
+#install.packages("geodata")
+library(geodata)
+sin <- gadm(
+  country = "Singapore",
+  level = 0,
+  path = tempdir(),
+  resolution = 2
 )
-#> Please Note: Because you did not provide a version, by default the version being used is 202403 (This is the most recent version of admin unit shape data. To see other version options use function listShpVersions)
-#> although coordinates are longitude/latitude, st_union assumes that they are
-#> planar
-```
-
-``` r
 plot(sin)
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
-We’re going to see how long it takes to walk home from Changi Airport.
-So we’ll download the walking-only friction surface this time.
+We’re going to see how long it takes to walk home from a station, so
+we’ll download the walking-only friction surface this time by specifying
+`surface = "walk2020`.
 
-We can feed in our `sin` `SpatVector` directly as the `extent`, instead
-of specifying by hand as above.
+We can also pass in our basemap `sin`, a `SpatVector`, directly as the
+`extent`, instead of specifying by hand as above. We’re also only
+interested in walking *on land* so we mask out areas outside of `sin`,
+that are within the extent of the raster:
 
 ``` r
 library(traveltime)
@@ -185,79 +193,41 @@ friction_singapore <- get_friction_surface(
 #>   - Explorer__2020_walking_only_friction_surface:  DEFAULT
 #> 
 #> <GMLEnvelope>
-#> ....|-- lowerCorner: 1.164 103.6383
-#> ....|-- upperCorner: 1.4713 104.09
-```
-
-``` r
+#> ....|-- lowerCorner: 1.1664 103.6091
+#> ....|-- upperCorner: 1.4714 104.0858
 
 friction_singapore
 #> class       : SpatRaster 
-#> dimensions  : 37, 54, 1  (nrow, ncol, nlyr)
+#> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : 103.6417, 104.0917, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
+#> extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
 #> source(s)   : memory
-#> varname     : Explorer__2020_walking_only_friction_surface_1.164,103.6383,1.4713,104.09 
+#> varname     : Explorer__2020_walking_only_friction_surface_1.1664,103.6091,1.4714,104.0858 
 #> name        : friction_surface 
 #> min value   :       0.01200000 
 #> max value   :       0.06192715
 ```
 
-And where is Changi Airport?
+The the `stations` data set in this package contains the longitude and
+latitude of all LRT and MRT station exits in Singapore[^1].
 
 ``` r
-changi_airport <- tibble::tibble(
-  x = c(103.984),
-  y = c(1.355)
-)
-changi_airport
-#> # A tibble: 1 × 2
-#>       x     y
-#>   <dbl> <dbl>
-#> 1  104.  1.36
+head(stations)
+#>             x        y
+#> [1,] 103.9091 1.334922
+#> [2,] 103.9335 1.336555
+#> [3,] 103.8493 1.297699
+#> [4,] 103.8508 1.299195
+#> [5,] 103.9094 1.335311
+#> [6,] 103.9389 1.344999
 ```
 
-Let’s look at those.
+Let’s look at our data now.
 
-``` r
-plot(friction_singapore)
-plot(sin, add = TRUE)
-points(changi_airport, pch = 19)
-```
-
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
-
-And calculate the travel time
-
-``` r
-travel_time_sin <- calculate_travel_time(
-  friction_surface = friction_singapore,
-  points = changi_airport
-)
-travel_time_sin
-#> class       : SpatRaster 
-#> dimensions  : 37, 54, 1  (nrow, ncol, nlyr)
-#> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : 103.6417, 104.0917, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
-#> coord. ref. :  
-#> source(s)   : memory
-#> name        : travel_time 
-#> min value   :           0 
-#> max value   :         Inf
-```
-
-Et voi*lah*!
-
-``` r
-plot(travel_time_sin)
-points(changi_airport, pch = 19)
-plot(sin, add = TRUE)
-```
-
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
-
-### I want my plots to be nicer
+Below we plot the friction surface raster `friction_singapore`, with the
+vector boundary of `sin` as a dashed grey line, and `stations` as grey
+points:
 
 ``` r
 library(tidyterra)
@@ -269,32 +239,72 @@ library(tidyterra)
 #> The following object is masked from 'package:stats':
 #> 
 #>     filter
-```
-
-``` r
 library(ggplot2)
 
 ggplot() +
-  # plot the spatraster first
   geom_spatraster(
-    data = travel_time_sin
+    data = friction_singapore
   ) +
-  theme_minimal() +
-  scale_fill_whitebox_c(palette = "deep") +
-  # overlay the vector outline
   geom_spatvector(
     data = sin,
-    colour = "grey70",
-    linewidth = 1,
-    fill = NA
+    fill = "transparent",
+    col = "grey50",
+    lty = 2
   ) +
-  # add the points from tibble
-   geom_point(
-     data = changi_airport,
-     aes(x = x, y = y),
-     colour = "hotpink"
-   ) +
-  labs(x = NULL, y = NULL, fill = "Travel time\n(minutes)") 
+  geom_point(
+    data = stations,
+    aes(
+      x = x,
+      y = y
+    ),
+    col = "grey60",
+    size = 0.5
+  ) +
+  scale_fill_viridis_c(
+    option = "A",
+    na.value = "transparent",
+    direction = -1
+  ) +
+  labs(
+    fill = "Friction"
+  )
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+
+OK, now we want to calculate the walking travel time in minutes across
+the friction surface from the nearest station exit:
+
+``` r
+travel_time_sin <- calculate_travel_time(
+  friction_surface = friction_singapore,
+  points = stations
+)
+travel_time_sin
+#> class       : SpatRaster 
+#> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
+#> resolution  : 0.008333333, 0.008333333  (x, y)
+#> extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
+#> coord. ref. :  
+#> source(s)   : memory
+#> name        : travel_time 
+#> min value   :           0 
+#> max value   :         Inf
+```
+
+Et voi*lah* — a raster of walking time from the nearest station.
+
+``` r
+contour(
+  x = travel_time_sin,
+  filled = TRUE,
+  nlevels = 20,
+  col = viridis::magma(19, direction = -1)
+)
+```
+
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+
+[^1]: Land Transport Authority. (2019). LTA MRT Station Exit (GEOJSON)
+    (2024) \[Dataset\]. data.gov.sg. Retrieved December 10, 2024 from
+    <https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view>
