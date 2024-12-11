@@ -41,7 +41,8 @@ Lieber, M. Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U.
 Dalrymple, J. Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang,
 E. Cameron, D. Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething.* **A
 global map of travel time to cities to assess inequalities in
-accessibility in 2015.** (2018). Nature. <doi:10.1038/nature25181>.
+accessibility in 2015.** (2018). Nature.
+<https://doi.org/10.1038/nature25181>
 
 ## Installation
 
