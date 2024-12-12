@@ -105,10 +105,12 @@ calculate_travel_time <- function(
   tsn <- gdistance::transition(friction, function(x) 1/mean(x), 8)
   tgc <- gdistance::geoCorrection(tsn)
 
-  xy.data.frame <- data.frame()
-  xy.data.frame[1:npoints,1] <- points[,1]
-  xy.data.frame[1:npoints,2] <- points[,2]
-  xy.matrix <- as.matrix(xy.data.frame)
+  # xy.data.frame <- data.frame()
+  # xy.data.frame[1:npoints,1] <- points[,1]
+  # xy.data.frame[1:npoints,2] <- points[,2]
+  # xy.matrix <- as.matrix(xy.data.frame)
+
+  xy.matrix <- as.matrix(points[,1:2])
 
   travel_time <- gdistance::accCost(tgc, xy.matrix)
   names(travel_time) <- "travel_time"
