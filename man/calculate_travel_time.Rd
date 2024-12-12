@@ -15,9 +15,9 @@ calculate_travel_time(
 \item{friction_surface}{A \code{SpatRaster} friction surface layer. See
 \code{?get_friction_surface}}
 
-\item{points}{A two-column \code{data.frame} or \code{tibble} with longitude (x) in the
-first column and latitude (y) in the second in the same coordinate
-reference system as \code{friction_surface}}
+\item{points}{A two-column \code{matrix}, \code{data.frame}, or \code{tibble} with longitude
+(x) in the first column and latitude (y) in the second, or a \code{SpatVector},
+in the same coordinate, reference system as \code{friction_surface}.}
 
 \item{filename}{\code{character}. Output file name with extension suitable for
 \code{terra::writeRaster}}
@@ -35,19 +35,19 @@ surface.
 Implements methods from Weiss et al. 2018, 2020 to calculate travel
 time from given locations over a friction surface.
 
-Over large areas this function can require significant RAM and will be slow.
+Over large areas this function can require significant RAM and will be
+slow.
 
-Citations:
-D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
-Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
-Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
-Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
-T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
-maps of travel time to healthcare facilities. (2020) Nature Medicine.
-https://doi.org/10.1038/s41591-020-1059-1
+Citations: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S.,
+Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T.,
+Shekel, C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K.
+Nandi, S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G.
+Chestnutt, J. J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt,
+and P. W. Gething. Global maps of travel time to healthcare facilities.
+(2020) Nature Medicine. https://doi.org/10.1038/s41591-020-1059-1
 
-D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber, M.
-Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U. Dalrymple, J.
+D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber,
+M. Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U. Dalrymple, J.
 Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang, E. Cameron, D.
 Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething. A global map of travel
 time to cities to assess inequalities in accessibility in 2015. (2018).
