@@ -94,7 +94,7 @@ calculate_travel_time <- function(
   }
 
   if("SpatVector" %in% class(points)){
-    points <- geom(points)[,c("x", "y")]
+    points <- terra::geom(points)[,c("x", "y")]
   }
 
 
