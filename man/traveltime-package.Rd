@@ -8,12 +8,20 @@
 \description{
 Calculate travel time over a friction surface from a specified set of locations.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://idem-lab.github.io/traveltime/}
+  \item Report bugs at \url{https://github.com/idem-lab/traveltime/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Gerry Ryan \email{gerard.ryan@telethonkids.org.au} (\href{https://orcid.org/0000-0003-0183-7630}{ORCID})
 
 Authors:
 \itemize{
-  \item Daniel Weiss
+  \item Daniel Weiss (\href{https://orcid.org/0000-0002-6175-5648}{ORCID})
 }
 
 }
