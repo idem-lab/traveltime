@@ -24,5 +24,10 @@ Authors:
   \item Daniel Weiss (\href{https://orcid.org/0000-0002-6175-5648}{ORCID})
 }
 
+Other contributors:
+\itemize{
+  \item Nicholas Tierney (\href{https://orcid.org/0000-0000-0000-0000}{ORCID}) [contributor]
+}
+
 }
 \keyword{internal}

@@ -6,7 +6,9 @@ test_that("extent is extent", {
 
   x <- ext_from_terra(r)
 
-  expect_is(x, "matrix")
+  #expect_is(x, "matrix")
+  expect_type(x, "double")
+  #expect_s3_class(x, "matrix")
 
   expect_equal(dim(x), c(2, 2))
 })

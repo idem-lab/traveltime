@@ -75,7 +75,10 @@ calculate_travel_time <- function(
     if(file.exists(filename) & !overwrite){
 
       warning(sprintf(
-        "%s exists\nUsing existing file\nto re-generate, change overwrite to TRUE %s",
+        "%s exists\n
+        Using existing file\n
+        to re-generate,
+        change overwrite to TRUE %s",
         filename,
         filename
       ))
