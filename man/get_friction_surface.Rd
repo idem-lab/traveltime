@@ -26,10 +26,10 @@ the extent will be taken), or 2x2 \code{matrix} (see details).}
 }
 \description{
 Wrapper function to download friction surfaces via
-\code{malariaAtlas::getRaster}
+\code{\link[malariaAtlas:getRaster]{malariaAtlas::getRaster()}}.
 }
 \details{
-Convenience wrapper to \code{malariaAtlas::getRaster} to access motorised
+Convenience wrapper to \code{\link[malariaAtlas:getRaster]{malariaAtlas::getRaster()}} to access motorised
 and walking travel friction layers per Weiss et al. 2020, that adds safety to
 check existing files before download. Surfaces can be downloaded directly
 from:
@@ -49,16 +49,14 @@ T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
 maps of travel time to healthcare facilities. (2020) Nature Medicine.
 \url{https://doi.org/10.1038/s41591-020-1059-1}
 
-\code{extent} is passed through is to pass to \code{malariaAtlas::getRaster} as a 2x2
+\code{extent} is passed through is to pass to \code{\link[malariaAtlas:getRaster]{malariaAtlas::getRaster()}} as a 2x2
 matrix. If passed in as a numeric vector, \code{SpatExtent}, \code{SpatVector}, or
-\code{SpatRaster}, it is converted into a matrix using \code{ext_vect_to_matrix} and
-\code{ext_from_terra}. \code{matrix} format is  as returned by sf::st_bbox() - the
+\code{SpatRaster}, it is converted into a matrix using \code{ext_vect_to_matrix()} and
+\code{ext_from_terra()}. \code{matrix} format is  as returned by sf::st_bbox() - the
 first column has the minimum, the second the maximum values; rows 1 & 2
 represent the x & y dimensions respectively (\code{matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))})
 (use either shp OR extent; if neither is specified global raster is
 returned). \code{NULL} extent downloads (large) global layer.
-
-Additional details...
 }
 \examples{
 
