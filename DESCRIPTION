@@ -2,14 +2,31 @@ Package: traveltime
 Title: Calculate Travel Times Over Space
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Gerry", "Ryan", , "gerard.ryan@telethonkids.org.au", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0003-0183-7630")),
-    person("Daniel", "Weiss", role = "aut", comment = c(ORCID = "0000-0002-6175-5648")),
-    person("Nicholas", "Tierney", role = "ctb", comment = c(ORCID = "0000-0000-0000-0000"))
+    person(
+      given = "Gerry", 
+      family = "Ryan",
+      email = "gerard.ryan@telethonkids.org.au", 
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-0183-7630")
+      ),
+    person(
+      given = "Daniel", 
+      family = "Weiss", 
+      role = "aut", 
+      comment = c(ORCID = "0000-0002-6175-5648")
+      ),
+    person(
+      given = "Nicholas", 
+      family = "Tierney", 
+      email = "nicholas.tierney@gmail.com", 
+      role = c("ctb"),
+      comment = c(ORCID = "0000-0003-1460-8722")
+      )
   )
 Description: Calculate travel time over a friction surface from a specified set of locations.
 License: MIT + file LICENSE
 Imports: 
+    cli,
     gdistance,
     malariaAtlas,
     raster,
@@ -21,7 +38,7 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
 LazyData: true
 URL: https://idem-lab.github.io/traveltime/
 BugReports: https://github.com/idem-lab/traveltime/issues

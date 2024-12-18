@@ -4,11 +4,10 @@ test_that("extent is extent", {
      extent = terra::ext(c(111, 112, 0, 1))
    )
 
-  x <- ext_from_terra(r)
+  x <- ext_matrix(r)
 
-  #expect_is(x, "matrix")
   expect_type(x, "double")
-  #expect_s3_class(x, "matrix")
-
+  expect_true(inherits(x, "matrix"))
   expect_equal(dim(x), c(2, 2))
+
 })
