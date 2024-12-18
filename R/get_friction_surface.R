@@ -84,9 +84,9 @@ get_friction_surface <- function(
   }
 
   if (surface == "motor2020") {
-    surface_name <- "Explorer__2020_motorized_friction_surface"
+    surface_name <- "Accessibility__202001_Global_Motorized_Friction_Surface"
   } else if (surface == "walk2020"){
-    surface_name <- "Explorer__2020_walking_only_friction_surface"
+    surface_name <- "Accessibility__202001_Global_Walking_Only_Friction_Surface"
   }
 
   if (is.null(extent)) {
