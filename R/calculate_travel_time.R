@@ -71,35 +71,40 @@ calculate_travel_time <- function(
     overwrite = FALSE
 ){
 
-  if(!is.null(filename)){
-    if(file.exists(filename) & !overwrite){
+  # wrap into a function
+  # warn_if_filename_already_used(filename, overwrite)
+  filename_used <- !is.null(filename)
+  filename_exists_and_no_overwrite <- file.exists(filename) && !overwrite
+  warn_user_not_overwrite <- filename_used && filename_exists_and_no_overwrite
+  if (warn_user_not_overwrite) {
 
-      warning(sprintf(
-        "%s exists\n
-        Using existing file\n
-        to re-generate,
-        change overwrite to TRUE %s",
-        filename,
-        filename
-      ))
+    cli::cli_warn(
+      message = c(
+        "x" = "{.path {filename}} already exists",
+        "Using existing file, {.path {filename}}",
+        "i" =  "To re-generate file, change {.arg overwrite} to {.code TRUE}"
+      )
+    )
 
-      return(terra::rast(filename))
+    return(terra::rast(filename))
 
-    }
   }
 
-  if(!"SpatRaster" %in% class(friction_surface)){
-    stop("friction_surface must be a SpatRaster class object")
+  if (!inherits(friction_surface, "SpatRaster")){
+    cli::cli_abort(
+      "{.arg friction_surface} must be a {.cls SpatRaster}."
+    )
   }
 
+  # explaining variable
   if(!any(c("matrix", "data.frame", "SpatVector") %in% class(points))){
     stop("points must be a SpatVector, data.frame, or matrix")
   }
 
+  # use inherits
   if("SpatVector" %in% class(points)){
     points <- terra::geom(points)[,c("x", "y")]
   }
-
 
   #npoints <- nrow(points)
 
