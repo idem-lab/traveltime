@@ -4,21 +4,19 @@
 \alias{ext_matrix}
 \title{Convert extent to matrix}
 \usage{
-ext_matrix(x, ...)
+ext_matrix(extent)
 }
 \arguments{
-\item{x}{\code{numeric} length 4, consisting of \code{c(xmin, xmax, ymin, ymax)}
-dimensions of extent}
+\item{extent}{\code{vector} of length 4, 2x2 \code{matrix}, \code{SpatVector}, or \code{SpatRaster}}
 }
 \value{
-2x2 \code{matrix} - explain esoteric format of matrix
+2x2 \code{matrix} with column names "x" and "y" and row names "min"
+and "max
 }
 \description{
-This function converts from formats ...
-TODO - explain why we need to do this, which is that we need a special esoteric format
+This function allows \code{get_friction_surface()} to accept the argument \code{extent} as a \code{vector}, 2x2 \code{matrix}, \code{SpatVector}, or \code{SpatRaster} and extracts and converts into the annoyingly specific format necessary to download the friction surface. See details in \code{?get_friction_surface}
 }
 \examples{
 ext_matrix(c(111,112,0, 1))
-# TODO
-# add examples of all SpatRaster, SpatVector, etc.
+
 }

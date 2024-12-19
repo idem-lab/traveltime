@@ -26,7 +26,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Nicholas Tierney (\href{https://orcid.org/0000-0000-0000-0000}{ORCID}) [contributor]
+  \item Nicholas Tierney \email{nicholas.tierney@gmail.com} (\href{https://orcid.org/0000-0003-1460-8722}{ORCID}) [contributor]
 }
 
 }

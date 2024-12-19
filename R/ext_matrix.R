@@ -1,43 +1,41 @@
 #' @title Convert extent to matrix
 #'
 #' @description
-#' This function converts from formats ...
-#' TODO - explain why we need to do this, which is that we need a special esoteric format
+#' This function allows `get_friction_surface()` to accept the argument `extent` as a `vector`, 2x2 `matrix`, `SpatVector`, or `SpatRaster` and extracts and converts into the annoyingly specific format necessary to download the friction surface. See details in `?get_friction_surface`
 #'
-#' @param x `numeric` length 4, consisting of `c(xmin, xmax, ymin, ymax)`
-#' dimensions of extent
+#' @param extent `vector` of length 4, 2x2 `matrix`, `SpatVector`, or `SpatRaster`
 #'
-#' @return 2x2 `matrix` - explain esoteric format of matrix
+#' @return 2x2 `matrix` with column names "x" and "y" and row names "min"
+#'  and "max
 #'
 #' @examples
 #' ext_matrix(c(111,112,0, 1))
-#' # TODO
-#' # add examples of all SpatRaster, SpatVector, etc.
+#'
 #' @export
-ext_matrix <- function(x, ...){
+ext_matrix <- function(extent){
   UseMethod("ext_matrix")
 }
 
 #' @export
-ext_matrix.SpatExtent <- function(x, ...){
-  extent <- ext_vect_to_matrix(x)
+ext_matrix.SpatExtent <- function(extent){
+  extent <- ext_vect_to_matrix(extent)
   extent
 }
 
 #' @export
-ext_matrix.SpatRaster <- function(x, ...){
-  extent <- ext_from_terra(x)
+ext_matrix.SpatRaster <- function(extent){
+  extent <- ext_from_terra(extent)
   extent
 }
 
 #' @export
-ext_matrix.SpatVector <- function(x, ...){
-  extent <- ext_from_terra(x)
+ext_matrix.SpatVector <- function(extent){
+  extent <- ext_from_terra(extent)
   extent
 }
 
 #' @export
-ext_matrix.vector <- function(x){
+ext_matrix.double <- function(extent){
   if (length(extent) != 4){
     cli::cli_abort(
       message = c(
@@ -46,33 +44,32 @@ ext_matrix.vector <- function(x){
         )
     )
   }
-  extent <- ext_vect_to_matrix(x)
+  extent <- ext_vect_to_matrix(extent)
   extent
 }
 
 #' @export
-ext_matrix.matrix <- function(x, ...){
-  is_2x2 <- identical(dim(x), c(2L,2L))
+ext_matrix.matrix <- function(extent){
+  is_2x2 <- identical(dim(extent), c(2L,2L))
   if(!is_2x2){
     cli::cli_abort(
       message = c(
-        "If {.arg x} is of class, {.cls matrix}, it must have dimensions: 2x2",
+        "If {.arg extent} is of class, {.cls matrix}, it must have dimensions: 2x2",
         "However, we see that {.arg x} has dimensions: \\
-        {.val {paste0(dim(x), collapse = 'x')}}."
+        {.val {paste0(dim(extent), collapse = 'x')}}."
         )
     )
   }
-  extent <- x
   extent
 }
 
 #' @export
-ext_matrix.default <- function(x, ...){
+ext_matrix.default <- function(extent){
   cli::cli_abort(
     message = c(
       "{.arg extent} must be of class {.cls numeric, matrix, \\
-      SpatExtent, SpatRaster}",
-      "But we see class: {.cls {class(x)}."
+      SpatExtent, SpatRaster, SpatVector}",
+      "But we see class: {.cls {class(extent)}}."
       )
   )
 }
