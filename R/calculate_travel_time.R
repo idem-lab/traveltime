@@ -74,8 +74,15 @@ calculate_travel_time <- function(
   # wrap into a function
   # warn_if_filename_already_used(filename, overwrite)
   filename_used <- !is.null(filename)
-  filename_exists_and_no_overwrite <- file.exists(filename) && !overwrite
-  warn_user_not_overwrite <- filename_used && filename_exists_and_no_overwrite
+
+  file_exists <- ifelse(
+    filename_used,
+    file.exists(filename),
+    FALSE
+  )
+
+  warn_user_not_overwrite <- filename_used && file_exists && !overwrite
+
   if (warn_user_not_overwrite) {
 
     cli::cli_warn(
