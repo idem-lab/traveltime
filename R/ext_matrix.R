@@ -46,7 +46,7 @@ ext_matrix.vector <- function(x){
         )
     )
   }
-  extent <- ext_vect_to_matrix(extent)
+  extent <- ext_vect_to_matrix(x)
   extent
 }
 
@@ -62,6 +62,8 @@ ext_matrix.matrix <- function(x, ...){
         )
     )
   }
+  extent <- x
+  extent
 }
 
 #' @export
