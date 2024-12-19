@@ -68,17 +68,28 @@ get_friction_surface <- function(
   surface <- match.arg(surface)
 
   # similar code from calculate_travel_time
-  if(!is.null(filename)){
-    if(!overwrite & file.exists(filename)){
+  filename_used <- !is.null(filename)
 
-      warning(sprintf(
-        "%s exists\n Returning %s. To replace, change overwrite to TRUE",
-        filename,
-        filename
-      ))
+  file_exists <- ifelse(
+    filename_used,
+    file.exists(filename),
+    FALSE
+  )
 
-      return(terra::rast(filename))
-    }
+  warn_user_not_overwrite <- filename_used && file_exists && !overwrite
+
+  if (warn_user_not_overwrite) {
+
+    cli::cli_warn(
+      message = c(
+        "x" = "{.path {filename}} already exists",
+        "Using existing file, {.path {filename}}",
+        "i" =  "To re-generate file, change {.arg overwrite} to {.code TRUE}"
+      )
+    )
+
+    return(terra::rast(filename))
+
   }
 
 
