@@ -71,31 +71,10 @@ calculate_travel_time <- function(
     overwrite = FALSE
 ){
 
-  # wrap into a function
-  # warn_if_filename_already_used(filename, overwrite)
-  filename_used <- !is.null(filename)
-
-  file_exists <- ifelse(
-    filename_used,
-    file.exists(filename),
-    FALSE
+  warn_and_return(
+    filename = filename,
+    overwrite = overwrite
   )
-
-  warn_user_not_overwrite <- filename_used && file_exists && !overwrite
-
-  if (warn_user_not_overwrite) {
-
-    cli::cli_warn(
-      message = c(
-        "x" = "{.path {filename}} already exists",
-        "Using existing file, {.path {filename}}",
-        "i" =  "To re-generate file, change {.arg overwrite} to {.code TRUE}"
-      )
-    )
-
-    return(terra::rast(filename))
-
-  }
 
   if (!inherits(friction_surface, "SpatRaster")){
     cli::cli_abort(
