@@ -314,6 +314,4 @@ those without access to larger computing resources.
 
 # Acknowledgements
 
-Ta luv
-
 # References

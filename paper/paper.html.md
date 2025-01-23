@@ -1,7 +1,8 @@
 ---
 title: "`traveltime`: an R package to calculate walking and motorised travel time from user locations"
 format:
-  html: 
+  #md: default
+  html:
     keep-md: true
     fig-height: 4
     fig-align: center
@@ -17,13 +18,13 @@ authors:
     corresponding: true
     affiliation: "1, 2"
   - name: Nick Tierney
-    orcid: 1234
+    orcid: 0000-0003-1460-8722
     affiliation: "1, 3"
   - name: Nick Golding
-    orcid: 1234
+    orcid: 0000-0001-8916-5570
     affiliation: "1, 3 "
   - name: Daniel Weiss
-    orcid: 1234
+    orcid: 
     affiliation: "1, 3"
 affiliations:
  - name: The Kids Research Institute Australia, Nedlands 6009 WA, Australia
@@ -358,6 +359,6 @@ At the other end of the scale, the package can require large amounts of memory f
 
 # Acknowledgements
 
-Ta luv
+
 
 # References
