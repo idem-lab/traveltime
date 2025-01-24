@@ -113,7 +113,7 @@ server may be down or there may be an issue with that package.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for more examples of passing exten types see ?ext_matrix</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">111</span>, <span class="fl">0</span>, <span class="fl">112</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">111</span>, <span class="fl">112</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="fu">get_friction_surface</span><span class="op">(</span></span></span>
 <span class="r-in"><span>   surface <span class="op">=</span> <span class="st">"motor2020"</span>,</span></span>
@@ -125,10 +125,15 @@ server may be down or there may be an issue with that package.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   - Accessibility__202001_Global_Motorized_Friction_Surface:  DEFAULT </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBBBB;">&lt;</span><span style="color: #BBBBBB; text-decoration: underline;">GMLEnvelope</span><span style="color: #BBBBBB;">&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">lowerCorner</span>: <span style="background-color: #BBBBBB;">112 111</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1 0</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Error 4: `/tmp/RtmpQdjnap/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif' not recognized as a supported file format.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] cannot open this file as a SpatRaster: /tmp/RtmpQdjnap/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">lowerCorner</span>: <span style="background-color: #BBBBBB;">0 111</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1 112</span>Start tag expected, '&lt;' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 0.008333333, 0.008333333  (x, y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 111, 112, 3.774758e-15, 1  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> source      : Accessibility__202001_Global_Motorized_Friction_Surface_0,111,1,112.tif </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> name        : friction_surface </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
