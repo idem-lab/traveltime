@@ -46,7 +46,7 @@
 
 
 <dl><dt id="arg-extent">extent<a class="anchor" aria-label="anchor" href="#arg-extent"></a></dt>
-<dd><p><code>vector</code> of length 4, 2x2 <code>matrix</code>, <code>SpatVector</code>, or <code>SpatRaster</code></p></dd>
+<dd><p><code>vector</code> of length 4, 2x2 <code>matrix</code>, <code>SpatExtent</code>, <code>SpatVector</code>, or <code>SpatRaster</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -57,7 +57,30 @@ and "max</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ext_matrix</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">111</span>,<span class="fl">112</span>,<span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># vector/double</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">111</span>,<span class="fl">112</span>,<span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ext_matrix</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   min max</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x 111 112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y   0   1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># SpatExtent</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span>  <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/ext.html" class="external-link">ext</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ext_matrix</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   min max</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x 111 112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y   0   1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># SpatRaster</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span>extent <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ext_matrix</span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   min max</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x 111 112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y   0   1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># SpatVector</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ext_matrix</span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   min max</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x 111 112</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> y   0   1</span>
