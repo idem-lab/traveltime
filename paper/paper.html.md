@@ -44,7 +44,7 @@ bibliography: paper.bib
 
 # Summary
 
-Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@weiss2020global] and likely a myriad others we haven't thought of. Here we present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to supply a set of geographic point locations and an extent of interest, and calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest.
+Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@weiss2020global] (@ref-tt_healthcare) and likely a myriad others we haven't thought of. Here we present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to supply a set of geographic point locations and an extent of interest, and calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest.
 
 The work-flow requires two steps:
 
@@ -65,11 +65,11 @@ The work-flow requires two steps:
 
 
 
-Reference documents for `traveltime` are available at <https://idem-lab.github.io/traveltime/>. Although this article is intended to be the key reference for the `traveltime` package, we suggest citations of the package should be accompanied by citing the underlying work by @weiss2018global; @weiss2020global.
+`traveltime` is available from [R-Universe](https://idem-lab.r-universe.dev/traveltime) and [GitHub](https://github.com/idem-lab/traveltime), and reference documents at <https://idem-lab.github.io/traveltime/>. Although this article is intended to be the key reference for the `traveltime` package, we suggest citations of the package should be accompanied by citing the underlying work by @weiss2018global; @weiss2020global.
 
 # Statement of need
 
-Global maps of travel time to cities [@weiss2018global] and health care facilities [@weiss2020global] `@fig-tt_healthcare` have generated significant interest and use. Collectively @weiss2018global ; @weiss2020global have over 1300 citations (Google Scholar, at 10th December 2024), and the city data set is available to R users through the widely-used `geodata` package [@geodata]. There is clear demand for these type of products.
+Global maps of travel time to cities [@weiss2018global] and health care facilities [@weiss2020global] (@fig-tt_healthcare) have generated significant interest and use. Collectively @weiss2018global ; @weiss2020global have over 1300 citations (Google Scholar, at 10th December 2024), and the city data set is available to R users through the widely-used `geodata` package [@geodata]. There is clear demand for these type of products.
 
 @weiss2020global and colleagues made their code available as an R script to allow for reproduction and extension of their analyses (<https://malariaatlas.org/wp-content/uploads/2022/11/R_generic_accessibilty_mapping_script_2020-1.txt> ). To further enable extension of this work, here we have developed an R package based on that code to seamlessly calculate the travel time from any arbitrary set of locations.
 
@@ -157,7 +157,7 @@ head(stations)
 
 So now we have the two items of data we require. The next step is to download a friction surface for our area of interest.
 
-We can pass in our basemap `sin` @fig-basemap, a `SpatVector`, directly as the `extent`. It would also be possible pass in a `SpatRaster` with extent equal to our area of interest, or specify coordinates either as a vector, matrix, or `SpatExtent`.
+We can pass in our basemap `sin` (@fig-basemap), a `SpatVector`, directly as the `extent`. It would also be possible pass in a `SpatRaster` with extent equal to our area of interest, or specify coordinates either as a vector, matrix, or `SpatExtent`.
 
 We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. Alternatively, we could use `"motor2020"` for motorised travel if that was of interest.
 
@@ -205,7 +205,7 @@ max value   :       0.06192715
 
 
 
-Taking a look at these data, below we plot the friction surface raster `friction_singapore`, with the vector boundary of `sin` as a dashed grey line, and `stations` as grey points `@fig-data`. Higher values of friction indicate more time travelling across a given cell.
+Taking a look at these data, below we plot the friction surface raster `friction_singapore`, with the vector boundary of `sin` as a dashed grey line, and `stations` as grey points @fig-data. Higher values of friction indicate more time travelling across a given cell.
 
 
 
@@ -289,7 +289,7 @@ max value   :         Inf
 
 
 
-We present those results in `@fig-result`:
+We present those results in @fig-result:
 
 
 
@@ -321,7 +321,7 @@ ggplot() +
 
 
 
-Note that the above raster include infinite (`Inf`) values. In `@fig-data`, a number of islands to the south are shown as cells unconnected with the mainland. These raster cells for these islands appear absent in `@fig-result`. Because they are not connected, the calculated travel time is infinite, and so these cells do not appear in the plot `@fig-result`.
+Note that the above raster include infinite (`Inf`) values. In @fig-data, a number of islands to the south are shown as cells unconnected with the mainland. These raster cells for these islands appear absent in @fig-result. Because they are not connected, the calculated travel time is infinite, and so these cells do not appear in the plot @fig-result.
 
 # Opportunities for future development
 
