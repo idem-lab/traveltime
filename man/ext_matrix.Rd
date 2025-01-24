@@ -7,7 +7,7 @@
 ext_matrix(extent)
 }
 \arguments{
-\item{extent}{\code{vector} of length 4, 2x2 \code{matrix}, \code{SpatVector}, or \code{SpatRaster}}
+\item{extent}{\code{vector} of length 4, 2x2 \code{matrix}, \code{SpatExtent}, \code{SpatVector}, or \code{SpatRaster}}
 }
 \value{
 2x2 \code{matrix} with column names "x" and "y" and row names "min"
@@ -17,6 +17,20 @@ and "max
 This function allows \code{get_friction_surface()} to accept the argument \code{extent} as a \code{vector}, 2x2 \code{matrix}, \code{SpatVector}, or \code{SpatRaster} and extracts and converts into the annoyingly specific format necessary to download the friction surface. See details in \code{?get_friction_surface}
 }
 \examples{
-ext_matrix(c(111,112,0, 1))
+# vector/double
+x <- c(111,112,0, 1)
+ext_matrix(x)
+
+# SpatExtent
+y <-  terra::ext(x)
+ext_matrix(y)
+
+# SpatRaster
+r <- terra::rast(extent = y)
+ext_matrix(r)
+
+# SpatVector
+v <- terra::vect(y)
+ext_matrix(v)
 
 }

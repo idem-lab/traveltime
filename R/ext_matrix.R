@@ -3,13 +3,27 @@
 #' @description
 #' This function allows `get_friction_surface()` to accept the argument `extent` as a `vector`, 2x2 `matrix`, `SpatVector`, or `SpatRaster` and extracts and converts into the annoyingly specific format necessary to download the friction surface. See details in `?get_friction_surface`
 #'
-#' @param extent `vector` of length 4, 2x2 `matrix`, `SpatVector`, or `SpatRaster`
+#' @param extent `vector` of length 4, 2x2 `matrix`, `SpatExtent`, `SpatVector`, or `SpatRaster`
 #'
 #' @return 2x2 `matrix` with column names "x" and "y" and row names "min"
 #'  and "max
 #'
 #' @examples
-#' ext_matrix(c(111,112,0, 1))
+#' # vector/double
+#' x <- c(111,112,0, 1)
+#' ext_matrix(x)
+#'
+#' # SpatExtent
+#' y <-  terra::ext(x)
+#' ext_matrix(y)
+#'
+#' # SpatRaster
+#' r <- terra::rast(extent = y)
+#' ext_matrix(r)
+#'
+#' # SpatVector
+#' v <- terra::vect(y)
+#' ext_matrix(v)
 #'
 #' @export
 ext_matrix <- function(extent){
