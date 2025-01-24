@@ -84,7 +84,7 @@ motorised and walking travel friction layers per Weiss et al. 2020, that
 adds safety to check existing files before download. Surfaces can be
 downloaded directly from:
 <a href="https://malariaatlas.org/project-resources/accessibility-to-healthcare/" class="external-link">https://malariaatlas.org/project-resources/accessibility-to-healthcare/</a>.</p>
-<p>Here when</p><ul><li><p><code>surface = "motor2020"</code> will download
+<p>Here —</p><ul><li><p><code>surface = "motor2020"</code> will download
 <code>"Explorer__2020_motorized_friction_surface"</code>, and</p></li>
 <li><p><code>surface = "walk2020"</code> will download
 <code>"Explorer__2020_walking_only_friction_surface"</code>.</p></li>
@@ -98,10 +98,14 @@ Medicine. <a href="https://doi.org/10.1038/s41591-020-1059-1" class="external-li
 <p><code>extent</code> is formatted and then passed through to
 <code><a href="https://rdrr.io/pkg/malariaAtlas/man/getRaster.html" class="external-link">malariaAtlas::getRaster()</a></code> as a 2x2 matrix. It is converted into a matrix
 using <code>ext_matrix</code>. The <code>matrix</code> format used is as returned by
-<code><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">sf::st_bbox()</a></code> — the first column has the minimum, the second the maximum
-values; rows 1 &amp; 2 represent the x &amp; y dimensions respectively:
+<code><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">sf::st_bbox()</a></code> — the first column has the minimum, the second the
+maximum values; rows 1 &amp; 2 represent the x &amp; y dimensions respectively:
 <code>matrix(c("xmin", "ymin", "xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))</code>. <code>NULL</code> extent downloads (large)
 global layer.</p>
+<p>Troubleshooting: if you get a warning <code>Failed to connect to MAP geoserver</code>,
+this is an issue with fetching the friction surface using
+<code><a href="https://rdrr.io/pkg/malariaAtlas/man/getRaster.html" class="external-link">malariaAtlas::getRaster</a></code>, and not an issue with <code>traveltime</code> itself. The
+server may be down or there may be an issue with that package.</p>
     </div>
 
     <div class="section level2">
@@ -123,8 +127,8 @@ global layer.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBBBB;">&lt;</span><span style="color: #BBBBBB; text-decoration: underline;">GMLEnvelope</span><span style="color: #BBBBBB;">&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">lowerCorner</span>: <span style="background-color: #BBBBBB;">112 111</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1 0</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Error 4: `/tmp/RtmpkJGhO4/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif' not recognized as a supported file format.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] cannot open this file as a SpatRaster: /tmp/RtmpkJGhO4/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Error 4: `/tmp/Rtmp8D3dHY/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif' not recognized as a supported file format.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] cannot open this file as a SpatRaster: /tmp/Rtmp8D3dHY/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
