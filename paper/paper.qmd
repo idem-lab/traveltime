@@ -55,7 +55,6 @@ The work-flow requires two steps:
 ```{r ttexample,  include=FALSE}
 library(terra)
 library(malariaAtlas)
-library(tidyterra)
 
 boundary_kh <- getShp(ISO = "KHM")
 
@@ -69,6 +68,8 @@ tt_kh <- getRaster(
 ```{r ttexample_image, echo=FALSE}
 #| label: "fig-tt_healthcare"
 #| fig-cap: "Existing surface of motorised travel time from healthcare facilities, exerpted to Cambodia (Weiss et al., 2020)"
+library(ggplot2)
+library(tidyterra)
 
 ggplot() +
   geom_spatraster(

@@ -6,11 +6,11 @@
 #' @param extent `vector` of length 4, 2x2 `matrix`, `SpatExtent`, `SpatVector`, or `SpatRaster`
 #'
 #' @return 2x2 `matrix` with column names "x" and "y" and row names "min"
-#'  and "max
+#'  and "max"
 #'
 #' @examples
 #' # vector/double
-#' x <- c(111,112,0, 1)
+#' x <- c(111, 112, 0, 1)
 #' ext_matrix(x)
 #'
 #' # SpatExtent

@@ -11,14 +11,14 @@ ext_matrix(extent)
 }
 \value{
 2x2 \code{matrix} with column names "x" and "y" and row names "min"
-and "max
+and "max"
 }
 \description{
 This function allows \code{get_friction_surface()} to accept the argument \code{extent} as a \code{vector}, 2x2 \code{matrix}, \code{SpatVector}, or \code{SpatRaster} and extracts and converts into the annoyingly specific format necessary to download the friction surface. See details in \code{?get_friction_surface}
 }
 \examples{
 # vector/double
-x <- c(111,112,0, 1)
+x <- c(111, 112, 0, 1)
 ext_matrix(x)
 
 # SpatExtent

@@ -75,7 +75,7 @@ server may be down or there may be an issue with that package.
 
 # for more examples of passing exten types see ?ext_matrix
 
-ext <- c(111, 0, 112, 1)
+ext <- c(111, 112, 0, 1)
 
  get_friction_surface(
    surface = "motor2020",
