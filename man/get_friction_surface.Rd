@@ -42,7 +42,7 @@ adds safety to check existing files before download. Surfaces can be
 downloaded directly from:
 \url{https://malariaatlas.org/project-resources/accessibility-to-healthcare/}.
 
-Here when
+Here ---
 \itemize{
 \item \code{surface = "motor2020"} will download
 \code{"Explorer__2020_motorized_friction_surface"}, and
@@ -61,10 +61,15 @@ Medicine. \url{https://doi.org/10.1038/s41591-020-1059-1}
 \code{extent} is formatted and then passed through to
 \code{\link[malariaAtlas:getRaster]{malariaAtlas::getRaster()}} as a 2x2 matrix. It is converted into a matrix
 using \code{ext_matrix}. The \code{matrix} format used is as returned by
-\code{sf::st_bbox()} --- the first column has the minimum, the second the maximum
-values; rows 1 & 2 represent the x & y dimensions respectively:
+\code{sf::st_bbox()} --- the first column has the minimum, the second the
+maximum values; rows 1 & 2 represent the x & y dimensions respectively:
 \code{matrix(c("xmin", "ymin", "xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))}. \code{NULL} extent downloads (large)
 global layer.
+
+Troubleshooting: if you get a warning \verb{Failed to connect to MAP geoserver},
+this is an issue with fetching the friction surface using
+\code{malariaAtlas::getRaster}, and not an issue with \code{traveltime} itself. The
+server may be down or there may be an issue with that package.
 }
 \examples{
 

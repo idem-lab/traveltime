@@ -20,7 +20,7 @@
 #'   downloaded directly from:
 #'   \url{https://malariaatlas.org/project-resources/accessibility-to-healthcare/}.
 #'
-#'   Here when
+#'   Here ---
 #'
 #'  - `surface = "motor2020"` will download
 #'   `"Explorer__2020_motorized_friction_surface"`, and
@@ -43,6 +43,11 @@
 #'   `matrix(c("xmin", "ymin", "xmax", "ymax"), nrow = 2, ncol = 2, dimnames =
 #'   list(c("x", "y"), c("min", "max")))`. `NULL` extent downloads (large)
 #'   global layer.
+#'
+#'   Troubleshooting: if you get a warning `Failed to connect to MAP geoserver`,
+#'   this is an issue with fetching the friction surface using
+#'   `malariaAtlas::getRaster`, and not an issue with `traveltime` itself. The
+#'   server may be down or there may be an issue with that package.
 #'
 #' @return `SpatRaster`
 #' @export
