@@ -66,8 +66,11 @@ malariaAtlas::getRaster()."></head><body>
 
 
 <dt id="arg-extent">extent<a class="anchor" aria-label="anchor" href="#arg-extent"></a></dt>
-<dd><p>Spatial extent as either numeric vector specifying <code>c(xmin, xmax, ymin, ymax)</code>, <code>SpatExtent</code>, <code>SpatVector</code> or <code>SpatRaster</code> (from which
-the extent will be taken), or 2x2 <code>matrix</code> (see details).</p></dd>
+<dd><p>Spatial extent as one of:</p><ul><li><p>a numeric vector specifying <code>c(xmin,   xmax, ymin, ymax)</code>,</p></li>
+<li><p>a <code>terra</code> <code>SpatExtent</code>, <code>SpatVector</code>, or <code>SpatRaster</code> from which
+the extent will be taken, or</p></li>
+<li><p>or 2x2 <code>matrix</code></p></li>
+</ul><p>See details</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -76,44 +79,37 @@ the extent will be taken), or 2x2 <code>matrix</code> (see details).</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Convenience wrapper to <code><a href="https://rdrr.io/pkg/malariaAtlas/man/getRaster.html" class="external-link">malariaAtlas::getRaster()</a></code> to access motorised
-and walking travel friction layers per Weiss et al. 2020, that adds safety to
-check existing files before download. Surfaces can be downloaded directly
-from:
-<a href="https://malariaatlas.org/project-resources/accessibility-to-healthcare/" class="external-link">https://malariaatlas.org/project-resources/accessibility-to-healthcare/</a></p>
-<p><code>surface = "motor2020"</code> downloads
-<code>"Explorer__2020_motorized_friction_surface"</code>.</p>
-<p><code>surface = "walk2020"</code> downloads
-<code>"Explorer__2020_walking_only_friction_surface"</code>.</p>
-<p>D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
+    <p>Convenience wrapper to <code><a href="https://rdrr.io/pkg/malariaAtlas/man/getRaster.html" class="external-link">malariaAtlas::getRaster()</a></code> to access
+motorised and walking travel friction layers per Weiss et al. 2020, that
+adds safety to check existing files before download. Surfaces can be
+downloaded directly from:
+<a href="https://malariaatlas.org/project-resources/accessibility-to-healthcare/" class="external-link">https://malariaatlas.org/project-resources/accessibility-to-healthcare/</a>.</p>
+<p>Here when</p><ul><li><p><code>surface = "motor2020"</code> will download
+<code>"Explorer__2020_motorized_friction_surface"</code>, and</p></li>
+<li><p><code>surface = "walk2020"</code> will download
+<code>"Explorer__2020_walking_only_friction_surface"</code>.</p></li>
+</ul><p>D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
 Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
 Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
-Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar,
-T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global
-maps of travel time to healthcare facilities. (2020) Nature Medicine.
-<a href="https://doi.org/10.1038/s41591-020-1059-1" class="external-link">https://doi.org/10.1038/s41591-020-1059-1</a></p>
-<p><code>extent</code> is passed through is to pass to <code><a href="https://rdrr.io/pkg/malariaAtlas/man/getRaster.html" class="external-link">malariaAtlas::getRaster()</a></code> as a 2x2
-matrix. If passed in as a numeric vector, <code>SpatExtent</code>, <code>SpatVector</code>, or
-<code>SpatRaster</code>, it is converted into a matrix using <code><a href="ext_vect_to_matrix.html">ext_vect_to_matrix()</a></code> and
-<code><a href="ext_from_terra.html">ext_from_terra()</a></code>. <code>matrix</code> format is  as returned by sf::st_bbox() - the
-first column has the minimum, the second the maximum values; rows 1 &amp; 2
-represent the x &amp; y dimensions respectively (<code>matrix(c("xmin", "ymin","xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))</code>)
-(use either shp OR extent; if neither is specified global raster is
-returned). <code>NULL</code> extent downloads (large) global layer.</p>
+Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J.
+Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W.
+Gething. Global maps of travel time to healthcare facilities. (2020) Nature
+Medicine. <a href="https://doi.org/10.1038/s41591-020-1059-1" class="external-link">https://doi.org/10.1038/s41591-020-1059-1</a></p>
+<p><code>extent</code> is formatted and then passed through to
+<code><a href="https://rdrr.io/pkg/malariaAtlas/man/getRaster.html" class="external-link">malariaAtlas::getRaster()</a></code> as a 2x2 matrix. It is converted into a matrix
+using <code>ext_matrix</code>. The <code>matrix</code> format used is as returned by
+<code><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">sf::st_bbox()</a></code> — the first column has the minimum, the second the maximum
+values; rows 1 &amp; 2 represent the x &amp; y dimensions respectively:
+<code>matrix(c("xmin", "ymin", "xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))</code>. <code>NULL</code> extent downloads (large)
+global layer.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">111</span>, <span class="fl">0</span>, <span class="fl">112</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  nrow <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>  ncol <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="op">)</span></span></span>
-<span class="r-in"><span> <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># for more examples of passing exten types see ?ext_matrix</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">111</span>, <span class="fl">0</span>, <span class="fl">112</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="fu">get_friction_surface</span><span class="op">(</span></span></span>
 <span class="r-in"><span>   surface <span class="op">=</span> <span class="st">"motor2020"</span>,</span></span>
@@ -125,15 +121,10 @@ returned). <code>NULL</code> extent downloads (large) global layer.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   - Accessibility__202001_Global_Motorized_Friction_Surface:  DEFAULT </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBBBB;">&lt;</span><span style="color: #BBBBBB; text-decoration: underline;">GMLEnvelope</span><span style="color: #BBBBBB;">&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">lowerCorner</span>: <span style="background-color: #BBBBBB;">0 111</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1 112</span>Start tag expected, '&lt;' not found</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 0.008333333, 0.008333333  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 111, 112, 3.774758e-15, 1  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> source      : Accessibility__202001_Global_Motorized_Friction_Surface_0,111,1,112.tif </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        : friction_surface </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">lowerCorner</span>: <span style="background-color: #BBBBBB;">112 111</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1 0</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Error 4: `/tmp/RtmpkJGhO4/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif' not recognized as a supported file format.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] cannot open this file as a SpatRaster: /tmp/RtmpkJGhO4/Accessibility__202001_Global_Motorized_Friction_Surface_112,111,1,0.tif</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
