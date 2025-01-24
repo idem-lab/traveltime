@@ -14,7 +14,7 @@ tags:
   - spatial analysis
 authors:
   - name: Gerard E Ryan
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0003-0183-7630
     corresponding: true
     affiliation: "1, 2"
   - name: Nick Tierney
@@ -24,7 +24,7 @@ authors:
     orcid: 0000-0001-8916-5570
     affiliation: "1, 3 "
   - name: Daniel Weiss
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-6175-5648
     affiliation: "1, 3"
 affiliations:
  - name: The Kids Research Institute Australia, Nedlands 6009 WA, Australia
