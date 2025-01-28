@@ -15,9 +15,10 @@ calculate_travel_time(
 \item{friction_surface}{A \code{SpatRaster} friction surface layer. See
 \code{?get_friction_surface}}
 
-\item{points}{A two-column \code{matrix}, \code{data.frame}, or \code{tibble} with longitude
-(x) in the first column and latitude (y) in the second, or a \code{SpatVector},
-in the same coordinate, reference system as \code{friction_surface}.}
+\item{points}{A two-column \code{matrix}, \code{data.frame}, (including \code{tibble} types)
+with longitude (x) in the first column and latitude (y) in the second, or a
+\code{SpatVector}, in the same coordinate, reference system as
+\code{friction_surface}.}
 
 \item{filename}{\code{character}. Output file name with extension suitable for
 \code{terra::writeRaster}}

@@ -5,9 +5,10 @@
 #'
 #' @param friction_surface A `SpatRaster` friction surface layer. See
 #'   `?get_friction_surface`
-#' @param points A two-column `matrix`, `data.frame`, or `tibble` with longitude
-#'   (x) in the first column and latitude (y) in the second, or a `SpatVector`,
-#'   in the same coordinate, reference system as `friction_surface`.
+#' @param points A two-column `matrix`, `data.frame`, (including `tibble` types)
+#'   with longitude (x) in the first column and latitude (y) in the second, or a
+#'   `SpatVector`, in the same coordinate, reference system as
+#'   `friction_surface`.
 #' @param filename `character`. Output file name with extension suitable for
 #'   `terra::writeRaster`
 #' @param overwrite `logical`. If `TRUE` `filename` is overwritten.
