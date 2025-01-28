@@ -43,7 +43,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 # Summary
 
-Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@weiss2020global] (@ref-tt_healthcare) and likely a myriad others. Here we present a software package --- `{traveltime}` --- written in and for the language R [@Rref]. `{traveltime}` enables a user to supply a set of geographic point locations and an extent of interest, to then calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest (e.g., travel time from health care facilities @ref-tt_healthcare from @weiss2020global).
+Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [hulland2019travel; @weiss2020global] (@ref-tt_healthcare) and a myriad others [@nelson2019suite]. Here we present a software package --- `{traveltime}` --- written in and for the language R [@Rref]. `{traveltime}` enables a user to supply a set of geographic point locations and an extent of interest, to then calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest (e.g., travel time from health care facilities @ref-tt_healthcare from @weiss2020global).
 
 The work-flow requires two steps:
 
@@ -88,7 +88,7 @@ ggplot() +
 
 # Statement of need
 
-Global maps of travel time to cities [@weiss2018global] and health care facilities [@weiss2020global] (@fig-tt_healthcare) have generated significant interest and use. Collectively @weiss2018global ; @weiss2020global have over 1300 citations (Google Scholar, at 10th December 2024), and the city data set is available to R users through the widely-used `geodata` package [@geodata]. There is clear demand for these type of products.
+Global maps of travel time to cities [@weiss2018global; @nelson2019suite] and health care facilities [@hulland2019travel; @weiss2020global] (@fig-tt_healthcare) have generated significant interest and use (collectively >1500 citations per google scholar at the 28th of January 2025), and the city data set of @nelson2019suite is available to R users through the widely-used `geodata` package [@geodata]. There is clear demand for these type of products.
 
 @weiss2020global and colleagues made their code available as an R script to allow for reproduction and extension of their analyses (<https://malariaatlas.org/wp-content/uploads/2022/11/R_generic_accessibilty_mapping_script_2020-1.txt> ). To further enable extension of this work, here we have developed an R package based on that code to seamlessly calculate the travel time from any arbitrary set of locations.
 
@@ -134,7 +134,7 @@ ggplot() +
   theme_minimal()
 ```
 
-The the `stations` data set included in the `{traveltime}` package is a 563 \$\*\$ 2 `matrix` containing the longitude (x) and latitude (y) of all LRT and MRT station exits in Singapore from @singdata:2024.
+The the `stations` data set included in the `{traveltime}` package is a 563 \$\*\$ 2 `matrix` containing the longitude (x) and latitude (y) of all LRT and MRT station exits in Singapore from @singdata.
 
 ```{r show stations}
 library(traveltime)
@@ -216,7 +216,7 @@ travel_time_sin <- calculate_travel_time(
 travel_time_sin
 ```
 
-We present the resulting calculated travel times in @fig-result:
+We present the resulting calculated travel times in @fig-result 
 
 ```{r plot result}
 #| label: "fig-result"
