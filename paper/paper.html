@@ -191,7 +191,7 @@ window.Quarto = {
 
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>Understanding and mapping the time to travel among locations is useful for many activities from urban planning <span class="citation" data-cites="zahavi1974traveltime">(<a href="#ref-zahavi1974traveltime" role="doc-biblioref">Zahavi 1974</a>)</span> to public health (<span class="citation" data-cites="hulland2019travel">Hulland et al. (<a href="#ref-hulland2019travel" role="doc-biblioref">2019</a>)</span>; <span class="citation" data-cites="weiss2020global">D. Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>; <span class="math inline">\(\ref{fig:fig-tt_healthcare}\)</span>) and a myriad others <span class="citation" data-cites="nelson2019suite">(<a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span>. Here we present a software package — <code>{traveltime}</code> — written in and for the language R <span class="citation" data-cites="Rref">(<a href="#ref-Rref" role="doc-biblioref">R Core Team 2024</a>)</span>. <code>{traveltime}</code> enables a user to supply a set of geographic point locations and an extent of interest, to then calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km<span class="math inline">\(^2\)</span> at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest (e.g., travel time from health care facilities <span class="math inline">\(\ref{fig:fig-tt_healthcare}\)</span> from <span class="citation" data-cites="weiss2020global">D. Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>).</p>
+<p>Understanding and mapping the time to travel among locations is useful for many activities from urban planning <span class="citation" data-cites="zahavi1974traveltime">(<a href="#ref-zahavi1974traveltime" role="doc-biblioref">Zahavi 1974</a>)</span> to public health (<span class="citation" data-cites="hulland2019travel">Hulland et al. (<a href="#ref-hulland2019travel" role="doc-biblioref">2019</a>)</span>; <span class="citation" data-cites="weiss2020global">D. Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>; Figure <span class="math inline">\(\ref{fig:tt_healthcare}\)</span>) and a myriad others <span class="citation" data-cites="nelson2019suite">(<a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span>. Here we present a software package — <code>{traveltime}</code> — written in and for the language R <span class="citation" data-cites="Rref">(<a href="#ref-Rref" role="doc-biblioref">R Core Team 2024</a>)</span>. <code>{traveltime}</code> enables a user to supply a set of geographic point locations and an extent of interest, to then calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km<span class="math inline">\(^2\)</span> at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest (e.g., travel time from health care facilities in Figure <span class="math inline">\(\ref{fig:tt_healthcare}\)</span> from <span class="citation" data-cites="weiss2020global">D. Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>).</p>
 <p>The work-flow requires two steps:</p>
 <ul>
 <li>downloading a ‘friction surface’ for the area of interest, and then</li>
@@ -258,14 +258,10 @@ window.Quarto = {
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">na.value =</span> <span class="st">"transparent"</span>) <span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-basemap" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-basemap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="paper_files/figure-html/fig-basemap-1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-basemap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Area of interest: Singapore
-</figcaption>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="paper_files/figure-html/plot%20basemap-1.png" class="img-fluid figure-img"></p>
+<figcaption>Area of interest: Singapore.</figcaption>
 </figure>
 </div>
 </div>
@@ -284,7 +280,7 @@ Figure&nbsp;1: Area of interest: Singapore
 [6,] 103.9389 1.344999</code></pre>
 </div>
 </div>
-<p>Now that we have the two items of data that require, the next step is to download a friction surface for our area of interest. We can pass in our basemap <code>sin</code> (<a href="#fig-basemap" class="quarto-xref">Figure&nbsp;1</a>), a <code>SpatVector</code>, directly as the <code>extent</code>. We’re interested in walking time from a station, so we’ll download the walking friction surface by specifying <code>surface = "walk2020"</code>. (Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel if that were of interest.)</p>
+<p>Now that we have the two items of data that require, the next step is to download a friction surface for our area of interest. We can pass in our basemap <code>sin</code> (Figure <span class="math inline">\(\ref{fig:basemap}\)</span>), a <code>SpatVector</code>, directly as the <code>extent</code>. We’re interested in walking time from a station, so we’ll download the walking friction surface by specifying <code>surface = "walk2020"</code>. (Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel if that were of interest.)</p>
 <p>We’re also only interested in walking <em>on land</em> so we mask out areas outside of <code>sin</code>, that are within the extent of the raster:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(traveltime)</span>
@@ -311,7 +307,7 @@ min value   :       0.01200000
 max value   :       0.06192715 </code></pre>
 </div>
 </div>
-<p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary of <code>sin</code> as a dashed grey line, and <code>stations</code> as grey points <a href="#fig-data" class="quarto-xref">Figure&nbsp;2</a>. Higher values of friction indicate more time travelling across a given cell.</p>
+<p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary of <code>sin</code> as a dashed grey line, and <code>stations</code> as grey points <strong>?@fig-data</strong>. Higher values of friction indicate more time travelling across a given cell.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyterra)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -346,14 +342,10 @@ max value   :       0.06192715 </code></pre>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-data" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="paper_files/figure-html/fig-data-1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points
-</figcaption>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="paper_files/figure-html/plot%20data-1.png" class="img-fluid figure-img"></p>
+<figcaption>Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.</figcaption>
 </figure>
 </div>
 </div>
@@ -381,7 +373,7 @@ min value   :           0
 max value   :         Inf </code></pre>
 </div>
 </div>
-<p>We present the resulting calculated travel times in <a href="#fig-result" class="quarto-xref">Figure&nbsp;3</a></p>
+<p>We present the resulting calculated travel times in Figure <span class="math inline">\(\ref{fig:data}\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(</span>
@@ -400,19 +392,15 @@ max value   :         Inf </code></pre>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"grey20"</span></span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="paper_files/figure-html/fig-result-1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.
-</figcaption>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="paper_files/figure-html/plot%20result-1.png" class="img-fluid figure-img"></p>
+<figcaption>Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Note that the above raster <code>travel_time_sin</code> includes infinite (<code>Inf</code>) values. In <a href="#fig-data" class="quarto-xref">Figure&nbsp;2</a>, a number of islands to the south are shown as cells unconnected with the mainland. These raster cells for these islands appear absent in <a href="#fig-result" class="quarto-xref">Figure&nbsp;3</a>. Because they are not connected, the calculated travel time is infinite, and so these cells do not appear in the plot <a href="#fig-result" class="quarto-xref">Figure&nbsp;3</a>.</p>
+<p>Note that the above raster <code>travel_time_sin</code> includes infinite (<code>Inf</code>) values. In Figure <span class="math inline">\(\ref{fig:data}\)</span>, a number of islands to the south are shown as cells unconnected with the mainland. These raster cells for these islands appear absent in Figure <span class="math inline">\(\ref{fig:result}\)</span>. Because they are not connected, the calculated travel time is infinite, and so these cells do not appear in Figure <span class="math inline">\(\ref{fig:result}\)</span>.</p>
 </section>
 </section>
 <section id="opportunities-for-future-development" class="level1">

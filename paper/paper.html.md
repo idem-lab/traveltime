@@ -44,7 +44,7 @@ bibliography: paper.bib
 
 # Summary
 
-Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health (@hulland2019travel; @weiss2020global; \ref{fig:fig-tt_healthcare}) and a myriad others [@nelson2019suite]. Here we present a software package --- `{traveltime}` --- written in and for the language R [@Rref]. `{traveltime}` enables a user to supply a set of geographic point locations and an extent of interest, to then calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest (e.g., travel time from health care facilities  \ref{fig:fig-tt_healthcare} from @weiss2020global).
+Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health (@hulland2019travel; @weiss2020global; Figure \ref{fig:tt_healthcare}) and a myriad others [@nelson2019suite]. Here we present a software package --- `{traveltime}` --- written in and for the language R [@Rref]. `{traveltime}` enables a user to supply a set of geographic point locations and an extent of interest, to then calculate the motorised or walking travel time over that extent. The result is a raster of 30 arcsecond resolution (approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator) where the value in each cell is the lowest travel time in minutes to any of the supplied point locations over the extent of interest (e.g., travel time from health care facilities in Figure \ref{fig:tt_healthcare} from @weiss2020global).
 
 The work-flow requires two steps:
 
@@ -59,7 +59,7 @@ The work-flow requires two steps:
 
 ::: {.cell}
 ::: {.cell-output-display}
-![\label{fig:fig-tt_healthcare}Existing surface of motorised travel time from healthcare facilities, exerpted to Cambodia (Weiss et al., 2020)](paper_files/figure-html/ttexample_image-1.png)
+![\label{fig:tt_healthcare}Existing surface of motorised travel time from healthcare facilities, exerpted to Cambodia (Weiss et al., 2020)](paper_files/figure-html/ttexample_image-1.png)
 :::
 :::
 
@@ -136,7 +136,7 @@ ggplot() +
 ```
 
 ::: {.cell-output-display}
-![Area of interest: Singapore](paper_files/figure-html/fig-basemap-1.png){#fig-basemap}
+![\label{fig:basemap}Area of interest: Singapore.](paper_files/figure-html/plot basemap-1.png)
 :::
 :::
 
@@ -171,7 +171,7 @@ head(stations)
 
 
 
-Now that we have the two items of data that require, the next step is to download a friction surface for our area of interest. We can pass in our basemap `sin` (@fig-basemap), a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.)
+Now that we have the two items of data that require, the next step is to download a friction surface for our area of interest. We can pass in our basemap `sin` (Figure \ref{fig:basemap}), a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.)
 
 We're also only interested in walking *on land* so we mask out areas outside of `sin`, that are within the extent of the raster:
 
@@ -265,7 +265,7 @@ ggplot() +
 ```
 
 ::: {.cell-output-display}
-![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points](paper_files/figure-html/fig-data-1.png){#fig-data}
+![\label{fig:data}Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-html/plot data-1.png)
 :::
 :::
 
@@ -308,7 +308,7 @@ max value   :         Inf
 
 
 
-We present the resulting calculated travel times in @fig-result 
+We present the resulting calculated travel times in Figure \ref{fig:data} 
 
 
 
@@ -334,13 +334,13 @@ ggplot() +
 ```
 
 ::: {.cell-output-display}
-![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-html/fig-result-1.png){#fig-result}
+![\label{fig:result}Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-html/plot result-1.png)
 :::
 :::
 
 
 
-Note that the above raster `travel_time_sin` includes infinite (`Inf`) values. In @fig-data, a number of islands to the south are shown as cells unconnected with the mainland. These raster cells for these islands appear absent in @fig-result. Because they are not connected, the calculated travel time is infinite, and so these cells do not appear in the plot @fig-result.
+Note that the above raster `travel_time_sin` includes infinite (`Inf`) values. In Figure \ref{fig:data}, a number of islands to the south are shown as cells unconnected with the mainland. These raster cells for these islands appear absent in Figure \ref{fig:result}. Because they are not connected, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig:result}.
 
 # Opportunities for future development
 
