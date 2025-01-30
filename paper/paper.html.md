@@ -203,7 +203,7 @@ Below we plot the friction surface raster `friction_singapore`, with the vector 
 
 ::: {.cell}
 ::: {.cell-output-display}
-![\label{fig:data}Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-html/plot data-1.png)
+![\label{fig:data}Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-html/plot_data-1.png)
 :::
 :::
 
@@ -252,7 +252,7 @@ We present the resulting calculated travel times in Figure \ref{fig:result}. Not
 
 ::: {.cell}
 ::: {.cell-output-display}
-![\label{fig:result}Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-html/plot result-1.png)
+![\label{fig:result}Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-html/plot_result-1.png)
 :::
 :::
 

@@ -121,7 +121,7 @@ friction_singapore
 
 Below we plot the friction surface raster `friction_singapore`, with the vector boundary `sin` as a grey line, and `stations` as grey points (Figure \ref{fig:data}). Higher values of friction indicate more time travelling across a given cell.
 
-```{r plot data, echo=FALSE, fig.cap = "\\label{fig:data}Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points."}
+```{r plot_data, echo=FALSE, fig.cap = "\\label{fig:data}Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points."}
 library(tidyterra)
 library(ggplot2)
 
@@ -173,7 +173,7 @@ travel_time_sin
 
 We present the resulting calculated travel times in Figure \ref{fig:result}. Note that the results in `travel_time_sin` include infinite (`Inf`) values. In Figure \ref{fig:data}, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure \ref{fig:result}. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig:result}.
 
-```{r plot result, echo=FALSE,  fig.cap = "\\label{fig:result}Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station."}
+```{r plot_result, echo=FALSE,  fig.cap = "\\label{fig:result}Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station."}
 ggplot() +
   geom_spatraster(
     data = travel_time_sin
