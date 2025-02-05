@@ -198,7 +198,7 @@ ggplot() +
 
 The `traveltime` package is immediately suitable to a range of applications where travel to custom locations of interest. Nonetheless, we see opportunities to build the package utility into the future through two mechanisms: capability to distribute more a wider range friction surfaces, and additional methods to handle large spatial extents.
 
-Firstly, `traveltime` currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through `malariaAtlas`. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km$^2$ cell size is a relatively large area to walk across, and thus actual waking times are likeley to vary significantly within each cell. We note though that the capability to calculate travel time over any friction surface exists presently, it is only the availability of additional surfaces that is presently restrictive.
+Firstly, `traveltime` currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through `malariaAtlas`. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km$^2$ cell size is a relatively large area to walk across, and thus actual waking times are likely to vary significantly within each cell. We note though that the capability to calculate travel time over any friction surface exists presently, it is only the availability of additional surfaces that is presently restrictive.
 
 [^2]: Approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator
 
@@ -206,7 +206,7 @@ At the other end of the scale, the calculations can require relatively large amo
 
 # Acknowledgements
 
-GR is supported by the Gates Foundation grant for the Vector Atlas.
+This work was supported, in whole or in part, by the Bill & Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the author(s) alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.
 
 
 # References
