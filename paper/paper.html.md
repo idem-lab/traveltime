@@ -71,7 +71,7 @@ With `traveltime`, we provide free and open source software to estimate motorise
 
 # Example: walking from public transport in Singapore
 
-In this example we wish to calculate the walking travel time from the nearest mass transit station across the island nation of Singapore --- specifically MRT and LRT stations --- and create a map of this.
+In this example we wish to calculate the walking travel time from the nearest mass transit station across the island nation of Singapore --- specifically Mass Rapid Transit (MRT) and Light Rail Transit (LRT) stations --- and create a map of this.
 
 ## Prepare the data and download friction surface
 
@@ -80,7 +80,7 @@ For this excercise, we need two items of data:
 -   our area of interest --- in this case a map of Singapore, and
 -   our points to calculate travel time from --- here the locations of Singapore's MRT and LRT stations.
 
-We can download a national-level polygon of Singapore from the GADM [@gadm] database using the `geodata` package [@geodata]. Here we download only the national boundary (`level = 0`) and at a low resolution (`resolution = 2`). Our boundary `sin` is a `SpatVector` class object.
+We can download a national-level polygon of Singapore from the GADM [@gadm] database using the `geodata` package [@geodata]. Here we download only the national boundary (`level = 0`) and at a low resolution (`resolution = 2`). Our boundary `singapore_shapefile` is a `SpatVector` class object.
 
 
 
@@ -90,14 +90,14 @@ We can download a national-level polygon of Singapore from the GADM [@gadm] data
 library(terra)
 library(geodata)
 
-sin <- gadm(
+singapore_shapefile <- gadm(
   country = "Singapore",
   level = 0,
   path = tempdir(),
   resolution = 2
 )
 
-sin
+singapore_shapefile
 ```
 
 ::: {.cell-output .cell-output-stdout}
@@ -120,7 +120,7 @@ sin
 
 
 
-The the `stations` data set included in the `traveltime` package is a 563 row, 2 column `matrix` containing the longitude (`x`) and latitude (`y`) of all LRT and MRT station exits in Singapore from @singdata.
+The `stations` data set included in the `traveltime` package is a 563 row, 2 column `matrix` containing the longitude (`x`) and latitude (`y`) of all LRT and MRT station exits in Singapore from @singdata:
 
 
 
@@ -149,7 +149,7 @@ head(stations)
 
 
 
-Now that we have the two items of data that we require, the next step is to download a friction surface for our area of interest. We can pass in our basemap `sin`, a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.) We're also only interested in walking *on land* so we then mask out areas outside of `sin`, that are within the extent of the friction surface raster:
+Now that we have the two items of data that we require, the next step is to download a friction surface for our area of interest. We can pass in our basemap `singapore_shapefile`, a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.) We're also only interested in walking *on land* so we then mask out areas outside of `singapore_shapefile`, that are within the extent of the friction surface raster:
 
 
 
@@ -158,9 +158,9 @@ Now that we have the two items of data that we require, the next step is to down
 ```{.r .cell-code}
 friction_singapore <- get_friction_surface(
     surface = "walk2020",
-    extent = sin
+    extent = singapore_shapefile
   )|> 
-  mask(sin)
+  mask(singapore_shapefile)
 ```
 :::
 
@@ -197,13 +197,13 @@ max value   :       0.06192715
 
 
 
-Below we plot the friction surface raster `friction_singapore`, with the vector boundary `sin` as a grey line, and `stations` as grey points (Figure \ref{fig:data}). Higher values of friction indicate more time travelling across a given cell.
+Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure @fig-data). Higher values of friction indicate more time travelling across a given cell.
 
 
 
 ::: {.cell}
 ::: {.cell-output-display}
-![\label{fig:data}Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-html/plot_data-1.png)
+![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-html/fig-data-1.png){#fig-data}
 :::
 :::
 
@@ -211,19 +211,19 @@ Below we plot the friction surface raster `friction_singapore`, with the vector 
 
 ## Calculate and plot the travel time
 
-With all the data collected, the function `calculate_travel_time` takes the friction surface `friction_singapore` and the locations of interest `stations`, and returns a `SpatRaster` of walking time in minutes to each cell from the nearest station:
+With all the data collected, the function `calculate_travel_time()` takes the friction surface `friction_singapore()` and the locations of interest `stations`, and returns a `SpatRaster` of walking time in minutes to each cell from the nearest station:
 
 
 
 ::: {.cell}
 
 ```{.r .cell-code}
-travel_time_sin <- calculate_travel_time(
+travel_timesingapore <- calculate_travel_time(
   friction_surface = friction_singapore,
   points = stations
 )
 
-travel_time_sin
+travel_timesingapore
 ```
 
 ::: {.cell-output .cell-output-stdout}
@@ -246,27 +246,25 @@ max value   :         Inf
 
 
 
-We present the resulting calculated travel times in Figure \ref{fig:result}. Note that the results in `travel_time_sin` include infinite (`Inf`) values. In Figure \ref{fig:data}, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure \ref{fig:result}. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig:result}.
+We present the resulting calculated travel times in Figure @fig-result. Note that the results in `travel_timesingapore` include infinite (`Inf`) values. In Figure @fig-data, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure @fig-result. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure @fig-result.
 
 
 
 ::: {.cell}
 ::: {.cell-output-display}
-![\label{fig:result}Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-html/plot_result-1.png)
+![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-html/fig-result-1.png){#fig-result}
 :::
 :::
-
-
 
 
 
 # Opportunities for future development
 
-The `traveltime` package is immediately suitable to a range of applications where travel to custom locations of interest. Nonetheless, we see opportunities to build the package utility into the future through two mechanisms: capability to distribute more a wider range friction surfaces, and additional methods to handle large spatial extents.
+The `traveltime` package is immediately suitable to a range of applications where travel to custom locations is of interest. Nonetheless, we see opportunities to build the package utility into the future through two mechanisms: (1) capability to better distribute a wider range friction surfaces, and (2) additional methods to handle large spatial extents.
 
-Firstly, `traveltime` currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through `malariaAtlas`. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km$^2$ cell size is a relatively large area to walk across, and thus actual waking times are likely to vary significantly within each cell. We note though that the capability to calculate travel time over any friction surface exists presently, it is only the availability of additional surfaces that is presently restrictive.
+Firstly, `traveltime` currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through `malariaAtlas`. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km^2^ cell size is a relatively large area to walk across, and thus actual waking times are likely to vary significantly within each cell. We note though that the capability to calculate travel time over any friction surface exists presently, it is only the availability of additional surfaces that is presently restrictive.
 
-[^2]: Approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator
+[^2]: Approximately 0.008333 decimal degrees, or just below 1 km^2^ at the equator
 
 At the other end of the scale, the calculations can require relatively large amounts of onboard memory for analyses over large landscapes (e.g. one analyses over Africa required \~ 72 GB RAM). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.
 

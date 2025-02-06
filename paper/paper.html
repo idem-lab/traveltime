@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -84,40 +84,11 @@ div.csl-indent {
 <script src="paper_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="paper_files/libs/quarto-html/anchor.min.js"></script>
 <link href="paper_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="paper_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="paper_files/libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="paper_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="paper_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="paper_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="paper_files/libs/bootstrap/bootstrap-e19dc0c07aeef78048e587c3f1edba7a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -209,7 +180,7 @@ window.Quarto = {
 </section>
 <section id="example-walking-from-public-transport-in-singapore" class="level1">
 <h1>Example: walking from public transport in Singapore</h1>
-<p>In this example we wish to calculate the walking travel time from the nearest mass transit station across the island nation of Singapore — specifically MRT and LRT stations — and create a map of this.</p>
+<p>In this example we wish to calculate the walking travel time from the nearest mass transit station across the island nation of Singapore — specifically Mass Rapid Transit (MRT) and Light Rail Transit (LRT) stations — and create a map of this.</p>
 <section id="prepare-the-data-and-download-friction-surface" class="level2">
 <h2 class="anchored" data-anchor-id="prepare-the-data-and-download-friction-surface">Prepare the data and download friction surface</h2>
 <p>For this excercise, we need two items of data:</p>
@@ -217,19 +188,19 @@ window.Quarto = {
 <li>our area of interest — in this case a map of Singapore, and</li>
 <li>our points to calculate travel time from — here the locations of Singapore’s MRT and LRT stations.</li>
 </ul>
-<p>We can download a national-level polygon of Singapore from the GADM <span class="citation" data-cites="gadm">(<a href="#ref-gadm" role="doc-biblioref">GADM 2022</a>)</span> database using the <code>geodata</code> package <span class="citation" data-cites="geodata">(<a href="#ref-geodata" role="doc-biblioref">Hijmans et al. 2024</a>)</span>. Here we download only the national boundary (<code>level = 0</code>) and at a low resolution (<code>resolution = 2</code>). Our boundary <code>sin</code> is a <code>SpatVector</code> class object.</p>
+<p>We can download a national-level polygon of Singapore from the GADM <span class="citation" data-cites="gadm">(<a href="#ref-gadm" role="doc-biblioref">GADM 2022</a>)</span> database using the <code>geodata</code> package <span class="citation" data-cites="geodata">(<a href="#ref-geodata" role="doc-biblioref">Hijmans et al. 2024</a>)</span>. Here we download only the national boundary (<code>level = 0</code>) and at a low resolution (<code>resolution = 2</code>). Our boundary <code>singapore_shapefile</code> is a <code>SpatVector</code> class object.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geodata)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sin <span class="ot">&lt;-</span> <span class="fu">gadm</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>singapore_shapefile <span class="ot">&lt;-</span> <span class="fu">gadm</span>(</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">country =</span> <span class="st">"Singapore"</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">level =</span> <span class="dv">0</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">path =</span> <span class="fu">tempdir</span>(),</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">resolution =</span> <span class="dv">2</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>sin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>singapore_shapefile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> class       : SpatVector 
  geometry    : polygons 
@@ -241,7 +212,7 @@ window.Quarto = {
  values      :   SGP Singapore</code></pre>
 </div>
 </div>
-<p>The the <code>stations</code> data set included in the <code>traveltime</code> package is a 563 row, 2 column <code>matrix</code> containing the longitude (<code>x</code>) and latitude (<code>y</code>) of all LRT and MRT station exits in Singapore from <span class="citation" data-cites="singdata">Land Transport Authority (<a href="#ref-singdata" role="doc-biblioref">2019</a>)</span>.</p>
+<p>The <code>stations</code> data set included in the <code>traveltime</code> package is a 563 row, 2 column <code>matrix</code> containing the longitude (<code>x</code>) and latitude (<code>y</code>) of all LRT and MRT station exits in Singapore from <span class="citation" data-cites="singdata">Land Transport Authority (<a href="#ref-singdata" role="doc-biblioref">2019</a>)</span>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(traveltime)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -255,13 +226,13 @@ window.Quarto = {
 [6,] 103.9389 1.344999</code></pre>
 </div>
 </div>
-<p>Now that we have the two items of data that we require, the next step is to download a friction surface for our area of interest. We can pass in our basemap <code>sin</code>, a <code>SpatVector</code>, directly as the <code>extent</code>. We’re interested in walking time from a station, so we’ll download the walking friction surface by specifying <code>surface = "walk2020"</code>. (Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel if that were of interest.) We’re also only interested in walking <em>on land</em> so we then mask out areas outside of <code>sin</code>, that are within the extent of the friction surface raster:</p>
+<p>Now that we have the two items of data that we require, the next step is to download a friction surface for our area of interest. We can pass in our basemap <code>singapore_shapefile</code>, a <code>SpatVector</code>, directly as the <code>extent</code>. We’re interested in walking time from a station, so we’ll download the walking friction surface by specifying <code>surface = "walk2020"</code>. (Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel if that were of interest.) We’re also only interested in walking <em>on land</em> so we then mask out areas outside of <code>singapore_shapefile</code>, that are within the extent of the friction surface raster:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>friction_singapore <span class="ot">&lt;-</span> <span class="fu">get_friction_surface</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">surface =</span> <span class="st">"walk2020"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">extent =</span> sin</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">extent =</span> singapore_shapefile</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mask</span>(sin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mask</span>(singapore_shapefile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Thus we have our friction surface as a <code>SpatRaster</code>:</p>
 <div class="cell">
@@ -279,13 +250,17 @@ min value   :       0.01200000
 max value   :       0.06192715 </code></pre>
 </div>
 </div>
-<p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary <code>sin</code> as a grey line, and <code>stations</code> as grey points (Figure <span class="math inline">\(\ref{fig:data}\)</span>). Higher values of friction indicate more time travelling across a given cell.</p>
+<p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary <code>singapore_shapefile</code> as a grey line, and <code>stations</code> as grey points (Figure <a href="#fig-data" class="quarto-xref">Figure&nbsp;1</a>). Higher values of friction indicate more time travelling across a given cell.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="paper_files/figure-html/plot_data-1.png" class="img-fluid figure-img"></p>
-<figcaption>Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.</figcaption>
+<div id="fig-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="paper_files/figure-html/fig-data-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -293,14 +268,14 @@ max value   :       0.06192715 </code></pre>
 </section>
 <section id="calculate-and-plot-the-travel-time" class="level2">
 <h2 class="anchored" data-anchor-id="calculate-and-plot-the-travel-time">Calculate and plot the travel time</h2>
-<p>With all the data collected, the function <code>calculate_travel_time</code> takes the friction surface <code>friction_singapore</code> and the locations of interest <code>stations</code>, and returns a <code>SpatRaster</code> of walking time in minutes to each cell from the nearest station:</p>
+<p>With all the data collected, the function <code>calculate_travel_time()</code> takes the friction surface <code>friction_singapore()</code> and the locations of interest <code>stations</code>, and returns a <code>SpatRaster</code> of walking time in minutes to each cell from the nearest station:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>travel_time_sin <span class="ot">&lt;-</span> <span class="fu">calculate_travel_time</span>(</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>travel_timesingapore <span class="ot">&lt;-</span> <span class="fu">calculate_travel_time</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">friction_surface =</span> friction_singapore,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">points =</span> stations</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>travel_time_sin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>travel_timesingapore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
@@ -313,13 +288,17 @@ min value   :           0
 max value   :         Inf </code></pre>
 </div>
 </div>
-<p>We present the resulting calculated travel times in Figure <span class="math inline">\(\ref{fig:result}\)</span>. Note that the results in <code>travel_time_sin</code> include infinite (<code>Inf</code>) values. In Figure <span class="math inline">\(\ref{fig:data}\)</span>, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure <span class="math inline">\(\ref{fig:result}\)</span>. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure <span class="math inline">\(\ref{fig:result}\)</span>.</p>
+<p>We present the resulting calculated travel times in Figure <a href="#fig-result" class="quarto-xref">Figure&nbsp;2</a>. Note that the results in <code>travel_timesingapore</code> include infinite (<code>Inf</code>) values. In Figure <a href="#fig-data" class="quarto-xref">Figure&nbsp;1</a>, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure <a href="#fig-result" class="quarto-xref">Figure&nbsp;2</a>. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure <a href="#fig-result" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="paper_files/figure-html/plot_result-1.png" class="img-fluid figure-img"></p>
-<figcaption>Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.</figcaption>
+<div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="paper_files/figure-html/fig-result-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -328,8 +307,8 @@ max value   :         Inf </code></pre>
 </section>
 <section id="opportunities-for-future-development" class="level1">
 <h1>Opportunities for future development</h1>
-<p>The <code>traveltime</code> package is immediately suitable to a range of applications where travel to custom locations of interest. Nonetheless, we see opportunities to build the package utility into the future through two mechanisms: capability to distribute more a wider range friction surfaces, and additional methods to handle large spatial extents.</p>
-<p>Firstly, <code>traveltime</code> currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through <code>malariaAtlas</code>. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it’s simplicity and low computational demands, a ~1 km<span class="math inline">\(^2\)</span> cell size is a relatively large area to walk across, and thus actual waking times are likely to vary significantly within each cell. We note though that the capability to calculate travel time over any friction surface exists presently, it is only the availability of additional surfaces that is presently restrictive.</p>
+<p>The <code>traveltime</code> package is immediately suitable to a range of applications where travel to custom locations is of interest. Nonetheless, we see opportunities to build the package utility into the future through two mechanisms: (1) capability to better distribute a wider range friction surfaces, and (2) additional methods to handle large spatial extents.</p>
+<p>Firstly, <code>traveltime</code> currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through <code>malariaAtlas</code>. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it’s simplicity and low computational demands, a ~1 km<sup>2</sup> cell size is a relatively large area to walk across, and thus actual waking times are likely to vary significantly within each cell. We note though that the capability to calculate travel time over any friction surface exists presently, it is only the availability of additional surfaces that is presently restrictive.</p>
 <p>At the other end of the scale, the calculations can require relatively large amounts of onboard memory for analyses over large landscapes (e.g.&nbsp;one analyses over Africa required ~ 72 GB RAM). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.</p>
 </section>
 <section id="acknowledgements" class="level1">
@@ -404,7 +383,7 @@ Zhao, Jing, Andrew J Elmore, Janice Ser Huay Lee, Izaya Numata, Xin Zhang, and M
 
 <ol>
 <li id="fn1"><p>Collectively &gt;1600 citations per Google Scholar at the 28th of January 2025.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Approximately 0.008333 decimal degrees, or just below 1 km<span class="math inline">\(^2\)</span> at the equator<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Approximately 0.008333 decimal degrees, or just below 1 km<sup>2</sup> at the equator<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->
@@ -490,8 +469,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -602,7 +579,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
