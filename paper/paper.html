@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.36">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -84,11 +84,40 @@ div.csl-indent {
 <script src="paper_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="paper_files/libs/quarto-html/anchor.min.js"></script>
 <link href="paper_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="paper_files/libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="paper_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="paper_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="paper_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="paper_files/libs/bootstrap/bootstrap-e19dc0c07aeef78048e587c3f1edba7a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="paper_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -162,7 +191,7 @@ div.csl-indent {
 
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>Understanding and mapping the time to travel among locations is useful for many activities from urban planning <span class="citation" data-cites="zahavi1974traveltime">(<a href="#ref-zahavi1974traveltime" role="doc-biblioref">Zahavi 1974</a>)</span> to public health <span class="citation" data-cites="hulland2019travel weiss2020global">(<a href="#ref-hulland2019travel" role="doc-biblioref">Hulland et al. 2019</a>; <a href="#ref-weiss2020global" role="doc-biblioref">Weiss et al. 2020</a>)</span> and myriad others <span class="citation" data-cites="nelson2019suite">(<a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span>. Here we present a software package — <code>traveltime</code> — written in and for the language R <span class="citation" data-cites="Rref">(<a href="#ref-Rref" role="doc-biblioref">R Core Team 2024</a>)</span>. <code>traveltime</code> enables a user to create a map of the motorised or walking travel time over an area of interest from a user-specified set of geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations. We envisage these maps as having diverse applications including: estimating sampling bias in species occurrence data <span class="citation" data-cites="dennis2000bias">Reddy and Dávalos (<a href="#ref-reddy2003geographical" role="doc-biblioref">2003</a>)</span>, mapping electric vehicle charger accessibility <span class="citation" data-cites="falchetta2021electric">(<a href="#ref-falchetta2021electric" role="doc-biblioref">Falchetta and Noussan 2021</a>)</span>, or understanding access to agricultural processing facilities <span class="citation" data-cites="zhao2023replanting">(<a href="#ref-zhao2023replanting" role="doc-biblioref">Zhao et al. 2023</a>)</span>.</p>
+<p>Understanding and mapping the time to travel among locations is useful for many activities from urban planning <span class="citation" data-cites="zahavi1974traveltime">(<a href="#ref-zahavi1974traveltime" role="doc-biblioref">Zahavi 1974</a>)</span> to public health <span class="citation" data-cites="hulland2019travel weiss2020global">(<a href="#ref-hulland2019travel" role="doc-biblioref">Hulland et al. 2019</a>; <a href="#ref-weiss2020global" role="doc-biblioref">Weiss et al. 2020</a>)</span> and myriad others <span class="citation" data-cites="nelson2019suite">(<a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span>. Here we present a software package — <code>traveltime</code> — written in and for the language R <span class="citation" data-cites="Rref">(<a href="#ref-Rref" role="doc-biblioref">R Core Team 2024</a>)</span>. <code>traveltime</code> enables a user to create a map of the motorised or walking travel time over an area of interest from a user-specified set of geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations. We envisage this software having diverse applications including: estimating sampling bias in species occurrence data <span class="citation" data-cites="dennis2000bias">Reddy and Dávalos (<a href="#ref-reddy2003geographical" role="doc-biblioref">2003</a>)</span>, mapping electric vehicle charger accessibility <span class="citation" data-cites="falchetta2021electric">(<a href="#ref-falchetta2021electric" role="doc-biblioref">Falchetta and Noussan 2021</a>)</span>, or understanding access to agricultural processing facilities <span class="citation" data-cites="zhao2023replanting">(<a href="#ref-zhao2023replanting" role="doc-biblioref">Zhao et al. 2023</a>)</span>.</p>
 <p>The work-flow requires two steps:</p>
 <ul>
 <li>preparing a ‘friction surface’ for the area of interest, and then</li>
@@ -250,7 +279,7 @@ min value   :       0.01200000
 max value   :       0.06192715 </code></pre>
 </div>
 </div>
-<p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary <code>singapore_shapefile</code> as a grey line, and <code>stations</code> as grey points (Figure <a href="#fig-data" class="quarto-xref">Figure&nbsp;1</a>). Higher values of friction indicate more time travelling across a given cell.</p>
+<p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary <code>singapore_shapefile</code> as a grey line, and <code>stations</code> as grey points (Figure <span class="math inline">\(\ref{fig-data}\)</span>). Higher values of friction indicate more time travelling across a given cell.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-data" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -288,7 +317,7 @@ min value   :           0
 max value   :         Inf </code></pre>
 </div>
 </div>
-<p>We present the resulting calculated travel times in Figure <a href="#fig-result" class="quarto-xref">Figure&nbsp;2</a>. Note that the results in <code>travel_timesingapore</code> include infinite (<code>Inf</code>) values. In Figure <a href="#fig-data" class="quarto-xref">Figure&nbsp;1</a>, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure <a href="#fig-result" class="quarto-xref">Figure&nbsp;2</a>. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure <a href="#fig-result" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<p>We present the resulting calculated travel times in Figure <span class="math inline">\(\ref{fig-result}\)</span>. Note that the results in <code>travel_timesingapore</code> include infinite (<code>Inf</code>) values. In Figure <span class="math inline">\(\ref{fig-data}\)</span>, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure <span class="math inline">\(\ref{fig-result}\)</span>. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure <span class="math inline">\(\ref{fig-result}\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -313,7 +342,7 @@ Figure&nbsp;2: Map of walking travel time in Singapore, in minutes from nearest 
 </section>
 <section id="acknowledgements" class="level1">
 <h1>Acknowledgements</h1>
-<p>This work was supported, in whole or in part, by the Bill &amp; Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the author(s) alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.</p>
+<p>This work was supported, in whole or in part, by the Bill &amp; Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the authors alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.</p>
 </section>
 <section id="references" class="level1 unnumbered">
 
@@ -469,6 +498,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -579,6 +610,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

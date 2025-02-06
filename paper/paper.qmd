@@ -127,7 +127,7 @@ Thus we have our friction surface as a `SpatRaster`:
 friction_singapore
 ```
 
-Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure @fig-data). Higher values of friction indicate more time travelling across a given cell.
+Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure \ref{fig-data}). Higher values of friction indicate more time travelling across a given cell.
 
 ```{r}
 #| label: fig-data
@@ -184,7 +184,7 @@ travel_timesingapore <- calculate_travel_time(
 travel_timesingapore
 ```
 
-We present the resulting calculated travel times in Figure @fig-result. Note that the results in `travel_timesingapore` include infinite (`Inf`) values. In Figure @fig-data, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure @fig-result. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure @fig-result.
+We present the resulting calculated travel times in Figure \ref{fig-result}. Note that the results in `travel_timesingapore` include infinite (`Inf`) values. In Figure \ref{fig-data}, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure \ref{fig-result}. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig-result}.
 
 ```{r}
 #| label: fig-result

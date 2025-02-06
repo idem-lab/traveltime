@@ -46,7 +46,7 @@ bibliography: paper.bib
 
 # Summary
 
-Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@hulland2019travel; @weiss2020global] and myriad others [@nelson2019suite]. Here we present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to create a map of the motorised or walking travel time over an area of interest from a user-specified set of geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations. We envisage these maps as having diverse applications including: estimating sampling bias in species occurrence data [@dennis2000bias, @reddy2003geographical], mapping electric vehicle charger accessibility [@falchetta2021electric], or understanding access to agricultural processing facilities [@zhao2023replanting].
+Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@hulland2019travel; @weiss2020global] and myriad others [@nelson2019suite]. Here we present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to create a map of the motorised or walking travel time over an area of interest from a user-specified set of geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations. We envisage this software having diverse applications including: estimating sampling bias in species occurrence data [@dennis2000bias, @reddy2003geographical], mapping electric vehicle charger accessibility [@falchetta2021electric], or understanding access to agricultural processing facilities [@zhao2023replanting].
 
 The work-flow requires two steps:
 
@@ -197,7 +197,7 @@ max value   :       0.06192715
 
 
 
-Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure @fig-data). Higher values of friction indicate more time travelling across a given cell.
+Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure \ref{fig-data}). Higher values of friction indicate more time travelling across a given cell.
 
 
 
@@ -246,7 +246,7 @@ max value   :         Inf
 
 
 
-We present the resulting calculated travel times in Figure @fig-result. Note that the results in `travel_timesingapore` include infinite (`Inf`) values. In Figure @fig-data, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure @fig-result. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure @fig-result.
+We present the resulting calculated travel times in Figure \ref{fig-result}. Note that the results in `travel_timesingapore` include infinite (`Inf`) values. In Figure \ref{fig-data}, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure \ref{fig-result}. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig-result}.
 
 
 
@@ -270,7 +270,7 @@ At the other end of the scale, the calculations can require relatively large amo
 
 # Acknowledgements
 
-This work was supported, in whole or in part, by the Bill & Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the author(s) alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.
+This work was supported, in whole or in part, by the Bill & Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the authors alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.
 
 
 # References
