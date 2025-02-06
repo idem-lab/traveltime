@@ -299,12 +299,12 @@ Figure&nbsp;1: Friction surface raster of Singapore, showing Singapore boundary 
 <h2 class="anchored" data-anchor-id="calculate-and-plot-the-travel-time">Calculate and plot the travel time</h2>
 <p>With all the data collected, the function <code>calculate_travel_time()</code> takes the friction surface <code>friction_singapore()</code> and the locations of interest <code>stations</code>, and returns a <code>SpatRaster</code> of walking time in minutes to each cell from the nearest station:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>travel_timesingapore <span class="ot">&lt;-</span> <span class="fu">calculate_travel_time</span>(</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>trave_time_singapore <span class="ot">&lt;-</span> <span class="fu">calculate_travel_time</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">friction_surface =</span> friction_singapore,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">points =</span> stations</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>travel_timesingapore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>trave_time_singapore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
@@ -317,7 +317,7 @@ min value   :           0
 max value   :         Inf </code></pre>
 </div>
 </div>
-<p>We present the resulting calculated travel times in Figure <span class="math inline">\(\ref{fig-result}\)</span>. Note that the results in <code>travel_timesingapore</code> include infinite (<code>Inf</code>) values. In Figure <span class="math inline">\(\ref{fig-data}\)</span>, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure <span class="math inline">\(\ref{fig-result}\)</span>. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure <span class="math inline">\(\ref{fig-result}\)</span>.</p>
+<p>We present the resulting calculated travel times in Figure <span class="math inline">\(\ref{fig-result}\)</span>. Note that the results in <code>trave_time_singapore</code> include infinite (<code>Inf</code>) values. In Figure <span class="math inline">\(\ref{fig-data}\)</span>, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure <span class="math inline">\(\ref{fig-result}\)</span>. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure <span class="math inline">\(\ref{fig-result}\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
