@@ -76,7 +76,7 @@ In this example we wish to calculate the walking travel time from the nearest ma
 
 ## Prepare the data and download friction surface
 
-For this excercise, we need two items of data:
+For this exercise, we need two items of data:
 
 -   our area of interest --- in this case a map of Singapore, and
 -   our points to calculate travel time from --- here the locations of Singapore's MRT and LRT stations.
@@ -127,7 +127,7 @@ Thus we have our friction surface as a `SpatRaster`:
 friction_singapore
 ```
 
-Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure \ref{fig-data}). Higher values of friction indicate more time travelling across a given cell.
+Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure \ref{fig-data}). `traveltime` takes resistance values of friction [@gdistance2017], so higher values of friction indicate more time travelling across a given cell. In this case walking friction is fairly uniform across the islands barring a few small inaccesible locations. More heterogeneity would be expected in less developed areas with fewer transport corridors.
 
 ```{r}
 #| label: fig-data
@@ -161,7 +161,7 @@ ggplot() +
     direction = -1
   ) +
   labs(
-    fill = "Friction",
+    fill = "Resistance",
     x = element_blank(),
     y = element_blank()
   ) +
@@ -213,11 +213,11 @@ ggplot() +
 
 The `traveltime` package is immediately suitable to a range of applications where travel to custom locations is of interest. Nonetheless, we see opportunities to build the package utility into the future through two mechanisms: (1) capability to better distribute a wider range friction surfaces, and (2) additional methods to handle large spatial extents.
 
-Firstly, `traveltime` currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through `malariaAtlas`. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km^2^ cell size is a relatively large area to walk across, and thus actual waking times are likely to vary significantly within each cell. We note though that the capability to calculate travel time over any friction surface exists presently, it is only the availability of additional surfaces that is presently restrictive.
+Firstly, `traveltime` currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. Although the user can supply their own friction surface, we expect most applications will use these surfaces. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through `malariaAtlas`. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km^2^ cell size is a relatively large area to walk across, and thus actual waking times may vary significantly within each cell.
 
 [^2]: Approximately 0.008333 decimal degrees, or just below 1 km^2^ at the equator
 
-At the other end of the scale, the calculations can require relatively large amounts of onboard memory for analyses over large landscapes (e.g. one analyses over Africa required \~ 72 GB RAM). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.
+At the other end of the scale, the calculations can require relatively large amounts of onboard memory for analyses over large landscapes (e.g. analyses over Africa required \~ 72 GB RAM). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.
 
 # Acknowledgements
 
