@@ -6,3 +6,5 @@
 *.tif
 *further/
 docs
+*/paper/drafts
+*.pdf
