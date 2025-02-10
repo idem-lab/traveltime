@@ -95,34 +95,30 @@ calculate_travel_time <- function(
     )
   }
 
-  # explaining variable
-  if(!any(c("matrix", "data.frame", "SpatVector") %in% class(points))){
+  point_format_ok <- any(c("matrix", "data.frame", "SpatVector") %in% class(points))
+
+  if(!point_format_ok){
     stop("points must be a SpatVector, data.frame, or matrix")
   }
 
-  # use inherits
-  if("SpatVector" %in% class(points)){
+  if(inherits(points, "SpatVector")){
     points <- terra::geom(points)[,c("x", "y")]
   }
-
-  #npoints <- nrow(points)
 
   friction <- raster::raster(friction_surface)
 
   tsn <- gdistance::transition(friction, function(x) 1/mean(x), 8)
-  tgc <- gdistance::geoCorrection(tsn)
 
-  # xy.data.frame <- data.frame()
-  # xy.data.frame[1:npoints,1] <- points[,1]
-  # xy.data.frame[1:npoints,2] <- points[,2]
-  # xy.matrix <- as.matrix(xy.data.frame)
+  tgc <- gdistance::geoCorrection(tsn)
 
   xy.matrix <- as.matrix(points[,1:2])
 
   travel_time <- gdistance::accCost(tgc, xy.matrix)
+
   names(travel_time) <- "travel_time"
 
   if(!is.null(filename)){
+
     raster::writeRaster(
       travel_time,
       filename,
@@ -130,8 +126,11 @@ calculate_travel_time <- function(
     )
 
     return(terra::rast(filename))
+
   } else {
+
     terra::rast(travel_time)
+
   }
 
 }
