@@ -54,8 +54,8 @@ surface.</p>
 
 
 <dl><dt id="arg-friction-surface">friction_surface<a class="anchor" aria-label="anchor" href="#arg-friction-surface"></a></dt>
-<dd><p>A <code>SpatRaster</code> friction surface layer. See
-<code><a href="get_friction_surface.html">?get_friction_surface</a></code></p></dd>
+<dd><p>A <code>SpatRaster</code> friction surface layer with in
+resistance units. See Details.</p></dd>
 
 
 <dt id="arg-points">points<a class="anchor" aria-label="anchor" href="#arg-points"></a></dt>
@@ -84,19 +84,27 @@ with longitude (x) in the first column and latitude (y) in the second, or a
 time from given locations over a friction surface.</p>
 <p>Over large areas this function can require significant RAM and will be
 slow.</p>
-<p>Citations: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S.,
-Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T.,
-Shekel, C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K.
-Nandi, S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G.
-Chestnutt, J. J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt,
-and P. W. Gething. Global maps of travel time to healthcare facilities.
-(2020) Nature Medicine. https://doi.org/10.1038/s41591-020-1059-1</p>
+<p>Pre-prepared walking or motorised friction surfaces can be obtained
+with<code><a href="get_friction_surface.html">?get_friction_surface</a></code>. User can also provide their own friction
+surface. This surface but must be in resistance units (1/conductance), e.g.
+minutes/meter. See Van Etten 2017.</p>
+<p>Citations:</p>
+<p>D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
+Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C.
+Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
+Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J.
+Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W.
+Gething. Global maps of travel time to healthcare facilities. (2020) Nature
+Medicine. <a href="https://doi.org/10.1038/s41591-020-1059-1" class="external-link">https://doi.org/10.1038/s41591-020-1059-1</a></p>
 <p>D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A. Lieber,
 M. Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U. Dalrymple, J.
 Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang, E. Cameron, D.
 Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething. A global map of travel
 time to cities to assess inequalities in accessibility in 2015. (2018).
-Nature. doi:10.1038/nature25181.</p>
+Nature. <a href="https://doi:10.1038/nature25181" class="external-link">https://doi:10.1038/nature25181</a></p>
+<p>van Etten, J. (2017). R package gdistance: Distances and routes on
+geographical grids. Journal of Statistical Software
+<a href="https://doi.org/10.18637/jss.v076.i13" class="external-link">https://doi.org/10.18637/jss.v076.i13</a></p>
     </div>
 
     <div class="section level2">
@@ -120,17 +128,7 @@ Nature. doi:10.1038/nature25181.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   method              from     </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   autoplot.SpatRaster tidyterra</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   autoplot.default    ggplot2  </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking if the following Surface-Year combinations are available to download:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     DATASET ID  YEAR </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Accessibility__202001_Global_Motorized_Friction_Surface:  DEFAULT </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: sf</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is FALSE</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> No encoding supplied: defaulting to UTF-8.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBBBB;">&lt;</span><span style="color: #BBBBBB; text-decoration: underline;">GMLEnvelope</span><span style="color: #BBBBBB;">&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">lowerCorner</span>: <span style="background-color: #BBBBBB;">0 111</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1 112</span>Start tag expected, '&lt;' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> Failed to connect to MAP geoserver. Please try again later. If this error keeps occurring please send us an email at data.malariaatlas.org@telethonkids.org.au</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="va">from_here</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>   x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">111.2</span>, <span class="fl">111.9</span><span class="op">)</span>,</span></span>
@@ -141,15 +139,7 @@ Nature. doi:10.1038/nature25181.</p>
 <span class="r-in"><span>  friction_surface <span class="op">=</span> <span class="va">friction_surface</span>,</span></span>
 <span class="r-in"><span>  points <span class="op">=</span> <span class="va">from_here</span></span></span>
 <span class="r-in"><span> <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 0.008333333, 0.008333333  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 111, 112, 3.774758e-15, 1  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. :  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> source(s)   : memory</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        : travel_time </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :      0.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :    582.1882 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'friction_surface' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
