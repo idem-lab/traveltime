@@ -7,7 +7,7 @@
 #'   resistance units. See Details.
 #' @param points A two-column `matrix`, `data.frame`, (including `tibble` types)
 #'   with longitude (x) in the first column and latitude (y) in the second, or a
-#'   `SpatVector`, in the same coordinate, reference system as
+#'   `SpatVector`, in the same coordinate reference system as
 #'   `friction_surface`.
 #' @param filename `character`. Output file name with extension suitable for
 #'   `terra::writeRaster`
