@@ -24,7 +24,7 @@ Authors@R: c(
       )
   )
 Description: Calculate travel time over a friction surface from a specified set of locations.
-License: MIT + file LICENSE
+License: CC BY 4.0
 Imports: 
     cli,
     gdistance,
