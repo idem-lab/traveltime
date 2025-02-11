@@ -1,13 +1,8 @@
 ---
 title: "`traveltime`: an R package to calculate walking and motorised travel time from user-specified locations"
 format:
-  #md: default
-  html:
-    keep-md: true
-    fig-height: 4
-    fig-align: center
-    fig-format: png
-    dpi: 300
+  jasa-pdf:
+    keep-tex: true   
 tags: 
   - R
   - geographic information systems
@@ -107,7 +102,7 @@ library(traveltime)
 head(stations)
 ```
 
-Now that we have the two items of data that we require, the next step is to prepare a friction surface for our area of interest. We will use the friction surface from @weiss2020 that can be downloaded by `traveltime` with the function `get_friction_surface()`. We can pass in our basemap `singapore_shapefile`, a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.) We're also only interested in walking *on land* so we then mask out areas outside of the land boundary in `singapore_shapefile`:
+Now that we have the two items of data that we require, the next step is to prepare a friction surface for our area of interest. We will use the friction surface from @weiss2020global that can be downloaded by `traveltime` with the function `get_friction_surface()`. We can pass in our basemap `singapore_shapefile`, a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.) We're also only interested in walking *on land* so we then mask out areas outside of the land boundary in `singapore_shapefile`:
 
 ```{r}
 #| label: download-friction-surface
@@ -127,7 +122,7 @@ Thus we have our friction surface as a `SpatRaster`:
 friction_singapore
 ```
 
-Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure \ref{fig-data}). `traveltime` takes resistance values of friction [@gdistance2017], so higher values of friction indicate more time travelling across a given cell. In this case walking friction is fairly uniform across the islands barring a few small inaccesible locations. More heterogeneity would be expected in less developed locations with fewer transport corridors.
+Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points (Figure @fig-data). `traveltime` takes resistance values of friction [@gdistance2017], so higher values of friction indicate more time travelling across a given cell. In this case walking friction is fairly uniform across the islands barring a few small inaccesible locations. More heterogeneity would be expected in less developed locations with fewer transport corridors.
 
 ```{r}
 #| label: fig-data
@@ -184,7 +179,7 @@ trave_time_singapore <- calculate_travel_time(
 trave_time_singapore
 ```
 
-We present the resulting calculated travel times in Figure \ref{fig-result} where, as expected, the travel times are lowest near station exits (per Figure \ref{fig-data}) and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf`  above). In Figure \ref{fig-data}, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure \ref{fig-result}. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig-result}.
+We present the resulting calculated travel times in Figure @fig-result where, as expected, the travel times are lowest near station exits (per Figure @fig-data) and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf`  above). In Figure @fig-data, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure @fig-result. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure @fig-result.
 
 ```{r}
 #| label: fig-result
