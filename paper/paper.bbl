@@ -1,0 +1,80 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Dennis \harvardand\ Thomas}{2000}{dennis2000bias}
+Dennis, R. \harvardand\ Thomas, C.  \harvardyearleft 2000\harvardyearright , `Bias in butterfly distribution maps: the influence of hot spots and recorder's home range', {\em Journal of Insect Conservation} {\bf 4},~73--77.
+
+\harvarditem{Falchetta \harvardand\ Noussan}{2021}{falchetta2021electric}
+Falchetta, G. \harvardand\ Noussan, M.  \harvardyearleft 2021\harvardyearright , `Electric vehicle charging network in europe: An accessibility and deployment trends analysis', {\em Transportation Research Part D: Transport and Environment} {\bf 94},~102813.
+
+\harvarditem{GADM}{2022}{gadm}
+GADM  \harvardyearleft 2022\harvardyearright , `Gadm maps and data'.
+\newblock [Version 4.1. Online; accessed 10-December-2024].
+\newline\harvardurl{https://gadm.org/index.html}
+
+\harvarditem{Hijmans}{2024}{terra}
+Hijmans, R.~J.  \harvardyearleft 2024\harvardyearright , {\em terra: Spatial Data Analysis}.
+\newblock R package version 1.7-83.
+\newline\harvardurl{https://CRAN.R-project.org/package=terra}
+
+\harvarditem[Hijmans et~al.]{Hijmans, Barbosa, Ghosh \harvardand\ Mandel}{2024}{geodata}
+Hijmans, R.~J., Barbosa, M., Ghosh, A. \harvardand\ Mandel, A.  \harvardyearleft 2024\harvardyearright , {\em geodata: Download Geographic Data}.
+\newblock R package version 0.6-2.
+\newline\harvardurl{https://CRAN.R-project.org/package=geodata}
+
+\harvarditem[Hulland et~al.]{Hulland, Wiens, Shirude, Morgan, Bertozzi-Villa, Farag, Fullman, Kraemer, Miller-Petrie, Gupta et~al.}{2019}{hulland2019travel}
+Hulland, E., Wiens, K., Shirude, S., Morgan, J., Bertozzi-Villa, A., Farag, T., Fullman, N., Kraemer, M., Miller-Petrie, M., Gupta, V. et~al.  \harvardyearleft 2019\harvardyearright , `Travel time to health facilities in areas of outbreak potential: maps for guiding local preparedness and response', {\em BMC medicine} {\bf 17},~1--16.
+
+\harvarditem{{Land Transport Authority}}{2019}{singdata}
+{Land Transport Authority}  \harvardyearleft 2019\harvardyearright , `Lta mrt station exit (geojson) dataset'.
+\newblock [Online; accessed 10-December-2024].
+\newline\harvardurl{https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view}
+
+\harvarditem{{Lo Russo}}{2024}{traveltime_gh}
+{Lo Russo}, T.  \harvardyearleft 2024\harvardyearright , {\em traveltime - a Traveltime API Wrapper for R}.
+\newblock release 0.0.2.
+\newline\harvardurl{https://github.com/tlorusso/traveltime}
+
+\harvarditem[Nelson et~al.]{Nelson, Weiss, van Etten, Cattaneo, McMenomy \harvardand\ Koo}{2019}{nelson2019suite}
+Nelson, A., Weiss, D.~J., van Etten, J., Cattaneo, A., McMenomy, T.~S. \harvardand\ Koo, J.  \harvardyearleft 2019\harvardyearright , `A suite of global accessibility indicators', {\em Scientific data} {\bf 6}(1),~266.
+
+\harvarditem[Padgham et~al.]{Padgham, Boeing, Cooley, Tierney, Sumner, Phan \harvardand\ Beare}{2019}{padgham2019introduction}
+Padgham, M., Boeing, G., Cooley, D., Tierney, N., Sumner, M., Phan, T.~G. \harvardand\ Beare, R.  \harvardyearleft 2019\harvardyearright , `An introduction to software tools, data, and services for geospatial analysis of stroke services', {\em Frontiers in Neurology} {\bf 10},~743.
+
+\harvarditem{{R Core Team}}{2024}{Rref}
+{R Core Team}  \harvardyearleft 2024\harvardyearright , {\em R: A Language and Environment for Statistical Computing}, R Foundation for Statistical Computing, Vienna, Austria.
+\newline\harvardurl{https://www.R-project.org/}
+
+\harvarditem[Tierney et~al.]{Tierney, Reinhold, Mira, Weiser, Burkart, Benvenuti \harvardand\ Auricchio}{2018}{tierney2018novel}
+Tierney, N.~J., Reinhold, H.~J., Mira, A., Weiser, M., Burkart, R., Benvenuti, C. \harvardand\ Auricchio, A.  \harvardyearleft 2018\harvardyearright , `Novel relocation methods for automatic external defibrillator improve out-of-hospital cardiac arrest coverage under limited resources', {\em Resuscitation} {\bf 125},~83--89.
+
+\harvarditem{TravelTime}{2024{\em a}}{traveltimeapi}
+TravelTime  \harvardyearleft 2024{\em a}\harvardyearright , {\em TravelTime API}.
+\newblock [Online; accessed 10-December-2024].
+\newline\harvardurl{https://docs.traveltime.com/api/overview/introduction}
+
+\harvarditem{TravelTime}{2024{\em b}}{traveltimeR}
+TravelTime  \harvardyearleft 2024{\em b}\harvardyearright , {\em traveltimeR: Interface to 'Travel Time' API}.
+\newblock R package version 1.2.1.
+\newline\harvardurl{https://cran.r-project.org/package=traveltimeR}
+
+\harvarditem{{van Etten}}{2017}{gdistance2017}
+{van Etten}, J.  \harvardyearleft 2017\harvardyearright , `R package gdistance: Distances and routes on geographical grids', {\em Journal of Statistical Software} {\bf 76}(13),~1--21.
+
+\harvarditem{{von Bergmann}}{2024}{rtraveltime}
+{von Bergmann}, J.  \harvardyearleft 2024\harvardyearright , {\em rtraveltime}.
+\newblock [Online; accessed 10-December-2024].
+\newline\harvardurl{https://github.com/mountainMath/rtraveltime}
+
+\harvarditem[Weiss et~al.]{Weiss, Nelson, Gibson, Temperley, Peedell, Lieber, Hancher, Poyart, Belchior, Fullman et~al.}{2018}{weiss2018global}
+Weiss, D.~J., Nelson, A., Gibson, H., Temperley, W., Peedell, S., Lieber, A., Hancher, M., Poyart, E., Belchior, S., Fullman, N. et~al.  \harvardyearleft 2018\harvardyearright , `A global map of travel time to cities to assess inequalities in accessibility in 2015', {\em Nature} {\bf 553}(7688),~333--336.
+
+\harvarditem[Weiss et~al.]{Weiss, Nelson, Vargas-Ruiz, Gligori{\'c}, Bavadekar, Gabrilovich, Bertozzi-Villa, Rozier, Gibson, Shekel et~al.}{2020}{weiss2020global}
+Weiss, D.~J., Nelson, A., Vargas-Ruiz, C., Gligori{\'c}, K., Bavadekar, S., Gabrilovich, E., Bertozzi-Villa, A., Rozier, J., Gibson, H., Shekel, T. et~al.  \harvardyearleft 2020\harvardyearright , `Global maps of travel time to healthcare facilities', {\em Nature Medicine} {\bf 26}(12),~1835--1838.
+
+\harvarditem{Zahavi}{1974}{zahavi1974traveltime}
+Zahavi, Y.  \harvardyearleft 1974\harvardyearright , Traveltime budgets and mobility in urban areas, Technical report, United States. Federal Highway Administration.
+
+\harvarditem[Zhao et~al.]{Zhao, Elmore, Lee, Numata, Zhang \harvardand\ Cochrane}{2023}{zhao2023replanting}
+Zhao, J., Elmore, A.~J., Lee, J. S.~H., Numata, I., Zhang, X. \harvardand\ Cochrane, M.~A.  \harvardyearleft 2023\harvardyearright , `Replanting and yield increase strategies for alleviating the potential decline in palm oil production in indonesia', {\em Agricultural Systems} {\bf 210},~103714.
+
+\end{thebibliography}
