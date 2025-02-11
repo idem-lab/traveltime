@@ -11,25 +11,24 @@ authors:
   - name: Gerard E. Ryan
     orcid: 0000-0003-0183-7630
     corresponding: true
-    affiliation: 1, 2
+    affiliations:
+      - The Kids Research Institute Australia, Nedlands 6009 WA, Australia
+      - Melbourne School of Population and Global Health, University of Melbourne, 3010, VIC, Australia
   - name: Nicholas Tierney
     orcid: 0000-0003-1460-8722
-    affiliation: 1, 3
+    affiliations:
+      - The Kids Research Institute Australia, Nedlands 6009 WA, Australia
+      - Curtin University, Bentley, WA, Australia
   - name: Nick Golding
     orcid: 0000-0001-8916-5570
-    affiliation: 1, 4
+    affiliations:
+      - University of Western Australia, WA, Australia
+      - The Kids Research Institute Australia, Nedlands 6009 WA, Australia
   - name: Daniel J. Weiss
     orcid: 0000-0002-6175-5648
-    affiliation: 1, 3
-affiliations:
- - name: The Kids Research Institute Australia, Nedlands 6009 WA, Australia
-   index: 1
- - name: Melbourne School of Population and Global Health, University of Melbourne, 3010, VIC, Australia
-   index: 2
- - name: Curtin University, Bentley, WA, Australia
-   index: 3
- - name: University of Western Australia, WA, Australia
-   index: 4
+    affiliations:
+      - The Kids Research Institute Australia, Nedlands 6009 WA, Australia
+      - Curtin University, Bentley, WA, Australia
 date: In prep 2025
 bibliography: paper.bib
 ---
