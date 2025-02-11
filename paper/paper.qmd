@@ -107,7 +107,7 @@ library(traveltime)
 head(stations)
 ```
 
-Now that we have the two items of data that we require, the next step is to prepare a friction surface for our area of interest. We will use the friction surface from @weiss2020 that can be downloaded by `traveltime` with the function `get_friction_surface()`. We can pass in our basemap `singapore_shapefile`, a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.) We're also only interested in walking *on land* so we then mask out areas outside of the land boundary in `singapore_shapefile`:
+Now that we have the two items of data that we require, the next step is to prepare a friction surface for our area of interest. We will use the friction surface from @weiss2020global that can be downloaded by `traveltime` with the function `get_friction_surface()`. We can pass in our basemap `singapore_shapefile`, a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. (Alternatively, we could use `surface = "motor2020"` for motorised travel if that were of interest.) We're also only interested in walking *on land* so we then mask out areas outside of the land boundary in `singapore_shapefile`:
 
 ```{r}
 #| label: download-friction-surface
