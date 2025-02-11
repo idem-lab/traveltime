@@ -1,10 +1,15 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
+
+
+\PassOptionsToPackage{table}{xcolor}
+
 \documentclass[
-  12pt]{article}
+  10pt,
+  letterpaper,
+]{article}
 
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
@@ -38,31 +43,9 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{5}
-% Make \paragraph and \subparagraph free-standing
-\makeatletter
-\ifx\paragraph\undefined\else
-  \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-  \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-\makeatother
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -130,11 +113,73 @@
 \def\fps@figure{htbp}
 \makeatother
 
-\addtolength{\oddsidemargin}{-.5in}%
-\addtolength{\evensidemargin}{-1in}%
-\addtolength{\textwidth}{1in}%
-\addtolength{\textheight}{1.7in}%
-\addtolength{\topmargin}{-1in}%
+% Use adjustwidth environment to exceed column width (see example table in text)
+\usepackage{changepage}
+
+% marvosym package for additional characters
+\usepackage{marvosym}
+
+% cite package, to clean up citations in the main text. Do not remove.
+% Using natbib instead
+% \usepackage{cite}
+
+% Use nameref to cite supporting information files (see Supporting Information section for more info)
+\usepackage{nameref,hyperref}
+
+% line numbers
+\usepackage[right]{lineno}
+
+% ligatures disabled
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+
+% create "+" rule type for thick vertical lines
+\newcolumntype{+}{!{\vrule width 2pt}}
+
+% create \thickcline for thick horizontal lines of variable length
+\newlength\savedwidth
+\newcommand\thickcline[1]{%
+  \noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+  \cline{#1}%
+  \noalign{\vskip\arrayrulewidth}%
+  \noalign{\global\arrayrulewidth\savedwidth}%
+}
+
+% \thickhline command for thick horizontal lines that span the table
+\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+\hline
+\noalign{\global\arrayrulewidth\savedwidth}}
+
+% Text layout
+\raggedright
+\setlength{\parindent}{0.5cm}
+\textwidth 5.25in 
+\textheight 8.75in
+
+% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
+% Captions will be left justified
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
+\renewcommand{\figurename}{Fig}
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+% Header and Footer with logo
+\usepackage{lastpage,fancyhdr}
+\usepackage{epstopdf}
+%\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+%\setlength{\headheight}{27.023pt}
+%\lhead{\includegraphics[width=2.0in]{PLOS-submission.eps}}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
+\fancyheadoffset[L]{2.25in}
+\fancyfootoffset[L]{2.25in}
+\lfoot{\today}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -180,56 +225,79 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\usepackage[]{natbib}
-\bibliographystyle{agsm}
+\usepackage[numbers,square,comma]{natbib}
+\bibliographystyle{plos2015}
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Summary},
-  colorlinks=true,
-  linkcolor={blue},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={Blue},
+  pdftitle={traveltime: an R package to calculate walking and motorised travel time from user-specified locations},
+  hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
 
 
+
 \begin{document}
+\vspace*{0.2in}
 
-
-\def\spacingset#1{\renewcommand{\baselinestretch}%
-{#1}\small\normalsize} \spacingset{1}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\date{January 1, 2025}
-\title{\bf Summary}
-\author{
-Gerard E. Ryan\\
-1, 2\\
-and\\Nicholas Tierney\\
-1, 3\\
-and\\Nick Golding\\
-1, 4\\
-and\\Daniel J. Weiss\\
-1, 3\\
+% Title must be 250 characters or less.
+\begin{flushleft}
+{\Large
+\textbf\newline{\texttt{traveltime}: an R package to calculate walking
+and motorised travel time from user-specified
+locations} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
 }
-\maketitle
-
+\newline
+\\
+% Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
+Gerard E. Ryan\textsuperscript{1*}, Nicholas
+Tierney\textsuperscript{2}, Nick Golding\textsuperscript{3}, Daniel J.
+Weiss\textsuperscript{2}
+\\
 \bigskip
+\textbf{1} 1, 2, \\ \textbf{2} 1, 3, \\ \textbf{3} 1,
+4, \\ \textbf{4} The Kids Research Institute Australia, Nedlands 6009
+WA, Australia, \\ \textbf{5} Melbourne School of Population and Global
+Health, University of Melbourne, 3010, VIC,
+Australia, \\ \textbf{6} Curtin University, Bentley, WA,
+Australia, \\ \textbf{7} University of Western Australia, WA,
+Australia, 
 \bigskip
-\begin{abstract}
 
-\end{abstract}
+% Insert additional author notes using the symbols described below. Insert symbol callouts after author names as necessary.
+%
+% Remove or comment out the author notes below if they aren't used.
+%
+% Primary Equal Contribution Note
+%\Yinyang These authors contributed equally to this work.
+
+% Additional Equal Contribution Note
+% Also use this double-dagger symbol for special authorship notes, such as senior authorship.
+%\ddag These authors also contributed equally to this work.
+
+% Current address notes
+%\textcurrency Current Address: Dept/Program/Center, Institution Name, City, State, Country % change symbol to "\textcurrency a" if more than one current address note
+% \textcurrency b Insert second current address
+% \textcurrency c Insert third current address
+
+% Deceased author note
+%\dag Deceased
+
+% Group/Consortium Author Note
+%\textpilcrow Membership list can be found in the Acknowledgments section.
+
+% Use the asterisk to denote corresponding authorship and provide email address in note below.
+* \\ email \href{mailto:gerry.ryan@thekids.org.au}{gerry.ryan@thekids.org.au}
+
+\end{flushleft}
 
 
-\newpage
-\spacingset{1.9} % DON'T change the spacing!
 
+\linenumbers
+
+\section{Summary}\label{summary}
 
 Understanding and mapping the time to travel among locations is useful
 for many activities from urban planning \citep{zahavi1974traveltime} to
@@ -284,7 +352,7 @@ package, we suggest citations of the package should be accompanied by
 citing the underlying methodological work
 \citep{weiss2018global, weiss2020global} as well.
 
-Statement of need
+\section{Statement of need}\label{statement-of-need}
 
 Global maps of travel time to cities
 \citep{weiss2018global, nelson2019suite} and health care facilities
@@ -327,14 +395,15 @@ estimate travel time from any number of user-supplied locations, across
 a complete area of interest, and with convenient access to motorised or
 walking friction surfaces with global coverage.
 
-Example: walking from public transport in Singapore
+\section{Example: walking from public transport in
+Singapore}\label{example-walking-from-public-transport-in-singapore}
 
 In this example we will calculate the walking travel time from the
 nearest mass transit station across the island nation of Singapore ---
 specifically Mass Rapid Transit (MRT) and Light Rail Transit (LRT)
 stations --- and create a map of this.
 
-\section{Prepare the data and friction
+\subsection{Prepare the data and friction
 surface}\label{prepare-the-data-and-friction-surface}
 
 For this exercise, we need two items of data:
@@ -355,22 +424,6 @@ GADM \citep{gadm} database using the \texttt{geodata} package
 (\texttt{resolution\ =\ 2}). Our boundary \texttt{singapore\_shapefile}
 is a \texttt{SpatVector} class object.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(terra)}
-\FunctionTok{library}\NormalTok{(geodata)}
-
-\NormalTok{singapore\_shapefile }\OtherTok{\textless{}{-}} \FunctionTok{gadm}\NormalTok{(}
-  \AttributeTok{country =} \StringTok{"Singapore"}\NormalTok{,}
-  \AttributeTok{level =} \DecValTok{0}\NormalTok{,}
-  \AttributeTok{path =} \FunctionTok{tempdir}\NormalTok{(),}
-  \AttributeTok{resolution =} \DecValTok{2}
-\NormalTok{)}
-
-\NormalTok{singapore\_shapefile}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
  class       : SpatVector 
  geometry    : polygons 
@@ -387,13 +440,6 @@ package is a 563 row, 2 column \texttt{matrix} containing the longitude
 (\texttt{x}) and latitude (\texttt{y}) of all LRT and MRT station exits
 in Singapore from \citet{singdata}:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(traveltime)}
-\FunctionTok{head}\NormalTok{(stations)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
             x        y
 [1,] 103.9091 1.334922
@@ -406,7 +452,7 @@ in Singapore from \citet{singdata}:
 
 Now that we have the two items of data that we require, the next step is
 to prepare a friction surface for our area of interest. We will use the
-friction surface from \citet{weiss2020} that can be downloaded by
+friction surface from \citet{weiss2020global} that can be downloaded by
 \texttt{traveltime} with the function \texttt{get\_friction\_surface()}.
 We can pass in our basemap \texttt{singapore\_shapefile}, a
 \texttt{SpatVector}, directly as the \texttt{extent}. We're interested
@@ -429,12 +475,6 @@ land} so we then mask out areas outside of the land boundary in
 
 Thus we have our friction surface as a \texttt{SpatRaster}:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{friction\_singapore}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 class       : SpatRaster 
 dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
@@ -450,7 +490,7 @@ max value   :       0.06192715
 
 Below we plot the friction surface raster \texttt{friction\_singapore},
 with the vector boundary \texttt{singapore\_shapefile} as a grey line,
-and \texttt{stations} as grey points (Figure Figure~\ref{fig-data}).
+and \texttt{stations} as grey points (Figure Fig~\ref{fig-data}).
 \texttt{traveltime} takes resistance values of friction
 \citep{gdistance2017}, so higher values of friction indicate more time
 travelling across a given cell. In this case walking friction is fairly
@@ -471,7 +511,7 @@ Singapore boundary in grey, and station locations as grey points.}
 
 \end{figure}%
 
-\section{Calculate and plot the travel
+\subsection{Calculate and plot the travel
 time}\label{calculate-and-plot-the-travel-time}
 
 With all the data collected, the function
@@ -479,17 +519,6 @@ With all the data collected, the function
 \texttt{friction\_singapore} and the points of interest in
 \texttt{stations}, and returns a \texttt{SpatRaster} of walking time in
 minutes to each cell from the nearest station:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{trave\_time\_singapore }\OtherTok{\textless{}{-}} \FunctionTok{calculate\_travel\_time}\NormalTok{(}
-  \AttributeTok{friction\_surface =}\NormalTok{ friction\_singapore,}
-  \AttributeTok{points =}\NormalTok{ stations}
-\NormalTok{)}
-
-\NormalTok{trave\_time\_singapore}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 class       : SpatRaster 
@@ -504,16 +533,16 @@ max value   :         Inf
 \end{verbatim}
 
 We present the resulting calculated travel times in Figure
-Figure~\ref{fig-result} where, as expected, the travel times are lowest
-near station exits (per Figure Figure~\ref{fig-data}) and progressively
+Fig~\ref{fig-result} where, as expected, the travel times are lowest
+near station exits (per Figure Fig~\ref{fig-data}) and progressively
 higher further away. Note that the results in
 \texttt{trave\_time\_singapore} include infinite values (\texttt{Inf}
-above). In Figure Figure~\ref{fig-data}, the islands to the south and
+above). In Figure Fig~\ref{fig-data}, the islands to the south and
 north-east are shown as filled cells, but unconnected with the mainland.
 The raster cells for these islands appear absent in Figure
-Figure~\ref{fig-result}. Because they are not connected to any cells
-with a station, the calculated travel time is infinite, and so these
-cells do not appear in Figure Figure~\ref{fig-result}.
+Fig~\ref{fig-result}. Because they are not connected to any cells with a
+station, the calculated travel time is infinite, and so these cells do
+not appear in Figure Fig~\ref{fig-result}.
 
 \begin{figure}
 
@@ -528,7 +557,8 @@ minutes from nearest MRT or LRT station.}
 
 \end{figure}%
 
-Opportunities for future development
+\section{Opportunities for future
+development}\label{opportunities-for-future-development}
 
 The \texttt{traveltime} package is immediately suitable to a range of
 applications where travel to custom locations is of interest.
@@ -540,13 +570,13 @@ large spatial extents.
 Firstly, \texttt{traveltime} currently has access to walking and
 motorised friction surfaces for 2020, both at 30 arc-second
 resolution\footnote{Approximately 0.008333 decimal degrees, or just
-  below 1 km\textsuperscript{2} at the equator}. Although the user can
-supply their own friction surface, we expect most applications will use
-these existing surfaces given the extensive work needed in creating new
-ones \citep{weiss2018global, weiss2020global}. As landscapes are not
-dynamic, it may be useful to incorporate updated versions of these
-friction surfaces if and when they are available, though this is likely
-to occur first through \texttt{malariaAtlas}. Furthermore, although the
+  below 1 km\(^2\) at the equator}. Although the user can supply their
+own friction surface, we expect most applications will use these
+existing surfaces given the extensive work needed in creating new ones
+\citep{weiss2018global, weiss2020global}. As landscapes are not dynamic,
+it may be useful to incorporate updated versions of these friction
+surfaces if and when they are available, though this is likely to occur
+first through \texttt{malariaAtlas}. Furthermore, although the
 resolution of these data is likely to be suitable for larger landscape
 foci, higher resolution data may be helpful for more locally focussed
 analyses. For instance, although the example here was chosen for it's
@@ -563,7 +593,7 @@ Developing methods to handle large landscapes either with less memory or
 via cloud resources would be helpful to make such analyses accessible to
 those without access to larger computing resources.
 
-Acknowledgements
+\section{Acknowledgements}\label{acknowledgements}
 
 This work was supported, in whole or in part, by the Bill \& Melinda
 Gates Foundation {[}INV-021972{]}. The conclusions and opinions
@@ -574,11 +604,10 @@ assigned to the Author Accepted Manuscript version that might arise from
 this submission. Please note works submitted as a preprint have not
 undergone a peer review process.
 
-References
 
-
+\nolinenumbers
+\renewcommand\refname{References}
   \bibliography{paper.bib}
-
 
 
 \end{document}

@@ -1,7 +1,7 @@
 ---
 title: "`traveltime`: an R package to calculate walking and motorised travel time from user-specified locations"
 format:
-  jasa-pdf:
+  plos-pdf:
     keep-tex: true   
 tags: 
   - R
@@ -11,16 +11,16 @@ authors:
   - name: Gerard E. Ryan
     orcid: 0000-0003-0183-7630
     corresponding: true
-    affiliation: "1, 2"
+    affiliation: 1, 2
   - name: Nicholas Tierney
     orcid: 0000-0003-1460-8722
-    affiliation: "1, 3"
+    affiliation: 1, 3
   - name: Nick Golding
     orcid: 0000-0001-8916-5570
-    affiliation: "1, 4"
+    affiliation: 1, 4
   - name: Daniel J. Weiss
     orcid: 0000-0002-6175-5648
-    affiliation: "1, 3"
+    affiliation: 1, 3
 affiliations:
  - name: The Kids Research Institute Australia, Nedlands 6009 WA, Australia
    index: 1
@@ -210,9 +210,9 @@ The `traveltime` package is immediately suitable to a range of applications wher
 
 Firstly, `traveltime` currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. Although the user can supply their own friction surface, we expect most applications will use these existing surfaces given the extensive work needed in creating new ones [@weiss2018global; @weiss2020global]. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through `malariaAtlas`. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km^2^ cell size is a relatively large area to walk across, and thus actual waking times may vary significantly within each cell. We underline however that a user can provide their own higher resolution friction surface at present if desired.
 
-[^2]: Approximately 0.008333 decimal degrees, or just below 1 km^2^ at the equator
+[^2]: Approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator
 
-At the other end of the scale, the calculations can require relatively large amounts of onboard memory for analyses over large landscapes (e.g. analyses over Africa required \~ 72 GB RAM). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.
+At the other end of the scale, the calculations can require relatively large amounts of onboard memory for analyses over large landscapes (e.g. analyses over Africa required ~ 72 GB RAM). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.
 
 # Acknowledgements
 
