@@ -1,5 +1,5 @@
 ---
-title: "`traveltime`: an R package to calculate walking and motorised travel time from user-specified locations"
+title: "`traveltime`: an R package to calculate travel time across a landscape from user-specified locations"
 format:
   #md: default
   html:
