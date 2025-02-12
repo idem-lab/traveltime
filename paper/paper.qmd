@@ -1,8 +1,12 @@
 ---
-title: "`traveltime`: an R package to calculate walking and motorised travel time from user-specified locations"
+title: "`traveltime`: an R package to calculate travel time across a landscape from user-specified locations"
 format:
   plos-pdf:
-    keep-tex: true   
+    keep-tex: true
+    fig-height: 4
+    fig-align: center
+    fig-format: png
+    dpi: 300   
 tags: 
   - R
   - geographic information systems
@@ -41,7 +45,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 # Summary
 
-Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@hulland2019travel; @weiss2020global] and myriad others [@nelson2019suite]. Here we present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to create a map of the motorised or walking travel time over an area of interest from a user-specified set of geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations. We envisage this software having diverse applications including: estimating sampling bias in species occurrence data [@dennis2000bias, @reddy2003geographical], mapping electric vehicle charger accessibility [@falchetta2021electric], allocating public defibrillators [@tierney2018novel], setting rehabilitation districts for stroke patients [@padgham2019introduction], or understanding access to agricultural processing facilities [@zhao2023replanting].
+Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@hulland2019travel; @weiss2020global] and myriad others [@nelson2019suite]. Here we present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to create a map of the motorised or walking travel time over an area of interest from a user-specified set of geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations. We envisage this software having diverse applications including: estimating sampling bias in species occurrence data [@dennis2000bias; @reddy2003geographical], mapping electric vehicle charger accessibility [@falchetta2021electric], allocating public defibrillators [@tierney2018novel], setting rehabilitation districts for stroke patients [@padgham2019introduction], or understanding access to agricultural processing facilities [@zhao2023replanting].
 
 The work-flow requires two steps:
 
