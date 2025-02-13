@@ -98,9 +98,10 @@ singapore_shapefile
 ```
 
 
-The `stations` data set included in the `traveltime` package is a 563 row, 2 column `matrix` containing the longitude (`x`) and latitude (`y`) of all LRT and MRT station exits in Singapore from Land Transport Authority @singdata:
+The `stations` data set included in the `traveltime` package is a 563 row, 2 column `matrix` containing the longitude (`x`) and latitude (`y`) of all LRT and MRT station exits in Singapore from Land Transport Authority [@singdata]:
 
 ```{r}
+#| echo: true
 #| label: show-stations
 library(traveltime)
 head(stations)
@@ -122,6 +123,7 @@ friction_singapore <- get_friction_surface(
 Thus we have our friction surface as a `SpatRaster`:
 
 ```{r }
+#| echo: true
 #| label: show-friction-surface-raster
 friction_singapore
 ```
@@ -174,6 +176,7 @@ ggplot() +
 With all the data collected, the function `calculate_travel_time()` takes the friction surface `friction_singapore` and the points of interest in `stations`, and returns a `SpatRaster` of walking time in minutes to each cell from the nearest station:
 
 ```{r}
+#| echo: true
 #| label: calculate-result
 trave_time_singapore <- calculate_travel_time(
   friction_surface = friction_singapore,

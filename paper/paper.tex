@@ -453,7 +453,14 @@ is a \texttt{SpatVector} class object.
 The \texttt{stations} data set included in the \texttt{traveltime}
 package is a 563 row, 2 column \texttt{matrix} containing the longitude
 (\texttt{x}) and latitude (\texttt{y}) of all LRT and MRT station exits
-in Singapore from Land Transport Authority \citet{singdata}:
+in Singapore from Land Transport Authority \citep{singdata}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(traveltime)}
+\FunctionTok{head}\NormalTok{(stations)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
             x        y
@@ -490,6 +497,12 @@ then mask out areas outside of the land boundary in
 \end{Shaded}
 
 Thus we have our friction surface as a \texttt{SpatRaster}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{friction\_singapore}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 class       : SpatRaster 
@@ -535,6 +548,17 @@ With all the data collected, the function
 \texttt{friction\_singapore} and the points of interest in
 \texttt{stations}, and returns a \texttt{SpatRaster} of walking time in
 minutes to each cell from the nearest station:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trave\_time\_singapore }\OtherTok{\textless{}{-}} \FunctionTok{calculate\_travel\_time}\NormalTok{(}
+  \AttributeTok{friction\_surface =}\NormalTok{ friction\_singapore,}
+  \AttributeTok{points =}\NormalTok{ stations}
+\NormalTok{)}
+
+\NormalTok{trave\_time\_singapore}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 class       : SpatRaster 
