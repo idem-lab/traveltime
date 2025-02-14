@@ -8,212 +8,103 @@
 [![traveltime status
 badge](https://idem-lab.r-universe.dev/badges/traveltime)](https://idem-lab.r-universe.dev/traveltime)
 [![R-CMD-check](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/idem-lab/traveltime/branch/main/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime?branch=main)
 ![GitHub
 License](https://img.shields.io/github/license/geryan/traveltime)
-[![Lifecycle:](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 ![GitHub commit
 activity](https://img.shields.io/github/commit-activity/w/geryan/traveltime)
-![GitHub Downloads (all assets, all
-releases)](https://img.shields.io/github/downloads/geryan/traveltime/total)
 ![GitHub last
 commit](https://img.shields.io/github/last-commit/geryan/traveltime)
 ![GitHub commits since latest
 release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
+[![Codecov test
+coverage](https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
-Implements methods from Weiss et al. 2018, 2020 to calculate travel time
-from given locations over a friction surface.
+`traveltime` enables a user to create a map of travel time over an area
+of interest from a user-specified set of geographic coordinates and
+friction surface. The package provides convenient access to global
+friction surfaces for walking and motorised travel for the year 2020.
+The final result is a raster of the area of interest where the value in
+each cell is the lowest travel time in minutes to any of the specified
+locations.
 
-Citations:
-
-*D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar,
-E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel,
-C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi,
-S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J.
-J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W.
-Gething.* **Global maps of travel time to healthcare facilities.**
-(2020) Nature Medicine. <https://doi.org/10.1038/s41591-020-1059-1>
-
-*D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A.
-Lieber, M. Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U.
-Dalrymple, J. Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang,
-E. Cameron, D. Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething.* **A
-global map of travel time to cities to assess inequalities in
-accessibility in 2015.** (2018). Nature.
-<https://doi.org/10.1038/nature25181>
+<figure>
+<img src="man/figures/README-fig-result-1.png" style="width:60.0%"
+data-fig-align="right"
+alt="Walking travel time from rail transport in Singapore" />
+<figcaption aria-hidden="true">Walking travel time from rail transport
+in Singapore</figcaption>
+</figure>
 
 ## Installation
-
-You can install `traveltime` with:
 
 ``` r
 install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 ```
 
-## Let’s calculate some travel times
+or
 
-First download a friction surface –— here we are using the motorised
-travel time from Weiss *et al.* 2020. We use the function
-`traveltime::get_friction_surface`, specify the surface (type) as
-`"motor2020"`, and provide the spatial extent of interest:
+``` r
+remotes::install_github("idem-lab/traveltime")
+```
+
+## Documentation
+
+### Website
+
+<https://idem-lab.github.io/traveltime/>
+
+### Paper
+
+Ryan, G.E., Tierney, N., Golding, N., and Weiss, D.J (2025).
+<a href="https://doi.org/10.31223/X56M74" target="_blank">traveltime: an
+R package to calculate travel time across a landscape from
+user-specified locations</a>. **EarthArXiv** 10.31223/X56M74
+
+## What does this thing do?
+
+The `traveltime` workflow starts with:
+
+- a set of points you are interested in,
+
+and either
+
+- you supply a friction surface for the area you are interested in, or
+- you supply your area of interest and use `get_friction_surface` to
+  retrieve a pre-prepared walking or motorised travel friction surface
+  from Weiss et al. (2020) [^1] — this will probably be the case in most
+  applications.
+
+Then, running `calculate_travel_time` produces a raster as a `terra`
+`SpatRaster` with the travel time to the (temporally) nearest of the
+supplied points over the area of interest.
+
+### A practical example: walking from public transport in Singapore
+
+Here we will calculate the walking travel time from the nearest mass
+transit station across the island nation of Singapore — specifically
+Mass Rapid Transit (MRT) and Light Rail Transit (LRT) stations — and
+create a map of this.
+
+#### Prepare the data
+
+For this exercise, we need two items of data:
+
+- our points to calculate travel time from — here the locations of
+  Singapore’s MRT and LRT stations, and
+- our area of interest — in this case a map of Singapore.
+
+##### Points
+
+Our points of interest will be the `stations` data set included in
+`traveltime`; a 563 row, 2 column `matrix` containing the longitude
+(`x`) and latitude (`y`) of all LRT and MRT station exits in Singapore
+from [^2]:
 
 ``` r
 library(traveltime)
-library(terra)
-#> terra 1.7.83
-
-friction_surface <- get_friction_surface(
-    surface = "motor2020",
-    extent = c(111,112,0,1)
-  )
-#> Checking if the following Surface-Year combinations are available to download:
-#> 
-#>     DATASET ID  YEAR
-#>   - Explorer__2020_motorized_friction_surface:  DEFAULT
-#> 
-#> Loading required package: sf
-#> Linking to GEOS 3.12.1, GDAL 3.9.0, PROJ 9.4.0; sf_use_s2() is FALSE
-#> <GMLEnvelope>
-#> ....|-- lowerCorner: 0 111
-#> ....|-- upperCorner: 1 112
-friction_surface
-#> class       : SpatRaster 
-#> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
-#> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : 111, 112, 1.387779e-17, 1  (xmin, xmax, ymin, ymax)
-#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
-#> source      : Explorer__2020_motorized_friction_surface_0,111,1,112.tif 
-#> name        : friction_surface
-```
-
-Let’s have a look at that `SpatRaster`:
-
-``` r
-plot(friction_surface)
-```
-
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
-
-Now, prepare points that we would like to calculate travel time from:
-
-``` r
-from_here <- tibble::tibble(
-  x = c(111.2, 111.9),
-  y = c(0.2, 0.35)
-)
-from_here
-#> # A tibble: 2 × 2
-#>       x     y
-#>   <dbl> <dbl>
-#> 1  111.  0.2 
-#> 2  112.  0.35
-```
-
-And calculate the travel time from our points `from_here` over the
-friction surface `friction_surface` using the function
-`traveltime::calculate_travel_time`:
-
-``` r
-travel_time <- calculate_travel_time(
-  friction_surface = friction_surface,
-  points = from_here
-)
-travel_time
-#> class       : SpatRaster 
-#> dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
-#> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : 111, 112, 1.387779e-17, 1  (xmin, xmax, ymin, ymax)
-#> coord. ref. :  
-#> source(s)   : memory
-#> name        : travel_time 
-#> min value   :      0.0000 
-#> max value   :    582.1882
-```
-
-Et voila! Here is the motorised travel time in minutes for each cell,
-with our points in pink.
-
-``` r
-plot(travel_time)
-points(from_here, pch = 19, col = "hotpink")
-```
-
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
-
-## A more tangible example: Walking in Singapore
-
-Let’s create a map of the walking time across the island of Singapore
-from the nearest [MRT or
-LRT](https://en.wikipedia.org/wiki/Transport_in_Singapore#Rail_transport)
-station.
-
-To do this, we need:
-
-- a map of Singapore
-- locations of the stations
-
-Here’s our basemap via `geodata`:
-
-``` r
-#install.packages("geodata")
-library(geodata)
-sin <- gadm(
-  country = "Singapore",
-  level = 0,
-  path = tempdir(),
-  resolution = 2
-)
-plot(sin)
-```
-
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
-
-We’re going to see how long it takes to walk home from a station, so
-we’ll download the walking-only friction surface this time by specifying
-`surface = "walk2020`.
-
-We can also pass in our basemap `sin`, a `SpatVector`, directly as the
-`extent`, instead of specifying by hand as above. We’re also only
-interested in walking *on land* so we mask out areas outside of `sin`,
-that are within the extent of the raster:
-
-``` r
-library(traveltime)
-library(terra)
-
-friction_singapore <- get_friction_surface(
-    surface = "walk2020",
-    extent = sin
-  )|> 
-  mask(sin)
-#> Checking if the following Surface-Year combinations are available to download:
-#> 
-#>     DATASET ID  YEAR
-#>   - Explorer__2020_walking_only_friction_surface:  DEFAULT
-#> 
-#> <GMLEnvelope>
-#> ....|-- lowerCorner: 1.1664 103.6091
-#> ....|-- upperCorner: 1.4714 104.0858
-
-friction_singapore
-#> class       : SpatRaster 
-#> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
-#> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
-#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
-#> source(s)   : memory
-#> varname     : Explorer__2020_walking_only_friction_surface_1.1664,103.6091,1.4714,104.0858 
-#> name        : friction_surface 
-#> min value   :       0.01200000 
-#> max value   :       0.06192715
-```
-
-The the `stations` data set in this package contains the longitude and
-latitude of all LRT and MRT station exits in Singapore[^1].
-
-``` r
 head(stations)
 #>             x        y
 #> [1,] 103.9091 1.334922
@@ -224,11 +115,100 @@ head(stations)
 #> [6,] 103.9389 1.344999
 ```
 
-Let’s look at our data now.
+##### Area of interest
+
+To obtain our area of interest, we download a national-level polygon
+boundary of Singapore using the `geodata` package. Here we download only
+the national boundary (`level = 0`) at a low resolution
+(`resolution = 2`). Our boundary `singapore_shapefile` is a `SpatVector`
+class object from the package `terra`.
+
+``` r
+library(terra)
+#> terra 1.8.5
+library(geodata)
+
+singapore_shapefile <- gadm(
+  country = "Singapore",
+  level = 0,
+  path = tempdir(),
+  resolution = 2
+)
+
+singapore_shapefile
+#>  class       : SpatVector 
+#>  geometry    : polygons 
+#>  dimensions  : 1, 2  (geometries, attributes)
+#>  extent      : 103.6091, 104.0858, 1.1664, 1.4714  (xmin, xmax, ymin, ymax)
+#>  coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+#>  names       : GID_0   COUNTRY
+#>  type        : <chr>     <chr>
+#>  values      :   SGP Singapore
+```
+
+##### Friction surface
+
+Now that we have the two items of data that we require initially, the
+next step is to prepare a friction surface for our area of interest.
+
+We will use the friction surface from Weiss et al (2020) that can be
+downloaded by `traveltime` with the function `get_friction_surface()`.
+This function takes extents in a variety of formats and returns the
+surface for that extent only.
+
+We can pass in our basemap `singapore_shapefile`, a `SpatVector`,
+directly as the `extent`. We’re interested in walking time from a
+station, so we’ll download the walking friction surface by specifying
+`surface = "walk2020"`.
+
+(Alternatively, we could use `surface = "motor2020"` for motorised
+travel).
+
+We’re only interested in walking *on land*, so we then mask out areas
+outside of the land boundary of `singapore_shapefile`:
+
+``` r
+friction_singapore <- get_friction_surface(
+    surface = "walk2020",
+    extent = singapore_shapefile
+  )|> 
+  mask(singapore_shapefile)
+#> Checking if the following Surface-Year combinations are available to download:
+#> 
+#>     DATASET ID  YEAR
+#>   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT
+#> 
+#> Loading required package: sf
+#> Linking to GEOS 3.13.0, GDAL 3.10.0, PROJ 9.5.1; sf_use_s2() is FALSE
+#> No encoding supplied: defaulting to UTF-8.
+#> <GMLEnvelope>
+#> ....|-- lowerCorner: 1.1664 103.6091
+#> ....|-- upperCorner: 1.4714 104.0858Start tag expected, '<' not found
+```
+
+Thus we have our friction surface as a `SpatRaster`:
+
+``` r
+friction_singapore
+#> class       : SpatRaster 
+#> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
+#> resolution  : 0.008333333, 0.008333333  (x, y)
+#> extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+#> source(s)   : memory
+#> varname     : Accessibility__202001_Global_Walking_Only_Friction_Surface_1.1664,103.6091,1.4714,104.0858 
+#> name        : friction_surface 
+#> min value   :       0.01200000 
+#> max value   :       0.06192715
+```
+
+##### Input data
 
 Below we plot the friction surface raster `friction_singapore`, with the
-vector boundary of `sin` as a dashed grey line, and `stations` as grey
-points:
+vector boundary `singapore_shapefile` as a grey line, and `stations` as
+grey points. `traveltime` takes resistance values of friction (see paper
+for more details), so higher values of friction indicate more time
+travelling across a given cell.
 
 ``` r
 library(tidyterra)
@@ -247,10 +227,9 @@ ggplot() +
     data = friction_singapore
   ) +
   geom_spatvector(
-    data = sin,
+    data = singapore_shapefile,
     fill = "transparent",
-    col = "grey50",
-    lty = 2
+    col = "grey50"
   ) +
   geom_point(
     data = stations,
@@ -267,21 +246,37 @@ ggplot() +
     direction = -1
   ) +
   labs(
-    fill = "Friction"
-  )
+    fill = "Resistance",
+    x = element_blank(),
+    y = element_blank()
+  ) +
+  theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<div class="figure">
 
-OK, now we want to calculate the walking travel time in minutes across
-the friction surface from the nearest station exit:
+<img src="man/figures/README-fig-data-1.png" alt="Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points." width="80%" />
+<p class="caption">
+Friction surface raster of Singapore, showing Singapore boundary in
+grey, and station locations as grey points.
+</p>
+
+</div>
+
+#### Calculate travel time
+
+With all the data collected, the function `calculate_travel_time()`
+takes the friction surface `friction_singapore` and the points of
+interest in `stations`, and returns a `SpatRaster` of walking time in
+minutes to each cell from the nearest station:
 
 ``` r
-travel_time_sin <- calculate_travel_time(
+trave_time_singapore <- calculate_travel_time(
   friction_surface = friction_singapore,
   points = stations
 )
-travel_time_sin
+
+trave_time_singapore
 #> class       : SpatRaster 
 #> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
@@ -293,19 +288,56 @@ travel_time_sin
 #> max value   :         Inf
 ```
 
-Et voi*lah* — a raster of walking time from the nearest station.
+##### Plot results
+
+We present the resulting calculated travel times below where (as
+expected) the travel times are lowest near station exits and
+progressively higher further away. Note that the results in
+`trave_time_singapore` include infinite values (`Inf` above). The
+islands to the south and north-east are shown as filled cells in the
+figure above, i.e., they are not masked out by `singapore_shapefile`.
+But because those islands they are not connected to any cells with a
+station, the calculated travel time is infinite, and so these cells do
+not appear in the figure below.
 
 ``` r
-contour(
-  x = travel_time_sin,
-  filled = TRUE,
-  nlevels = 20,
-  col = viridis::magma(19, direction = -1)
-)
+ggplot() +
+  geom_spatraster(
+    data = trave_time_singapore
+  ) +
+  scale_fill_viridis_c(
+    option = "A",
+    direction = -1,
+    na.value = "transparent"
+  ) +
+  theme_minimal() +
+  labs(fill = "Minutes") +
+  geom_spatvector(
+    data = singapore_shapefile,
+    fill = "transparent",
+    col = "grey20"
+  )
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<div class="figure">
 
-[^1]: Land Transport Authority. (2019). LTA MRT Station Exit (GEOJSON)
+<img src="man/figures/README-fig-result-1.png" alt="Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station." width="80%" />
+<p class="caption">
+Map of walking travel time in Singapore, in minutes from nearest MRT or
+LRT station.
+</p>
+
+</div>
+
+[^1]: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S.,
+    Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S.
+    Gibson, T., Shekel, C. Kamath, A. Lieber, K. Schulman, Y. Shao, V.
+    Qarkaxhija, A. K. Nandi, S. H. Keddie, S. Rumisha, P. Amratia, R.
+    Arambepola, E. G. Chestnutt, J. J. Millar, T. L. Symons, E. Cameron,
+    K. E. Battle, S. Bhatt, and P. W. Gething. Global maps of travel
+    time to healthcare facilities. (2020) Nature Medicine.
+    <https://doi.org/10.1038/s41591-020-1059-1>
+
+[^2]: Land Transport Authority. (2019). LTA MRT Station Exit (GEOJSON)
     (2024) \[Dataset\]. data.gov.sg. Retrieved December 10, 2024 from
-    <https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view>
+    <https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view>.

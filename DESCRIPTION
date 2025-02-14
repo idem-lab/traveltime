@@ -28,6 +28,7 @@ License: CC BY 4.0
 Imports: 
     cli,
     gdistance,
+    lifecycle,
     malariaAtlas,
     raster,
     terra
