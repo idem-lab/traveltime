@@ -36,6 +36,8 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
@@ -43,3 +45,4 @@ Depends:
 LazyData: true
 URL: https://idem-lab.github.io/traveltime/
 BugReports: https://github.com/idem-lab/traveltime/issues
+VignetteBuilder: knitr

@@ -1,0 +1,187 @@
+---
+title: "A practical example: walking from public transport in Singapore"
+output: rmarkdown::html_vignette
+authors:
+  Gerry Ryan
+vignette: >
+  %\VignetteIndexEntry{A practical example: walking from public transport in Singapore}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "80%",
+  warning = NA,
+  dpi = 300,
+  fig.height = 5,
+  fig.width = 7
+)
+```
+
+Here we will calculate the walking travel time from the nearest mass transit station across the island nation of Singapore --- specifically Mass Rapid Transit (MRT) and Light Rail Transit (LRT) stations --- and create a map of this.
+
+## Prepare the data
+
+For this exercise, we need two items of data:
+
+-   our points to calculate travel time from --- here the locations of Singapore's MRT and LRT stations, and
+-   our area of interest --- in this case a map of Singapore.
+
+### Points
+
+Our points of interest will be the `stations` data set included in `traveltime`; a 563 row, 2 column `matrix` containing the longitude (`x`) and latitude (`y`) of all LRT and MRT station exits in Singapore from [^2]:
+
+```{r}
+#| label: show-stations
+library(traveltime)
+head(stations)
+```
+
+
+### Area of interest
+
+To obtain our area of interest, we download a national-level polygon boundary of Singapore using the `geodata` package. Here we download only the national boundary (`level = 0`) at a low resolution (`resolution = 2`). Our boundary `singapore_shapefile` is a `SpatVector` class object from the package `terra`.
+
+```{r}
+#| label: get-basemap
+library(terra)
+library(geodata)
+
+singapore_shapefile <- gadm(
+  country = "Singapore",
+  level = 0,
+  path = tempdir(),
+  resolution = 2
+)
+
+singapore_shapefile
+```
+
+### Friction surface
+
+Now that we have the two items of data that we require initially, the next step is to prepare a friction surface for our area of interest.
+
+We will use the friction surface from Weiss et al (2020) that can be downloaded by `traveltime` with the function `get_friction_surface()`. This function takes extents in a variety of formats and returns the surface for that extent only.
+
+We can pass in our basemap `singapore_shapefile`, a `SpatVector`, directly as the `extent`. We're interested in walking time from a station, so we'll download the walking friction surface by specifying `surface = "walk2020"`. 
+
+(Alternatively, we could use `surface = "motor2020"` for motorised travel).
+
+We're only interested in walking *on land*, so we then mask out areas outside of the land boundary of `singapore_shapefile`:
+
+```{r}
+#| label: download-friction-surface
+#| echo: true
+#| output: false
+friction_singapore <- get_friction_surface(
+    surface = "walk2020",
+    extent = singapore_shapefile
+  )|> 
+  mask(singapore_shapefile)
+```
+
+Thus we have our friction surface as a `SpatRaster`:
+
+```{r }
+#| label: show-friction-surface-raster
+#| echo: true
+friction_singapore
+```
+
+### Input data
+
+Below we plot the friction surface raster `friction_singapore`, with the vector boundary `singapore_shapefile` as a grey line, and `stations` as grey points. `traveltime` takes resistance values of friction (see paper for more details), so higher values of friction indicate more time travelling across a given cell.
+
+```{r}
+#| label: fig-data
+#| echo: true
+#| fig-cap: "Friction surface raster of Singapore, showing Singapore boundary
+#|   in grey, and station locations as grey points."
+library(tidyterra)
+library(ggplot2)
+
+ggplot() +
+  geom_spatraster(
+    data = friction_singapore
+  ) +
+  geom_spatvector(
+    data = singapore_shapefile,
+    fill = "transparent",
+    col = "grey50"
+  ) +
+  geom_point(
+    data = stations,
+    aes(
+      x = x,
+      y = y
+    ),
+    col = "grey60",
+    size = 0.5
+  ) +
+  scale_fill_viridis_c(
+    option = "A",
+    na.value = "transparent",
+    direction = -1
+  ) +
+  labs(
+    fill = "Resistance",
+    x = element_blank(),
+    y = element_blank()
+  ) +
+  theme_minimal()
+```
+
+## Calculate travel time
+
+With all the data collected, the function `calculate_travel_time()` takes the friction surface `friction_singapore` and the points of interest in `stations`, and returns a `SpatRaster` of walking time in minutes to each cell from the nearest station:
+
+```{r}
+#| label: calculate-result
+#| echo: true
+trave_time_singapore <- calculate_travel_time(
+  friction_surface = friction_singapore,
+  points = stations
+)
+
+trave_time_singapore
+```
+
+### Plot results
+
+We present the resulting calculated travel times below where (as expected) the travel times are lowest near station exits and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf`  above). The islands to the south and north-east are shown as filled cells in the figure above, i.e., they are not masked out by `singapore_shapefile`. But because those islands they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in the figure below.
+
+```{r}
+#| label: fig-result
+#| echo: true
+#| fig-cap: "Map of walking travel time in Singapore, in minutes from 
+#|   nearest MRT or LRT station."
+ggplot() +
+  geom_spatraster(
+    data = trave_time_singapore
+  ) +
+  scale_fill_viridis_c(
+    option = "A",
+    direction = -1,
+    na.value = "transparent"
+  ) +
+  theme_minimal() +
+  labs(fill = "Minutes") +
+  geom_spatvector(
+    data = singapore_shapefile,
+    fill = "transparent",
+    col = "grey20"
+  )
+```
+
+
+[^1]: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global maps of travel time to healthcare facilities. (2020) Nature Medicine. <https://doi.org/10.1038/s41591-020-1059-1>
+
+
+[^2]: Land Transport Authority. (2019). LTA MRT Station Exit (GEOJSON) (2024)
+[Dataset]. data.gov.sg. Retrieved December 10, 2024 from
+<https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view>.
+
+
