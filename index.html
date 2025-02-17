@@ -152,7 +152,7 @@ Walking travel time from rail transport in Singapore
 <h5 id="friction-surface">Friction surface<a class="anchor" aria-label="anchor" href="#friction-surface"></a>
 </h5>
 <p>Now that we have the two items of data that we require initially, the next step is to prepare a friction surface for our area of interest.</p>
-<p>We will use the friction surface from Weiss et al (2020) that can be downloaded by <code>traveltime</code> with the function <code><a href="reference/get_friction_surface.html">get_friction_surface()</a></code>. This function takes extents in a variety of formats and returns the surface for that extent only.</p>
+<p>We will use the friction surface from Weiss et al. (2020) that can be downloaded by <code>traveltime</code> with the function <code><a href="reference/get_friction_surface.html">get_friction_surface()</a></code>. This function takes extents in a variety of formats and returns the surface for that extent only.</p>
 <p>We can pass in our basemap <code>singapore_shapefile</code>, a <code>SpatVector</code>, directly as the <code>extent</code>. We’re interested in walking time from a station, so we’ll download the walking friction surface by specifying <code>surface = "walk2020"</code>.</p>
 <p>(Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel).</p>
 <p>We’re only interested in walking <em>on land</em>, so we then mask out areas outside of the land boundary of <code>singapore_shapefile</code>:</p>
