@@ -151,7 +151,7 @@ singapore_shapefile
 Now that we have the two items of data that we require initially, the
 next step is to prepare a friction surface for our area of interest.
 
-We will use the friction surface from Weiss et al (2020) that can be
+We will use the friction surface from Weiss et al. (2020) that can be
 downloaded by `traveltime` with the function `get_friction_surface()`.
 This function takes extents in a variety of formats and returns the
 surface for that extent only.
