@@ -25,6 +25,7 @@ knitr::opts_chunk$set(
 ![GitHub commits since latest release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
 [![Codecov test coverage](https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 <!-- badges: end -->
 
 `traveltime` enables a user to create a map of travel time over an area of interest from a user-specified set of geographic coordinates and friction surface. The package provides convenient access to global friction surfaces for walking and motorised travel for the year 2020. The final result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations.
@@ -220,6 +221,10 @@ ggplot() +
     col = "grey20"
   )
 ```
+
+## Code of Conduct
+
+Please note that the `traveltime` project is released with a [Contributor Code of Conduct](https://idem-lab.github.io/traveltime/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 
 [^1]: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel, C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W. Gething. Global maps of travel time to healthcare facilities. (2020) Nature Medicine. <https://doi.org/10.1038/s41591-020-1059-1>
