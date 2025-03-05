@@ -25,3 +25,15 @@ test_that("Are SpatRasters", {
   expect_s4_class(wfs, "SpatRaster")
 
 })
+
+
+test_that(
+  desc = "throws error",
+  code = {
+    expect_error(
+      get_friction_surface(
+        extent = NULL
+      )
+    )
+  }
+)
