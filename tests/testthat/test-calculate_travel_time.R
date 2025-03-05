@@ -36,4 +36,46 @@ test_that("Is SpatRaster", {
   )
 
   expect_s4_class(tt2, "SpatRaster")
+
+
+  # check throws error if points is junk
+  expect_error(
+    calculate_travel_time(
+      friction_surface = wfs,
+      points = 1
+    )
+  )
+
+  # check parses points as SpatVector OK
+  from_here_SpatVector <- terra::vect(
+    x = from_here,
+    geom = c(
+      "x",
+      "y"
+    )
+  )
+
+  tt3 <- calculate_travel_time(
+    friction_surface = wfs,
+    points = from_here_SpatVector,
+    filename = tempfile(
+      fileext = ".tif"
+    )
+  )
+
+  expect_s4_class(tt3, "SpatRaster")
+
+
+
 })
+
+test_that(
+  desc = "aborts if friction surface is not a SpatRaster",
+  code = {
+    expect_error(
+      calculate_travel_time(
+        friction_surface = TRUE
+      )
+    )
+  }
+)
