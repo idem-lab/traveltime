@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# traveltime
+# `traveltime`
 
 <!-- badges: start -->
 
@@ -20,6 +20,8 @@ release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
 coverage](https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Contributor
+Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 <!-- badges: end -->
 
 `traveltime` enables a user to create a map of travel time over an area
@@ -125,7 +127,7 @@ class object from the package `terra`.
 
 ``` r
 library(terra)
-#> terra 1.8.5
+#> terra 1.8.29
 library(geodata)
 
 singapore_shapefile <- gadm(
@@ -328,6 +330,13 @@ LRT station.
 </p>
 
 </div>
+
+## Code of Conduct
+
+Please note that the `traveltime` project is released with a
+[Contributor Code of
+Conduct](https://idem-lab.github.io/traveltime/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.
 
 [^1]: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S.,
     Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S.

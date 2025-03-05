@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# traveltime
+# `traveltime`
 
 <!-- badges: start -->
 [![traveltime status badge](https://idem-lab.r-universe.dev/badges/traveltime)](https://idem-lab.r-universe.dev/traveltime)
