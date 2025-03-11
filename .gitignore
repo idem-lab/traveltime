@@ -9,3 +9,4 @@ docs
 */paper/drafts
 *.pdf
 inst/doc
+*_extensions

@@ -191,95 +191,41 @@ window.Quarto = {
 
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>Understanding and mapping the time to travel among locations is useful for many activities from urban planning <span class="citation" data-cites="zahavi1974traveltime">(<a href="#ref-zahavi1974traveltime" role="doc-biblioref">Zahavi 1974</a>)</span> to public health <span class="citation" data-cites="hulland2019travel weiss2020global">(<a href="#ref-hulland2019travel" role="doc-biblioref">Hulland et al. 2019</a>; <a href="#ref-weiss2020global" role="doc-biblioref">Weiss et al. 2020</a>)</span> and myriad others <span class="citation" data-cites="nelson2019suite">(<a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span>. Here we present a software package — <code>traveltime</code> — written in and for the language R <span class="citation" data-cites="Rref">(<a href="#ref-Rref" role="doc-biblioref">R Core Team 2024</a>)</span>. <code>traveltime</code> enables a user to create a map of the motorised or walking travel time over an area of interest from a user-specified set of geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations. We envisage this software having diverse applications including: estimating sampling bias in species occurrence data <span class="citation" data-cites="dennis2000bias reddy2003geographical">(<a href="#ref-dennis2000bias" role="doc-biblioref">Dennis and Thomas 2000</a>; <a href="#ref-reddy2003geographical" role="doc-biblioref">Reddy and Dávalos 2003</a>)</span>, mapping electric vehicle charger accessibility <span class="citation" data-cites="falchetta2021electric">(<a href="#ref-falchetta2021electric" role="doc-biblioref">Falchetta and Noussan 2021</a>)</span>, allocating public defibrillators <span class="citation" data-cites="tierney2018novel">(<a href="#ref-tierney2018novel" role="doc-biblioref">Tierney et al. 2018</a>)</span>, setting rehabilitation districts for stroke patients <span class="citation" data-cites="padgham2019introduction">(<a href="#ref-padgham2019introduction" role="doc-biblioref">Padgham et al. 2019</a>)</span>, or understanding access to agricultural processing facilities <span class="citation" data-cites="zhao2023replanting">(<a href="#ref-zhao2023replanting" role="doc-biblioref">Zhao et al. 2023</a>)</span>.</p>
-<p>The work-flow requires two steps:</p>
+<p>Understanding and mapping the time to travel among locations is useful for many activities from urban planning <span class="citation" data-cites="zahavi1974traveltime">(<a href="#ref-zahavi1974traveltime" role="doc-biblioref">Zahavi 1974</a>)</span> to public health <span class="citation" data-cites="hulland2019travel weiss2020global">(<a href="#ref-hulland2019travel" role="doc-biblioref">Hulland et al. 2019</a>; <a href="#ref-weiss2020global" role="doc-biblioref">Weiss et al. 2020</a>)</span> and myriad others <span class="citation" data-cites="nelson2019suite">(<a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span>. Here we present a software package — <code>traveltime</code> — written in and for the language R <span class="citation" data-cites="Rref">(<a href="#ref-Rref" role="doc-biblioref">R Core Team 2024</a>)</span>. <code>traveltime</code> enables a user to create a raster map of the travel time over an area of interest from a user-specified set of geographic coordinates. Applications include: estimating sampling bias <span class="citation" data-cites="dennis2000bias">(<a href="#ref-dennis2000bias" role="doc-biblioref">Dennis and Thomas 2000</a>)</span>, allocating defibrillators <span class="citation" data-cites="tierney2018novel">(<a href="#ref-tierney2018novel" role="doc-biblioref">Tierney et al. 2018</a>)</span>, setting health districts <span class="citation" data-cites="padgham2019introduction">(<a href="#ref-padgham2019introduction" role="doc-biblioref">Padgham et al. 2019</a>)</span>, or mapping access to vehicle chargers <span class="citation" data-cites="falchetta2021electric">(<a href="#ref-falchetta2021electric" role="doc-biblioref">Falchetta and Noussan 2021</a>)</span> and agricultural facilities <span class="citation" data-cites="zhao2023replanting">(<a href="#ref-zhao2023replanting" role="doc-biblioref">Zhao et al. 2023</a>)</span>.</p>
+<p>The work-flow requires two key steps:</p>
 <ul>
-<li>preparing a ‘friction surface’ for the area of interest, and then</li>
+<li>preparing a friction surface for the area of interest, and then</li>
 <li>calculating travel time over that surface for the points of interest.</li>
 </ul>
-<p><code>traveltime</code> provides a spatial interface using object classes from the <code>terra</code> package <span class="citation" data-cites="terra">(<a href="#ref-terra" role="doc-biblioref">Hijmans 2024</a>)</span>. It accepts points as <code>matrix</code>, <code>data.frame</code>, or <code>SpatVector</code> class objects; and the area of interest as an extent in the form of a <code>numeric</code>, <code>SpatExtent</code>, <code>SpatVector</code>, or <code>SpatRaster</code> class object; and returns the result as a <code>SpatRaster</code> class object. The travel time is calculated as movement over a resistance ‘friction surface’ <span class="citation" data-cites="gdistance2017">(<a href="#ref-gdistance2017" role="doc-biblioref">van Etten 2017</a>)</span>. To provide easy access to the existing friction surfaces generated by <span class="citation" data-cites="weiss2020global">Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>, <code>traveltime</code> uses the package <code>malariaAtlas</code> to allow users to access friction surfaces for the area of interest; though users can also supply any other friction surfaces to <code>traveltime</code>. Functionality from <code>gdistance</code> <span class="citation" data-cites="gdistance2017">(<a href="#ref-gdistance2017" role="doc-biblioref">van Etten 2017</a>)</span> is also used internally to calculate the minimum least-cost-distance for each cell from the points of interest.</p>
-<p><code>traveltime</code> is available from <a href="https://idem-lab.r-universe.dev/traveltime">R-Universe</a> and <a href="https://github.com/idem-lab/traveltime">GitHub</a>, and has reference documents at <a href="https://idem-lab.github.io/traveltime/" class="uri">https://idem-lab.github.io/traveltime/</a>. Although this article is intended to be the key reference for the <code>traveltime</code> package, we suggest citations of the package should be accompanied by citing the underlying methodological work <span class="citation" data-cites="weiss2018global weiss2020global">(<a href="#ref-weiss2018global" role="doc-biblioref">Weiss et al. 2018</a>, <a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span> as well.</p>
+<p><code>traveltime</code> provides a spatial interface using object classes from the <code>terra</code> package <span class="citation" data-cites="terra">(<a href="#ref-terra" role="doc-biblioref">Hijmans 2024</a>)</span>. Travel time is calculated as movement over a resistance ‘friction surface’ <span class="citation" data-cites="gdistance2017">(<a href="#ref-gdistance2017" role="doc-biblioref">van Etten 2017</a>)</span>. To provide easy access to the existing friction surfaces generated by <span class="citation" data-cites="weiss2020global">Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>, <code>traveltime</code> internally uses <code>malariaAtlas</code> <span class="citation" data-cites="pfeffer2018malariaatlas">(<a href="#ref-pfeffer2018malariaatlas" role="doc-biblioref">Pfeffer et al. 2018</a>)</span> to download surfaces for the area of interest; though users can also supply any other friction surface.</p>
+<p><code>traveltime</code> is available from <a href="https://idem-lab.r-universe.dev/traveltime">R-Universe</a> and <a href="https://github.com/idem-lab/traveltime">GitHub</a>, and documented at <a href="https://idem-lab.github.io/traveltime/" class="uri">https://idem-lab.github.io/traveltime/</a>. Although this article is intended to be the key reference for the <code>traveltime</code> package, we suggest citations of the package are accompanied by citing the underlying methodological work as well <span class="citation" data-cites="weiss2018global weiss2020global">(<a href="#ref-weiss2018global" role="doc-biblioref">Weiss et al. 2018</a>, <a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>.</p>
 </section>
 <section id="statement-of-need" class="level1">
 <h1>Statement of need</h1>
-<p>Global maps of travel time to cities <span class="citation" data-cites="weiss2018global nelson2019suite">(<a href="#ref-weiss2018global" role="doc-biblioref">Weiss et al. 2018</a>; <a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span> and health care facilities <span class="citation" data-cites="hulland2019travel weiss2020global">(<a href="#ref-hulland2019travel" role="doc-biblioref">Hulland et al. 2019</a>; <a href="#ref-weiss2020global" role="doc-biblioref">Weiss et al. 2020</a>)</span> have generated significant interest and use<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and the city data set of <span class="citation" data-cites="nelson2019suite">Nelson et al. (<a href="#ref-nelson2019suite" role="doc-biblioref">2019</a>)</span> is available to R users through the widely-used <code>geodata</code> package <span class="citation" data-cites="geodata">(<a href="#ref-geodata" role="doc-biblioref">Hijmans et al. 2024</a>)</span>. There is clear demand for these type of products.</p>
-<p><span class="citation" data-cites="weiss2020global">Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span> made their code available as an R script to allow for reproduction and extension of their analyses (<a href="https://malariaatlas.org/wp-content/uploads/2022/11/R_generic_accessibilty_mapping_script_2020-1.txt" class="uri">https://malariaatlas.org/wp-content/uploads/2022/11/R_generic_accessibilty_mapping_script_2020-1.txt</a> ). To further enable extension of this work, here we have developed an R package based on that code to seamlessly calculate the travel time from any arbitrary set of locations.</p>
-<p>Other R packages provide superficially similar though fundamentally different functionality. A gaggle of R packages provide interfaces to the <a href="https://www.TravelTime.com">TravelTime.com</a> API <span class="citation" data-cites="traveltimeapi traveltimeR rtraveltime traveltime_gh">(<a href="#ref-traveltimeapi" role="doc-biblioref">TravelTime 2024a</a>, <a href="#ref-traveltimeR" role="doc-biblioref">2024b</a>; <a href="#ref-rtraveltime" role="doc-biblioref">von Bergmann 2024</a>; <a href="#ref-traveltime_gh" role="doc-biblioref">Lo Russo 2024</a>)</span>. The TravelTime.com platform provides travel time and routes between pairs of locations, and ‘isochron’ polygons — areas reachable within a given time from a given location. The isochron polygons are most comparable to what <code>traveltime::calculate_travel_time()</code> calculates, though each isochron polygon is a single polygon calculated is for a single point location and specified maximum travel time, and the result provides a maximum reachable extent for a specified time, rather than a raster of gradation across a landscape for an arbitrary number of points as in <code>traveltime</code>. TravelTime.com cannot provide a single result surface for time to the nearest of a group of points, and continuous time scale without extensive repeated iteration for all combinations of time and points, plus additional calculation of the minimum value for each cell from all points. Furthermore, TravelTime.com requires access keys, a paid subscription beyond a short free period, and caps queries, which add considerable friction to the use of this resource.</p>
-<p>With <code>traveltime</code>, we provide free and open source software to estimate travel time from any number of user-supplied locations, across a complete area of interest, and with convenient access to motorised or walking friction surfaces with global coverage.</p>
+<p>Global maps of travel time to cities <span class="citation" data-cites="weiss2018global nelson2019suite">(<a href="#ref-weiss2018global" role="doc-biblioref">Weiss et al. 2018</a>; <a href="#ref-nelson2019suite" role="doc-biblioref">Nelson et al. 2019</a>)</span> and health care <span class="citation" data-cites="hulland2019travel weiss2020global">(<a href="#ref-hulland2019travel" role="doc-biblioref">Hulland et al. 2019</a>; <a href="#ref-weiss2020global" role="doc-biblioref">Weiss et al. 2020</a>)</span> have generated much interest and use<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and the city data set of <span class="citation" data-cites="nelson2019suite">Nelson et al. (<a href="#ref-nelson2019suite" role="doc-biblioref">2019</a>)</span> is available to R users through the widely-used <code>geodata</code> package <span class="citation" data-cites="geodata">(<a href="#ref-geodata" role="doc-biblioref">Hijmans et al. 2024</a>)</span>. Here we extend that work to enable travel time calculations from any arbitrary set of locations and friction surface.</p>
+<p>A gaggle of R packages provide superficially similar though fundamentally different functionality via the <a href="https://www.TravelTime.com">TravelTime.com</a> API <span class="citation" data-cites="traveltimeapi traveltimeR rtraveltime traveltime_gh">(<a href="#ref-traveltimeapi" role="doc-biblioref">TravelTime 2024a</a>, <a href="#ref-traveltimeR" role="doc-biblioref">2024b</a>; <a href="#ref-rtraveltime" role="doc-biblioref">von Bergmann 2024</a>; <a href="#ref-traveltime_gh" role="doc-biblioref">Lo Russo 2024</a>)</span>. Their ‘Isochron’ polygons — areas reachable within a given time from a given location — are most comparable to what <code>traveltime::calculate_travel_time()</code> calculates. However, each isochron is a single polygon calculated is for a single point location and specified maximum travel time, rather than a raster of temporal gradation across a landscape, jointly for an arbitrary number of points, as in <code>traveltime</code>.</p>
+<p>With <code>traveltime</code>, we provide free and open source software to estimate travel time from any number of user-supplied locations, across a complete area of interest, and with convenient access to motorised transport or walking friction surfaces with global coverage.</p>
 </section>
 <section id="example-walking-from-public-transport-in-singapore" class="level1">
 <h1>Example: walking from public transport in Singapore</h1>
-<p>In this example we will calculate the walking travel time from the nearest mass transit station across the island nation of Singapore — specifically Mass Rapid Transit (MRT) and Light Rail Transit (LRT) stations — and create a map of this.</p>
-<section id="prepare-the-data-and-friction-surface" class="level2">
-<h2 class="anchored" data-anchor-id="prepare-the-data-and-friction-surface">Prepare the data and friction surface</h2>
-<p>For this exercise, we need two items of data:</p>
+<p>Here we provide a very brief example to calculate and map the walking travel time from rail transport stations across Singapore. <a href="https://idem-lab.github.io/traveltime/articles/singapore.html">Complete code for this example is available as a vignettte in package documentation</a>.</p>
+<section id="prepare-data-and-friction-surface" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-data-and-friction-surface">Prepare data and friction surface</h2>
+<p>We need two items of data:</p>
 <ul>
-<li>our area of interest — in this case a map of Singapore, and</li>
-<li>our points to calculate travel time from — here the locations of Singapore’s MRT and LRT stations.</li>
+<li>our area of interest — Singapore, and</li>
+<li>our points to calculate travel time from — Singapore’s Mass Rapid Transit (MRT) and Light Rail Transit (LRT) stations.</li>
 </ul>
-<p>We can download a national-level polygon boundary of Singapore from the GADM <span class="citation" data-cites="gadm">(<a href="#ref-gadm" role="doc-biblioref">GADM 2022</a>)</span> database using the <code>geodata</code> package <span class="citation" data-cites="geodata">(<a href="#ref-geodata" role="doc-biblioref">Hijmans et al. 2024</a>)</span>. Here we download only the national boundary (<code>level = 0</code>) and at a low resolution (<code>resolution = 2</code>). Our boundary <code>singapore_shapefile</code> is a <code>SpatVector</code> class object.</p>
+<p>We download <code>singapore_shapefile</code>, a polygon boundary of Singapore from the GADM <span class="citation" data-cites="gadm">(<a href="#ref-gadm" role="doc-biblioref">GADM 2022</a>)</span> database using the <code>geodata</code> package <span class="citation" data-cites="geodata">(<a href="#ref-geodata" role="doc-biblioref">Hijmans et al. 2024</a>)</span> as our area of interest. Our points are the <code>traveltime::stations</code> data, containing coordinates of all LRT and MRT station exits in Singapore <span class="citation" data-cites="singdata">(<a href="#ref-singdata" role="doc-biblioref">Land Transport Authority 2019</a>)</span>. We then download a walking travel friction surface for Singapore:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geodata)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>singapore_shapefile <span class="ot">&lt;-</span> <span class="fu">gadm</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">country =</span> <span class="st">"Singapore"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">level =</span> <span class="dv">0</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">path =</span> <span class="fu">tempdir</span>(),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">resolution =</span> <span class="dv">2</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>singapore_shapefile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> class       : SpatVector 
- geometry    : polygons 
- dimensions  : 1, 2  (geometries, attributes)
- extent      : 103.6091, 104.0858, 1.1664, 1.4714  (xmin, xmax, ymin, ymax)
- coord. ref. : lon/lat WGS 84 (EPSG:4326) 
- names       : GID_0   COUNTRY
- type        : &lt;chr&gt;     &lt;chr&gt;
- values      :   SGP Singapore</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>friction_singapore <span class="ot">&lt;-</span> traveltime<span class="sc">::</span><span class="fu">get_friction_surface</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">surface =</span> <span class="st">"walk2020"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">extent =</span> singapore_shapefile</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">|&gt;</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  terra<span class="sc">::</span><span class="fu">mask</span>(singapore_shapefile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>The <code>stations</code> data set included in the <code>traveltime</code> package is a 563 row, 2 column <code>matrix</code> containing the longitude (<code>x</code>) and latitude (<code>y</code>) of all LRT and MRT station exits in Singapore from <span class="citation" data-cites="singdata">Land Transport Authority (<a href="#ref-singdata" role="doc-biblioref">2019</a>)</span>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(traveltime)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            x        y
-[1,] 103.9091 1.334922
-[2,] 103.9335 1.336555
-[3,] 103.8493 1.297699
-[4,] 103.8508 1.299195
-[5,] 103.9094 1.335311
-[6,] 103.9389 1.344999</code></pre>
-</div>
-</div>
-<p>Now that we have the two items of data that we require, the next step is to prepare a friction surface for our area of interest. We will use the friction surface from <span class="citation" data-cites="weiss2020global">Weiss et al. (<a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span> that can be downloaded by <code>traveltime</code> with the function <code>get_friction_surface()</code>. We can pass in our basemap <code>singapore_shapefile</code>, a <code>SpatVector</code>, directly as the <code>extent</code>. We’re interested in walking time from a station, so we’ll download the walking friction surface by specifying <code>surface = "walk2020"</code>. (Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel if that were of interest.) We’re also only interested in walking <em>on land</em> so we then mask out areas outside of the land boundary in <code>singapore_shapefile</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>friction_singapore <span class="ot">&lt;-</span> <span class="fu">get_friction_surface</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">surface =</span> <span class="st">"walk2020"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">extent =</span> singapore_shapefile</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mask</span>(singapore_shapefile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Thus we have our friction surface as a <code>SpatRaster</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>friction_singapore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
-dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
-resolution  : 0.008333333, 0.008333333  (x, y)
-extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
-coord. ref. : lon/lat WGS 84 (EPSG:4326) 
-source(s)   : memory
-varname     : Accessibility__202001_Global_Walking_Only_Friction_Surface_1.1664,103.6091,1.4714,104.0858 
-name        : friction_surface 
-min value   :       0.01200000 
-max value   :       0.06192715 </code></pre>
-</div>
-</div>
-<p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary <code>singapore_shapefile</code> as a grey line, and <code>stations</code> as grey points (Figure <span class="math inline">\(\ref{fig-data}\)</span>). <code>traveltime</code> takes resistance values of friction <span class="citation" data-cites="gdistance2017">(<a href="#ref-gdistance2017" role="doc-biblioref">van Etten 2017</a>)</span>, so higher values of friction indicate more time travelling across a given cell. In this case walking friction is fairly uniform across the islands barring a few small inaccesible locations. More heterogeneity would be expected in less developed locations with fewer transport corridors.</p>
+<p>(Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel. We’re also only interested in walking <em>on land</em> so we <code>mask</code> out areas outside of the land boundary in <code>singapore_shapefile</code>)</p>
+<p>We plot these data below. <code>traveltime</code> takes resistance values of friction <span class="citation" data-cites="gdistance2017">(<a href="#ref-gdistance2017" role="doc-biblioref">van Etten 2017</a>)</span>, so higher values of friction indicate more time travelling across a given cell.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-data" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -299,12 +245,12 @@ Figure&nbsp;1: Friction surface raster of Singapore, showing Singapore boundary 
 <h2 class="anchored" data-anchor-id="calculate-and-plot-the-travel-time">Calculate and plot the travel time</h2>
 <p>With all the data collected, the function <code>calculate_travel_time()</code> takes the friction surface <code>friction_singapore</code> and the points of interest in <code>stations</code>, and returns a <code>SpatRaster</code> of walking time in minutes to each cell from the nearest station:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>trave_time_singapore <span class="ot">&lt;-</span> <span class="fu">calculate_travel_time</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">friction_surface =</span> friction_singapore,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">points =</span> stations</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>trave_time_singapore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trave_time_singapore <span class="ot">&lt;-</span> <span class="fu">calculate_travel_time</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">friction_surface =</span> friction_singapore,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">points =</span> stations</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>trave_time_singapore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
@@ -317,7 +263,7 @@ min value   :           0
 max value   :         Inf </code></pre>
 </div>
 </div>
-<p>We present the resulting calculated travel times in Figure <span class="math inline">\(\ref{fig-result}\)</span> where, as expected, the travel times are lowest near station exits (per Figure <span class="math inline">\(\ref{fig-data}\)</span>) and progressively higher further away. Note that the results in <code>trave_time_singapore</code> include infinite values (<code>Inf</code> above). In Figure <span class="math inline">\(\ref{fig-data}\)</span>, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure <span class="math inline">\(\ref{fig-result}\)</span>. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure <span class="math inline">\(\ref{fig-result}\)</span>.</p>
+<p>Resulting travel times are Figure <span class="math inline">\(\ref{fig-result}\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-result" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -336,21 +282,19 @@ Figure&nbsp;2: Map of walking travel time in Singapore, in minutes from nearest 
 </section>
 <section id="opportunities-for-future-development" class="level1">
 <h1>Opportunities for future development</h1>
-<p>The <code>traveltime</code> package is immediately suitable to a range of applications where travel to custom locations is of interest. Nonetheless, we see opportunities to build the package utility into the future through two mechanisms: (1) capability to better distribute a wider range friction surfaces, and (2) additional methods to handle large spatial extents.</p>
-<p>Firstly, <code>traveltime</code> currently has access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Although the user can supply their own friction surface, we expect most applications will use these existing surfaces given the extensive work needed in creating new ones <span class="citation" data-cites="weiss2018global weiss2020global">(<a href="#ref-weiss2018global" role="doc-biblioref">Weiss et al. 2018</a>, <a href="#ref-weiss2020global" role="doc-biblioref">2020</a>)</span>. As landscapes are not dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available, though this is likely to occur first through <code>malariaAtlas</code>. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it’s simplicity and low computational demands, a ~1 km<sup>2</sup> cell size is a relatively large area to walk across, and thus actual waking times may vary significantly within each cell. We underline however that a user can provide their own higher resolution friction surface at present if desired.</p>
-<p>At the other end of the scale, the calculations can require relatively large amounts of onboard memory for analyses over large landscapes (e.g.&nbsp;analyses over Africa required ~ 72 GB RAM). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.</p>
+<p>The <code>traveltime</code> package is immediately suitable to a range of application. Nonetheless, we see opportunities to build the package utility through:</p>
+<ul>
+<li>capability to better distribute a wider range friction surfaces, and</li>
+<li>additional methods to efficiently compute results over large spatial extents.</li>
+</ul>
 </section>
 <section id="acknowledgements" class="level1">
 <h1>Acknowledgements</h1>
 <p>This work was supported, in whole or in part, by the Bill &amp; Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the authors alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.</p>
 </section>
-<section id="references" class="level1 unnumbered">
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<section id="references" class="level1">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-dennis2000bias" class="csl-entry" role="listitem">
 Dennis, RLH, and CD Thomas. 2000. <span>“Bias in Butterfly Distribution Maps: The Influence of Hot Spots and Recorder’s Home Range.”</span> <em>Journal of Insect Conservation</em> 4: 73–77.
 </div>
@@ -381,11 +325,11 @@ Nelson, Andy, Daniel J Weiss, Jacob van Etten, Andrea Cattaneo, Theresa S McMeno
 <div id="ref-padgham2019introduction" class="csl-entry" role="listitem">
 Padgham, Mark, Geoff Boeing, David Cooley, Nicholas Tierney, Michael Sumner, Thanh G Phan, and Richard Beare. 2019. <span>“An Introduction to Software Tools, Data, and Services for Geospatial Analysis of Stroke Services.”</span> <em>Frontiers in Neurology</em> 10: 743.
 </div>
+<div id="ref-pfeffer2018malariaatlas" class="csl-entry" role="listitem">
+Pfeffer, Daniel A, Timothy CD Lucas, Daniel May, Joseph Harris, Jennifer Rozier, Katherine A Twohig, Ursula Dalrymple, et al. 2018. <span>“malariaAtlas: An r Interface to Global Malariometric Data Hosted by the Malaria Atlas Project.”</span> <em>Malaria Journal</em> 17: 1–10.
+</div>
 <div id="ref-Rref" class="csl-entry" role="listitem">
 R Core Team. 2024. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
-</div>
-<div id="ref-reddy2003geographical" class="csl-entry" role="listitem">
-Reddy, Sushma, and Liliana M Dávalos. 2003. <span>“Geographical Sampling Bias and Its Implications for Conservation Priorities in Africa.”</span> <em>Journal of Biogeography</em> 30 (11): 1719–27.
 </div>
 <div id="ref-tierney2018novel" class="csl-entry" role="listitem">
 Tierney, Nicholas John, H Jost Reinhold, Antonietta Mira, Martin Weiser, Roman Burkart, Claudio Benvenuti, and Angelo Auricchio. 2018. <span>“Novel Relocation Methods for Automatic External Defibrillator Improve Out-of-Hospital Cardiac Arrest Coverage Under Limited Resources.”</span> <em>Resuscitation</em> 125: 83–89.
@@ -414,11 +358,15 @@ Zahavi, Yacov. 1974. <span>“Traveltime Budgets and Mobility in Urban Areas.”
 <div id="ref-zhao2023replanting" class="csl-entry" role="listitem">
 Zhao, Jing, Andrew J Elmore, Janice Ser Huay Lee, Izaya Numata, Xin Zhang, and Mark A Cochrane. 2023. <span>“Replanting and Yield Increase Strategies for Alleviating the Potential Decline in Palm Oil Production in Indonesia.”</span> <em>Agricultural Systems</em> 210: 103714.
 </div>
-</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</div>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
 <li id="fn1"><p>Collectively &gt;1600 citations per Google Scholar at the 28th of January 2025.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Approximately 0.008333 decimal degrees, or just below 1 km<sup>2</sup> at the equator<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In Figure <span class="math inline">\(\ref{fig-data}\)</span>, the islands to the south and north-east are filled, but unconnected with the mainland. These cells appear absent in Figure <span class="math inline">\(\ref{fig-result}\)</span>; because they are not connected to any cells with a station, the calculated travel time is infinite, and so are not plotted in Figure <span class="math inline">\(\ref{fig-result}\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->
