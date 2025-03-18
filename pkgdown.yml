@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   singapore: singapore.html
-last_built: 2025-03-11T04:19Z
+last_built: 2025-03-18T02:52Z
 urls:
   reference: https://idem-lab.github.io/traveltime/reference
   article: https://idem-lab.github.io/traveltime/articles
