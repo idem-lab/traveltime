@@ -2,13 +2,22 @@
 title: "`traveltime`: an R package to calculate travel time across a landscape from user-specified locations"
 format:
   # md: default
-  wordcount-html:
+  # wordcount-html:
   # html:
+  #   keep-md: true
+  #   fig-height: 4
+  #   fig-align: center
+  #   fig-format: png
+  #   dpi: 300
+  pdf:
     keep-md: true
     fig-height: 4
     fig-align: center
-    fig-format: png
     dpi: 300
+    fig-format: png
+header-includes:
+  \usepackage{lineno} \linenumbers
+  \usepackage{hanging}
 tags: 
   - R
   - geographic information systems
@@ -36,7 +45,7 @@ affiliations:
    index: 3
  - name: University of Western Australia, WA, Australia
    index: 4
-date: In prep 2025
+date: 2025-04-07
 bibliography: paper.bib
 ---
 
@@ -121,7 +130,7 @@ We plot these data below. `traveltime` takes resistance values of friction [@gdi
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-html/fig-data-1.png){#fig-data}
+![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-pdf/fig-data-1.png){#fig-data}
 :::
 :::
 
@@ -170,7 +179,7 @@ Resulting travel times are Figure \ref{fig-result}[^2].
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-html/fig-result-1.png){#fig-result}
+![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-pdf/fig-result-1.png){#fig-result}
 :::
 :::
 
