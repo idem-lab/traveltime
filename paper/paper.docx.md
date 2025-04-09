@@ -9,7 +9,7 @@ format:
   #   fig-align: center
   #   fig-format: png
   #   dpi: 300
-  pdf:
+  docx:
     keep-md: true
     fig-height: 4
     fig-align: center
@@ -130,7 +130,7 @@ We plot these data below. `traveltime` takes resistance values of friction [@gdi
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-pdf/fig-data-1.png){#fig-data}
+![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-docx/fig-data-1.png){#fig-data}
 :::
 :::
 
@@ -179,7 +179,7 @@ We present the resulting calculated travel times in Figure \ref{fig-result} wher
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-pdf/fig-result-1.png){#fig-result}
+![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-docx/fig-result-1.png){#fig-result}
 :::
 :::
 
