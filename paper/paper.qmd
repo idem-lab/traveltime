@@ -9,20 +9,21 @@ format:
   #   fig-align: center
   #   fig-format: png
   #   dpi: 300
+  #pdf:
   docx:
     keep-md: true
     fig-height: 4
     fig-align: center
     dpi: 300
     fig-format: png
-header-includes:
-  \usepackage{lineno} \linenumbers
-  \usepackage{hanging}
+# header-includes:
+#   \usepackage{lineno} \linenumbers
+#   \usepackage{hanging}
 tags: 
   - R
   - geographic information systems
   - spatial analysis
-authors:
+author:
   - name: Gerard E. Ryan
     orcid: 0000-0003-0183-7630
     corresponding: true
