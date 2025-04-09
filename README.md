@@ -338,6 +338,14 @@ Please note that the `traveltime` project is released with a
 Conduct](https://idem-lab.github.io/traveltime/CODE_OF_CONDUCT.html). By
 contributing to this project, you agree to abide by its terms.
 
+## Imported data
+
+This repository contains information from the dataset “LTA MRT Station
+Exit (GEOJSON)” accessed on the 10th of December 2024 from
+[data.gov.sg](https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view),
+which is made available under the terms of the Singapore Open Data
+Licence version 1.0 <https://data.gov.sg/open-data-licence>
+
 [^1]: D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S.,
     Bavadekar, E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S.
     Gibson, T., Shekel, C. Kamath, A. Lieber, K. Schulman, Y. Shao, V.

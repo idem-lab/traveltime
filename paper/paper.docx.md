@@ -204,4 +204,6 @@ Firstly, `traveltime` currently facilitates access to walking and motorised fric
 
 This work was supported, in whole or in part, by the Bill & Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the authors alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.
 
+The package associated with this paper contains information from the dataset "LTA MRT Station Exit (GEOJSON)" accessed on the 10th of December 2024 from  data.gov.sg, which is made available under the terms of the Singapore Open Data Licence version 1.0 https://data.gov.sg/open-data-licence.
+
 # References
