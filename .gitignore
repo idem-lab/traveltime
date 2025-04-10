@@ -10,3 +10,4 @@ docs
 *.pdf
 inst/doc
 *_extensions
+!qr_code/qr-code.pdf
