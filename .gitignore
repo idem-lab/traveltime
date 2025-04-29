@@ -6,8 +6,9 @@
 *.tif
 *further/
 docs
-*/paper/drafts
+*paper/drafts
 *.pdf
 inst/doc
 *_extensions
 !qr_code/qr-code.pdf
+*paper/verixiv
