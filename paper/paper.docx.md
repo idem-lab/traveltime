@@ -12,10 +12,10 @@ format:
   #pdf:
   docx:
     keep-md: true
-    fig-height: 4
+    fig-height: 6
     fig-align: center
-    dpi: 300
-    fig-format: png
+    dpi: 600
+    fig-format: jpeg
 # header-includes:
 #   \usepackage{lineno} \linenumbers
 #   \usepackage{hanging}
@@ -66,7 +66,7 @@ Understanding and mapping the time to travel among locations is useful for many 
 Understanding and mapping the time to travel among locations is useful for many activities from urban planning [@zahavi1974traveltime] to public health [@hulland2019travel; @weiss2020global] and myriad others [@nelson2019suite]. Global maps of travel time to cities [@weiss2018global; @nelson2019suite] and health care [@hulland2019travel; @weiss2020global] have generated much interest and use[^1], and the city data set of @nelson2019suite is available to R users through the widely-used `geodata` package [@geodata]. Here we extend that work to enable travel time calculations from any arbitrary set of locations and friction surface.
 
 
-We present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to create a raster map of the travel time over an area of interest from a user-specified set of locations defined by geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to the nearest of the supplied locations. We envisage this software having diverse applications including: estimating sampling bias [@dennis2000bias], allocating defibrillators [@tierney2018novel], setting health districts [@padgham2019introduction], or mapping access to vehicle chargers [@falchetta2021electric] and agricultural facilities [@zhao2023replanting].
+We present a software package --- `traveltime` --- written in and for the language R [@Rref]. `traveltime` enables a user to create a raster map of the travel time over an area of interest from a user-specified set of locations defined by geographic coordinates. The result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to the nearest of the supplied locations.
 
 
 A gaggle of R packages provide superficially similar though fundamentally different functionality via the [TravelTime.com](https://www.TravelTime.com) API [@traveltimeapi; @traveltimeR; @rtraveltime; @traveltime_gh]. Their 'Isochron' polygons --- areas reachable within a given time from a given location --- are most comparable to what `traveltime::calculate_travel_time()` calculates. However, each isochron is a single polygon calculated is for a single point location and specified maximum travel time, rather than a raster of temporal gradation across a landscape, jointly for an arbitrary number of points, as in `traveltime`. TravelTime.com cannot provide a single result surface for time to the nearest of a group of points, and continuous time scale without extensive repeated iteration for all combinations of time and points, plus additional calculation of the minimum value for each cell from all points. Furthermore, TravelTime.com requires access keys, a paid subscription beyond a short free period, and caps queries, which add considerable friction to the use of this resource.
@@ -237,7 +237,7 @@ We plot these data below. `traveltime` takes resistance values of friction [@gdi
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-docx/fig-data-1.png){#fig-data}
+![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-docx/fig-data-1.jpeg){#fig-data}
 :::
 :::
 
@@ -280,13 +280,13 @@ max value   :         Inf
 
 
 
-We present the resulting calculated travel times in Figure @fig-result where, as expected, the travel times are lowest near station exits (per Figure @fig-data) and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf` above). In Figure @fig-data, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure \ref{fig-result}. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig-result}.
+We present the resulting calculated travel times in @fig-result where, as expected, the travel times are lowest near station exits (per @fig-data) and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf` above). In @fig-data, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in @fig-result. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in @fig-result.
 
 
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-docx/fig-result-1.png){#fig-result}
+![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-docx/fig-result-1.jpeg){#fig-result}
 :::
 :::
 
@@ -296,24 +296,36 @@ We present the resulting calculated travel times in Figure @fig-result where, as
 
 # Discussion 
 
-*ADD MORE OF A GENERAL DISCUSSION HERE*
 
-The `traveltime` package is immediately suitable to a range of application. Nonetheless, we see opportunities to build the package utility through:
+The `traveltime` package is immediately suitable to be used 'out-of-the-box' with any set of coordinates, in any part of the globe. We envisage this software having diverse applications including: estimating sampling bias [@dennis2000bias], allocating defibrillators [@tierney2018novel], setting health districts [@padgham2019introduction], or mapping access to vehicle chargers [@falchetta2021electric] and agricultural facilities [@zhao2023replanting]. Nonetheless, we see opportunities to build the package utility through:
 
   - capability to better distribute a wider range friction surfaces, and
   - additional methods to efficiently compute results over large spatial extents.
 
-Firstly, `traveltime` currently facilitates access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution[^2]. Although the user can presently supply their own friction surface, we expect most applications will use these existing surfaces given the extensive work needed in creating new ones [@weiss2018global; @weiss2020global]. As landscapes are dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km^2^ cell size is a relatively large area to walk across, and thus actual waking times may vary significantly within each cell. We underline however that a user can provide their own higher resolution friction surface at present if desired.
+Firstly, `traveltime` currently facilitates access to walking and motorised friction surfaces for 2020, both at 30 arc-second resolution (approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator). Although the user can presently supply their own friction surface, we expect most applications will use these existing surfaces given the extensive work needed in creating new ones [@weiss2018global; @weiss2020global]. As landscapes are dynamic, it may be useful to incorporate updated versions of these friction surfaces if and when they are available. Furthermore, although the resolution of these data is likely to be suitable for larger landscape foci, higher resolution data may be helpful for more locally focussed analyses. For instance, although the example here was chosen for it's simplicity and low computational demands, a ~1 km^2^ cell size is a relatively large area to walk across, and thus actual waking times may vary significantly within each cell. We underline however that a user can provide their own higher resolution friction surface at present if desired.
 
-Although this article is intended to be the key reference for the `traveltime` package, we suggest citations of the package are accompanied by citing the underlying methodological work as well [@weiss2018global; @weiss2020global].
+At the other end of the scale, as the area of interest increases, the size of the matrix of calculations necessary increases exponentially, making significant memory demands for analyses over large landscapes (e.g. analyses over Africa required \~ 72 GB RAM to run successfully). Developing methods to handle large landscapes either with less memory or via cloud resources would be helpful to make such analyses accessible to those without access to larger computing resources.
 
+Lastly, although this article is intended to be the key reference for the `traveltime` package, we suggest citations of the package are accompanied by citing the underlying methodological work as well [@weiss2018global; @weiss2020global].
 
-[^2]: Approximately 0.008333 decimal degrees, or just below 1 km$^2$ at the equator
+# Competing interests
 
-# Acknowledgements
+No competing interests were disclosed.
+
+# Grant Information
 
 This work was supported, in whole or in part, by the Bill & Melinda Gates Foundation [INV-021972]. The conclusions and opinions expressed in this work are those of the authors alone and shall not be attributed to the Foundation. Under the grant conditions of the Foundation, a Creative Commons Attribution 4.0 License has already been assigned to the Author Accepted Manuscript version that might arise from this submission. Please note works submitted as a preprint have not undergone a peer review process.
 
+
+# Figure Permissions
+
+The authors confirm ownership of the figures used in this manuscript.
+
+# Software availability
+
+All software described here is available from R-Universe <https://idem-lab.r-universe.dev/traveltime> and GitHub <https://github.com/idem-lab/traveltime>, and documented at <https://idem-lab.github.io/traveltime/>.
+
 The package associated with this paper contains information from the dataset "LTA MRT Station Exit (GEOJSON)" accessed on the 10th of December 2024 from  data.gov.sg, which is made available under the terms of the Singapore Open Data Licence version 1.0 https://data.gov.sg/open-data-licence.
+
 
 # References
