@@ -194,7 +194,7 @@ trave_time_singapore <- calculate_travel_time(
 trave_time_singapore
 ```
 
-We present the resulting calculated travel times in Figure \ref{fig-result} where, as expected, the travel times are lowest near station exits (per Figure \ref{fig-data}) and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf` above). In Figure \ref{fig-data}, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in Figure \ref{fig-result}. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in Figure \ref{fig-result}.
+We present the resulting calculated travel times in @fig-result where, as expected, the travel times are lowest near station exits (per @fig-data) and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf` above). In @fig-data, the islands to the south and north-east are shown as filled cells, but unconnected with the mainland. The raster cells for these islands appear absent in @fig-result. Because they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in @fig-result.
 
 ```{r}
 #| label: fig-result
