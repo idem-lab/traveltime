@@ -14,8 +14,8 @@ format:
     keep-md: true
     fig-height: 6
     fig-align: center
-    dpi: 600
-    fig-format: jpeg
+    dpi: 300
+    fig-format: png
 # header-includes:
 #   \usepackage{lineno} \linenumbers
 #   \usepackage{hanging}
@@ -27,27 +27,46 @@ author:
   - name: Gerard E. Ryan
     orcid: 0000-0003-0183-7630
     corresponding: true
-    affiliation: "1, 2"
+    email: gerry.ryan@thekids.org.au
+    #affiliation: "1, 2"
+    affiliations:
+      - ref: TKRIA
+      - ref: MSPGH
   - name: Nicholas Tierney
     orcid: 0000-0003-1460-8722
-    affiliation: "1, 3"
+    #affiliation: "1, 3"
+    affiliations:
+      - ref: TKRIA
+      - ref: CU
   - name: Nick Golding
     orcid: 0000-0001-8916-5570
-    affiliation: "1, 4"
+    #affiliation: "1, 4"
+    affiliations:
+      - ref: TKRIA
+      - ref: UWA
   - name: Daniel J. Weiss
     orcid: 0000-0002-6175-5648
-    affiliation: "1, 3"
+    #affiliation: "1, 3"
+    affiliations:
+      - ref: TKRIA
+      - ref: CU
 affiliations:
  - name: The Kids Research Institute Australia, Nedlands 6009 WA, Australia
+   id: TKRIA
    index: 1
  - name: Melbourne School of Population and Global Health, University of Melbourne, 3010, VIC, Australia
    index: 2
+   id: MSPGH
  - name: Curtin University, Bentley, WA, Australia
    index: 3
+   id: CU
  - name: University of Western Australia, WA, Australia
    index: 4
+   id: UWA
 date: 2025-05-02
 bibliography: paper.bib
+filters:
+  - authors-block
 ---
 
 
@@ -237,7 +256,7 @@ We plot these data below. `traveltime` takes resistance values of friction [@gdi
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-docx/fig-data-1.jpeg){#fig-data}
+![Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points.](paper_files/figure-docx/fig-data-1.png){#fig-data}
 :::
 :::
 
@@ -286,7 +305,7 @@ We present the resulting calculated travel times in @fig-result where, as expect
 
 ::: {.cell}
 ::: {.cell-output-display}
-![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-docx/fig-result-1.jpeg){#fig-result}
+![Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station.](paper_files/figure-docx/fig-result-1.png){#fig-result}
 :::
 :::
 
