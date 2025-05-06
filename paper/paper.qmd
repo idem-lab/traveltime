@@ -288,7 +288,7 @@ The authors confirm ownership of the figures used in this manuscript.
 
 # Software availability
 
-All software described here is available from R-Universe <https://idem-lab.r-universe.dev/traveltime> and GitHub <https://github.com/idem-lab/traveltime>, and documented at <https://idem-lab.github.io/traveltime/>.
+All software described here is available from R-Universe <https://idem-lab.r-universe.dev/traveltime> and GitHub <https://github.com/idem-lab/traveltime>, and documented at <https://idem-lab.github.io/traveltime/>. Code used in this paper is released via GitHub as [v4](https://github.com/idem-lab/traveltime/releases/tag/v3), and archived on Zenodo under [DOI 10.5281/zenodo.15347016](https://doi.org/10.5281/zenodo.15347016).
 
 The package associated with this paper contains information from the dataset "LTA MRT Station Exit (GEOJSON)" accessed on the 10th of December 2024 from  data.gov.sg, which is made available under the terms of the Singapore Open Data Licence version 1.0 https://data.gov.sg/open-data-licence.
 
