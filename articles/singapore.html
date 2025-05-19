@@ -109,7 +109,7 @@ resolution (<code>resolution = 2</code>). Our boundary
 object from the package <code>terra</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; terra 1.8.42</span></span>
+<span><span class="co">#&gt; terra 1.8.50</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">geodata</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">singapore_shapefile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/geodata/man/gadm.html" class="external-link">gadm</a></span><span class="op">(</span></span>
@@ -255,12 +255,12 @@ grey, and station locations as grey points.
 <code>stations</code>, and returns a <code>SpatRaster</code> of walking
 time in minutes to each cell from the nearest station:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trave_time_singapore</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_travel_time.html">calculate_travel_time</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">travel_time_singapore</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_travel_time.html">calculate_travel_time</a></span><span class="op">(</span></span>
 <span>  friction_surface <span class="op">=</span> <span class="va">friction_singapore</span>,</span>
 <span>  points <span class="op">=</span> <span class="va">stations</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">trave_time_singapore</span></span>
+<span><span class="va">travel_time_singapore</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 37, 57, 1  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 0.008333333, 0.008333333  (x, y)</span></span>
@@ -276,7 +276,7 @@ time in minutes to each cell from the nearest station:</p>
 <p>We present the resulting calculated travel times below where (as
 expected) the travel times are lowest near station exits and
 progressively higher further away. Note that the results in
-<code>trave_time_singapore</code> include infinite values
+<code>travel_time_singapore</code> include infinite values
 (<code>Inf</code> above). The islands to the south and north-east are
 shown as filled cells in the figure above, i.e., they are not masked out
 by <code>singapore_shapefile</code>. But because those islands they are
@@ -285,7 +285,7 @@ infinite, and so these cells do not appear in the figure below.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">trave_time_singapore</span></span>
+<span>    data <span class="op">=</span> <span class="va">travel_time_singapore</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_c</a></span><span class="op">(</span></span>
 <span>    option <span class="op">=</span> <span class="st">"A"</span>,</span>

@@ -129,7 +129,7 @@ Walking travel time from rail transport in Singapore
 <p>To obtain our area of interest, we download a national-level polygon boundary of Singapore using the <code>geodata</code> package. Here we download only the national boundary (<code>level = 0</code>) at a low resolution (<code>resolution = 2</code>). Our boundary <code>singapore_shapefile</code> is a <code>SpatVector</code> class object from the package <code>terra</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; terra 1.8.29</span></span>
+<span><span class="co">#&gt; terra 1.8.46</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">geodata</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">singapore_shapefile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/geodata/man/gadm.html" class="external-link">gadm</a></span><span class="op">(</span></span>
@@ -169,7 +169,7 @@ Walking travel time from rail transport in Singapore
 <span><span class="co">#&gt;   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Loading required package: sf</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.10.0, PROJ 9.5.1; sf_use_s2() is FALSE</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE</span></span>
 <span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
 <span><span class="co">#&gt; &lt;GMLEnvelope&gt;</span></span>
 <span><span class="co">#&gt; ....|-- lowerCorner: 1.1664 103.6091</span></span>
@@ -245,12 +245,12 @@ Friction surface raster of Singapore, showing Singapore boundary in grey, and st
 </h4>
 <p>With all the data collected, the function <code><a href="reference/calculate_travel_time.html">calculate_travel_time()</a></code> takes the friction surface <code>friction_singapore</code> and the points of interest in <code>stations</code>, and returns a <code>SpatRaster</code> of walking time in minutes to each cell from the nearest station:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trave_time_singapore</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calculate_travel_time.html">calculate_travel_time</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">travel_time_singapore</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calculate_travel_time.html">calculate_travel_time</a></span><span class="op">(</span></span>
 <span>  friction_surface <span class="op">=</span> <span class="va">friction_singapore</span>,</span>
 <span>  points <span class="op">=</span> <span class="va">stations</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">trave_time_singapore</span></span>
+<span><span class="va">travel_time_singapore</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 37, 57, 1  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 0.008333333, 0.008333333  (x, y)</span></span>
@@ -263,11 +263,11 @@ Friction surface raster of Singapore, showing Singapore boundary in grey, and st
 <div class="section level5">
 <h5 id="plot-results">Plot results<a class="anchor" aria-label="anchor" href="#plot-results"></a>
 </h5>
-<p>We present the resulting calculated travel times below where (as expected) the travel times are lowest near station exits and progressively higher further away. Note that the results in <code>trave_time_singapore</code> include infinite values (<code>Inf</code> above). The islands to the south and north-east are shown as filled cells in the figure above, i.e., they are not masked out by <code>singapore_shapefile</code>. But because those islands they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in the figure below.</p>
+<p>We present the resulting calculated travel times below where (as expected) the travel times are lowest near station exits and progressively higher further away. Note that the results in <code>travel_time_singapore</code> include infinite values (<code>Inf</code> above). The islands to the south and north-east are shown as filled cells in the figure above, i.e., they are not masked out by <code>singapore_shapefile</code>. But because those islands they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in the figure below.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">trave_time_singapore</span></span>
+<span>    data <span class="op">=</span> <span class="va">travel_time_singapore</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_c</a></span><span class="op">(</span></span>
 <span>    option <span class="op">=</span> <span class="st">"A"</span>,</span>
