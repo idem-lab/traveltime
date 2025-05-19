@@ -187,17 +187,17 @@ With all the data collected, the function `calculate_travel_time()` takes the fr
 ```{r}
 #| label: calculate-result
 #| echo: true
-trave_time_singapore <- calculate_travel_time(
+travel_time_singapore <- calculate_travel_time(
   friction_surface = friction_singapore,
   points = stations
 )
 
-trave_time_singapore
+travel_time_singapore
 ```
 
 ##### Plot results
 
-We present the resulting calculated travel times below where (as expected) the travel times are lowest near station exits and progressively higher further away. Note that the results in `trave_time_singapore` include infinite values (`Inf`  above). The islands to the south and north-east are shown as filled cells in the figure above, i.e., they are not masked out by `singapore_shapefile`. But because those islands they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in the figure below.
+We present the resulting calculated travel times below where (as expected) the travel times are lowest near station exits and progressively higher further away. Note that the results in `travel_time_singapore` include infinite values (`Inf`  above). The islands to the south and north-east are shown as filled cells in the figure above, i.e., they are not masked out by `singapore_shapefile`. But because those islands they are not connected to any cells with a station, the calculated travel time is infinite, and so these cells do not appear in the figure below.
 
 ```{r}
 #| label: fig-result
@@ -206,7 +206,7 @@ We present the resulting calculated travel times below where (as expected) the t
 #|   nearest MRT or LRT station."
 ggplot() +
   geom_spatraster(
-    data = trave_time_singapore
+    data = travel_time_singapore
   ) +
   scale_fill_viridis_c(
     option = "A",

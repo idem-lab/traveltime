@@ -127,7 +127,7 @@ class object from the package `terra`.
 
 ``` r
 library(terra)
-#> terra 1.8.29
+#> terra 1.8.46
 library(geodata)
 
 singapore_shapefile <- gadm(
@@ -181,7 +181,7 @@ friction_singapore <- get_friction_surface(
 #>   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT
 #> 
 #> Loading required package: sf
-#> Linking to GEOS 3.13.0, GDAL 3.10.0, PROJ 9.5.1; sf_use_s2() is FALSE
+#> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
 #> No encoding supplied: defaulting to UTF-8.
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 1.1664 103.6091
@@ -259,6 +259,7 @@ ggplot() +
 
 <img src="man/figures/README-fig-data-1.png" alt="Friction surface raster of Singapore, showing Singapore boundary in grey, and station locations as grey points." width="80%" />
 <p class="caption">
+
 Friction surface raster of Singapore, showing Singapore boundary in
 grey, and station locations as grey points.
 </p>
@@ -273,12 +274,12 @@ interest in `stations`, and returns a `SpatRaster` of walking time in
 minutes to each cell from the nearest station:
 
 ``` r
-trave_time_singapore <- calculate_travel_time(
+travel_time_singapore <- calculate_travel_time(
   friction_surface = friction_singapore,
   points = stations
 )
 
-trave_time_singapore
+travel_time_singapore
 #> class       : SpatRaster 
 #> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
@@ -295,7 +296,7 @@ trave_time_singapore
 We present the resulting calculated travel times below where (as
 expected) the travel times are lowest near station exits and
 progressively higher further away. Note that the results in
-`trave_time_singapore` include infinite values (`Inf` above). The
+`travel_time_singapore` include infinite values (`Inf` above). The
 islands to the south and north-east are shown as filled cells in the
 figure above, i.e., they are not masked out by `singapore_shapefile`.
 But because those islands they are not connected to any cells with a
@@ -305,7 +306,7 @@ not appear in the figure below.
 ``` r
 ggplot() +
   geom_spatraster(
-    data = trave_time_singapore
+    data = travel_time_singapore
   ) +
   scale_fill_viridis_c(
     option = "A",
@@ -325,6 +326,7 @@ ggplot() +
 
 <img src="man/figures/README-fig-result-1.png" alt="Map of walking travel time in Singapore, in minutes from nearest MRT or LRT station." width="80%" />
 <p class="caption">
+
 Map of walking travel time in Singapore, in minutes from nearest MRT or
 LRT station.
 </p>
