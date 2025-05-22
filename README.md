@@ -60,10 +60,11 @@ remotes::install_github("idem-lab/traveltime")
 
 ### Paper
 
-Ryan, G.E., Tierney, N., Golding, N., and Weiss, D.J (2025).
-<a href="https://doi.org/10.31223/X56M74" target="_blank">traveltime: an
-R package to calculate travel time across a landscape from
-user-specified locations</a>. **EarthArXiv** 10.31223/X56M74
+**Ryan, G.E.**, Tierney, N., Golding, N., and Weiss, D.J (2025).
+<a href="https://doi.org/10.12688/verixiv.989.1"
+target="_blank">traveltime: an R package to calculate travel time across
+a landscape from user-specified locations</a>. **VeriXiv** 2:99 DOI
+10.12688/verixiv.989.1
 
 ## What does this thing do?
 
