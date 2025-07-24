@@ -50,7 +50,7 @@ remotes::install_github("idem-lab/traveltime")
 
 ### Paper
 
-**Ryan, G.E.**, Tierney, N., Golding, N., and Weiss, D.J (2025). [traveltime: an R package to calculate travel time across a landscape from user-specified locations](https://doi.org/10.12688/verixiv.989.1){target="_blank"}. **VeriXiv** 2:99 DOI 10.12688/verixiv.989.1
+Ryan, G.E., Tierney, N., Golding, N., and Weiss, D.J (2025). [traveltime: an R package to calculate travel time across a landscape from user-specified locations](https://doi.org/10.12688/gatesopenres.16356.1){target="_blank"}. Gates Open Research 9:50
 
 ## What does this thing do?
 
