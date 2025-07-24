@@ -63,8 +63,7 @@ remotes::install_github("idem-lab/traveltime")
 Ryan, G.E., Tierney, N., Golding, N., and Weiss, D.J (2025).
 <a href="https://doi.org/10.12688/gatesopenres.16356.1"
 target="_blank">traveltime: an R package to calculate travel time across
-a landscape from user-specified locations</a>. **Gates Open Research**
-9:50
+a landscape from user-specified locations</a>. Gates Open Research 9:50
 
 ## What does this thing do?
 
