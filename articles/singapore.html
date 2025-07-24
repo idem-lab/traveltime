@@ -109,7 +109,7 @@ resolution (<code>resolution = 2</code>). Our boundary
 object from the package <code>terra</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; terra 1.8.50</span></span>
+<span><span class="co">#&gt; terra 1.8.60</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">geodata</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">singapore_shapefile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/geodata/man/gadm.html" class="external-link">gadm</a></span><span class="op">(</span></span>
@@ -172,12 +172,12 @@ out areas outside of the land boundary of
 <span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBBBB;">&lt;</span><span style="color: #BBBBBB; text-decoration: underline;">GMLEnvelope</span><span style="color: #BBBBBB;">&gt;</span></span></span>
 <span><span class="co">#&gt; ....|-- <span style="font-style: italic;">lowerCorner</span>: <span style="background-color: #BBBBBB;">1.1664 103.6091</span></span></span>
-<span><span class="co">#&gt; ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1.4714 104.0858</span>Start tag expected, '&lt;' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; ....|-- <span style="font-style: italic;">upperCorner</span>: <span style="background-color: #BBBBBB;">1.4714 104.0858</span></span></span></code></pre></div>
 <p>Thus we have our friction surface as a <code>SpatRaster</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">friction_singapore</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
-<span><span class="co">#&gt; dimensions  : 37, 57, 1  (nrow, ncol, nlyr)</span></span>
+<span><span class="co">#&gt; size        : 37, 57, 1  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 0.008333333, 0.008333333  (x, y)</span></span>
 <span><span class="co">#&gt; extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
@@ -262,7 +262,7 @@ time in minutes to each cell from the nearest station:</p>
 <span></span>
 <span><span class="va">travel_time_singapore</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
-<span><span class="co">#&gt; dimensions  : 37, 57, 1  (nrow, ncol, nlyr)</span></span>
+<span><span class="co">#&gt; size        : 37, 57, 1  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 0.008333333, 0.008333333  (x, y)</span></span>
 <span><span class="co">#&gt; extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. :  </span></span>
@@ -319,7 +319,7 @@ LRT station.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
