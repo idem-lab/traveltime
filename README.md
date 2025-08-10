@@ -22,6 +22,8 @@ coverage](https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg)](https://ap
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+![GitHub Downloads (all assets, latest
+release)](https://img.shields.io/github/downloads/idem-lab/traveltime/latest/total)
 <!-- badges: end -->
 
 `traveltime` enables a user to create a map of travel time over an area
