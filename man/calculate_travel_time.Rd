@@ -44,6 +44,23 @@ with\code{?get_friction_surface}. User can also provide their own friction
 surface. This surface but must be in resistance units (1/conductance), e.g.
 minutes/meter. See Van Etten 2017.
 
+Note on this implementation: as of package version 1. Earlier versions of
+this package  used the \code{raster} and \code{gdistance} packages. These
+dependencies have been removed and now instead rely exclusively on \code{terra}
+for spatial data handling. The two approaches use the same cost model
+(eight-direction movement, edge cost \code{distance * mean(friction)}) and
+produce effectively the same result. \code{terra::costDist()} computes true
+geodesic inter-cell distances, so the new approach is \emph{more} accurate than
+the old \code{gdistance}'s distance approximation away from the equator (the
+results are identical at the equator and for projected coordinate systems).
+The remaining difference is a boundary convention at the origins:
+\code{gdistance} includes half of the starting cell's own friction when leaving
+a point, whereas \code{terra::costDist} measures cost to the border of the
+origin cells and omits it. This appears as a small, near-constant offset
+(about half a cell of friction) close to the origin points. See
+\code{data-raw/costdist_migration_comparison.md} in the package source for the
+full comparison.
+
 Citations:
 
 D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.

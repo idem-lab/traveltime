@@ -24,6 +24,23 @@
 #'   surface. This surface but must be in resistance units (1/conductance), e.g.
 #'   minutes/meter. See Van Etten 2017.
 #'
+#'   Note on this implementation: as of package version 1. Earlier versions of
+#'   this package  used the `raster` and `gdistance` packages. These
+#'   dependencies have been removed and now instead rely exclusively on `terra`
+#'   for spatial data handling. The two approaches use the same cost model
+#'   (eight-direction movement, edge cost `distance * mean(friction)`) and
+#'   produce effectively the same result. `terra::costDist()` computes true
+#'   geodesic inter-cell distances, so the new approach is *more* accurate than
+#'   the old `gdistance`'s distance approximation away from the equator (the
+#'   results are identical at the equator and for projected coordinate systems).
+#'   The remaining difference is a boundary convention at the origins:
+#'   `gdistance` includes half of the starting cell's own friction when leaving
+#'   a point, whereas `terra::costDist` measures cost to the border of the
+#'   origin cells and omits it. This appears as a small, near-constant offset
+#'   (about half a cell of friction) close to the origin points. See
+#'   `data-raw/costdist_migration_comparison.md` in the package source for the
+#'   full comparison.
+#'
 #'   Citations:
 #'
 #'   D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
@@ -105,21 +122,37 @@ calculate_travel_time <- function(
     points <- terra::geom(points)[,c("x", "y")]
   }
 
-  friction <- raster::raster(friction_surface)
-
-  tsn <- gdistance::transition(friction, function(x) 1/mean(x), 8)
-
-  tgc <- gdistance::geoCorrection(tsn)
-
   xy.matrix <- as.matrix(points[,1:2])
 
-  travel_time <- gdistance::accCost(tgc, xy.matrix)
+  # Identify the cells the origin points fall in. terra::costDist computes the
+  # cost-distance to the border of cells that hold the `target` value, so the
+  # origins are flagged by burning a sentinel value into their cells. The
+  # sentinel only identifies the target cells; costDist does not charge the
+  # origin cells' own friction, so the value chosen does not affect the result
+  # as long as it does not collide with genuine friction values elsewhere.
+  origin_cells <- terra::cellFromXY(friction_surface, xy.matrix)
+  origin_cells <- unique(origin_cells[!is.na(origin_cells)])
+
+  if (length(origin_cells) == 0) {
+    cli::cli_abort(
+      "None of {.arg points} fall within {.arg friction_surface}."
+    )
+  }
+
+  target_value <- -1
+  friction_target <- friction_surface
+  friction_target[origin_cells] <- target_value
+
+  travel_time <- terra::costDist(
+    x = friction_target,
+    target = target_value
+  )
 
   names(travel_time) <- "travel_time"
 
   if(!is.null(filename)){
 
-    raster::writeRaster(
+    terra::writeRaster(
       travel_time,
       filename,
       overwrite = overwrite
@@ -129,7 +162,7 @@ calculate_travel_time <- function(
 
   } else {
 
-    terra::rast(travel_time)
+    travel_time
 
   }
 
