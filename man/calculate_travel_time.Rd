@@ -18,10 +18,12 @@ resistance units. See Details.}
 \item{points}{A two-column \code{matrix}, \code{data.frame}, (including \code{tibble} types)
 with longitude (x) in the first column and latitude (y) in the second, or a
 \code{SpatVector}, in the same coordinate reference system as
-\code{friction_surface}.}
+\code{friction_surface}. Points that fall outside \code{friction_surface} are dropped
+with a warning; if none fall within it, an error is raised.}
 
 \item{filename}{\code{character}. Output file name with extension suitable for
-\code{terra::writeRaster}}
+\code{terra::writeRaster}. If \code{NULL} (default), output will be returned in
+memory}
 
 \item{overwrite}{\code{logical}. If \code{TRUE} \code{filename} is overwritten.}
 }

@@ -8,9 +8,11 @@
 #' @param points A two-column `matrix`, `data.frame`, (including `tibble` types)
 #'   with longitude (x) in the first column and latitude (y) in the second, or a
 #'   `SpatVector`, in the same coordinate reference system as
-#'   `friction_surface`.
+#'   `friction_surface`. Points that fall outside `friction_surface` are dropped
+#'   with a warning; if none fall within it, an error is raised.
 #' @param filename `character`. Output file name with extension suitable for
-#'   `terra::writeRaster`
+#'   `terra::writeRaster`. If `NULL` (default), output will be returned in
+#'   memory
 #' @param overwrite `logical`. If `TRUE` `filename` is overwritten.
 #'
 #' @details Implements methods from Weiss et al. 2018, 2020 to calculate travel
@@ -131,11 +133,29 @@ calculate_travel_time <- function(
   # origin cells' own friction, so the value chosen does not affect the result
   # as long as it does not collide with genuine friction values elsewhere.
   origin_cells <- terra::cellFromXY(friction_surface, xy.matrix)
+
+  n_points <- nrow(xy.matrix)
+  n_outside <- sum(is.na(origin_cells))
+
   origin_cells <- unique(origin_cells[!is.na(origin_cells)])
 
   if (length(origin_cells) == 0) {
     cli::cli_abort(
       "None of {.arg points} fall within {.arg friction_surface}."
+    )
+  }
+
+  # some, but not all, points fell outside the surface: drop them and warn
+  if (n_outside > 0) {
+    n_inside <- n_points - n_outside
+    cli::cli_warn(
+      c(
+        "!" = "{n_outside} of {n_points} {.arg points} fell outside \\
+        {.arg friction_surface} and {cli::qty(n_outside)}{?was/were} \\
+        dropped.",
+        "i" = "Travel time is calculated from the remaining \\
+        {cli::qty(n_inside)}{n_inside} point{?s}."
+      )
     )
   }
 
