@@ -104,11 +104,9 @@ ext <- c(111, 112, 0, 1)
 #>     DATASET ID  YEAR 
 #>   - Accessibility__202001_Global_Motorized_Friction_Surface:  DEFAULT 
 #> 
-#> No encoding supplied: defaulting to UTF-8.
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 0 111
 #> ....|-- upperCorner: 1 112
-#> No encoding supplied: defaulting to UTF-8.
 #> class       : SpatRaster
 #> size        : 120, 120, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)

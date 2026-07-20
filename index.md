@@ -13,6 +13,21 @@ Singapore](reference/figures/README-fig-result-1.png)
 
 Walking travel time from rail transport in Singapore
 
+  
+
+> **Note:** The internals of
+> [`calculate_travel_time()`](https://idem-lab.github.io/traveltime/reference/calculate_travel_time.md)
+> have been reimplemented on
+> [`terra::costDist()`](https://rspatial.github.io/terra/reference/costDist.html),
+> replacing the previous `raster` and `gdistance` machinery. This
+> produces effectively the same result while dropping two superseded
+> dependencies. For the evidence that the switch is safe — and a
+> characterisation of the small differences between the two approaches —
+> see the [validation
+> article](https://idem-lab.github.io/traveltime/articles/costdist-validation.html).
+
+  
+
 ## Installation
 
 ``` r
@@ -105,7 +120,7 @@ class object from the package `terra`.
 ``` r
 
 library(terra)
-#> terra 1.8.46
+#> terra 1.9.38
 library(geodata)
 
 singapore_shapefile <- gadm(
@@ -114,16 +129,17 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
+#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpCLwMZu/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
-#>  class       : SpatVector 
-#>  geometry    : polygons 
-#>  dimensions  : 1, 2  (geometries, attributes)
-#>  extent      : 103.6091, 104.0858, 1.1664, 1.4714  (xmin, xmax, ymin, ymax)
-#>  coord. ref. : lon/lat WGS 84 (EPSG:4326) 
-#>  names       : GID_0   COUNTRY
-#>  type        : <chr>     <chr>
-#>  values      :   SGP Singapore
+#> class       : SpatVector
+#> geometry    : polygons
+#> dimensions  : 1, 2  (geometries, attributes)
+#> extent      : 103.6091, 104.0858, 1.1664, 1.4714  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326)
+#> names       : GID_0   COUNTRY
+#> type        : <chr>     <chr>
+#> values      :   SGP Singapore
 ```
 
 ##### Friction surface
@@ -155,17 +171,20 @@ friction_singapore <- get_friction_surface(
     extent = singapore_shapefile
   )|> 
   mask(singapore_shapefile)
+#> Registered S3 method overwritten by 'malariaAtlas':
+#>   method           from   
+#>   autoplot.default ggplot2
 #> Checking if the following Surface-Year combinations are available to download:
 #> 
 #>     DATASET ID  YEAR
 #>   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT
 #> 
 #> Loading required package: sf
-#> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
+#> Linking to GEOS 3.14.1, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
 #> No encoding supplied: defaulting to UTF-8.
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 1.1664 103.6091
-#> ....|-- upperCorner: 1.4714 104.0858Start tag expected, '<' not found
+#> ....|-- upperCorner: 1.4714 104.0858
 ```
 
 Thus we have our friction surface as a `SpatRaster`:
@@ -173,16 +192,16 @@ Thus we have our friction surface as a `SpatRaster`:
 ``` r
 
 friction_singapore
-#> class       : SpatRaster 
-#> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
+#> class       : SpatRaster
+#> size        : 37, 57, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
 #> extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
-#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326)
 #> source(s)   : memory
-#> varname     : Accessibility__202001_Global_Walking_Only_Friction_Surface_1.1664,103.6091,1.4714,104.0858 
-#> name        : friction_surface 
-#> min value   :       0.01200000 
-#> max value   :       0.06192715
+#> varname     : Accessibility__202001_Global_Walking_Only_Friction_Surface_1.1664,103.6091,1.4714,104.0858
+#> name        : friction_surface
+#> min value   :            0.012
+#> max value   :         0.061927
 ```
 
 ##### Input data
@@ -260,15 +279,16 @@ travel_time_singapore <- calculate_travel_time(
 )
 
 travel_time_singapore
-#> class       : SpatRaster 
-#> dimensions  : 37, 57, 1  (nrow, ncol, nlyr)
+#> class       : SpatRaster
+#> size        : 37, 57, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
 #> extent      : 103.6083, 104.0833, 1.166667, 1.475  (xmin, xmax, ymin, ymax)
-#> coord. ref. :  
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326)
 #> source(s)   : memory
-#> name        : travel_time 
-#> min value   :           0 
-#> max value   :         Inf
+#> varname     : Accessibility__202001_Global_Walking_Only_Friction_Surface_1.1664,103.6091,1.4714,104.0858
+#> name        : travel_time
+#> min value   :           0
+#> max value   :   165.48359
 ```
 
 ##### Plot results

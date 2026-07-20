@@ -131,7 +131,6 @@ ext <- matrix(
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 0 111
 #> ....|-- upperCorner: 1 112
-#> No encoding supplied: defaulting to UTF-8.
 
  from_here <- data.frame(
    x = c(111.2, 111.9),

@@ -53,7 +53,7 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /tmp/Rtmpkof75c/gadm/gadm41_SGP_0_pk_low.rds
+#> Cached as: /tmp/RtmpcGlyI0/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
