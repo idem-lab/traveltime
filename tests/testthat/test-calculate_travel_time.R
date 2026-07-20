@@ -79,3 +79,58 @@ test_that(
     )
   }
 )
+
+test_that(
+  desc = "aborts if no points fall within the friction surface",
+  code = {
+    # synthetic surface, no network dependency
+    fs <- terra::rast(
+      nrow = 10,
+      ncol = 10,
+      xmin = 0,
+      xmax = 1,
+      ymin = 0,
+      ymax = 1,
+      crs = "EPSG:4326"
+    )
+    terra::values(fs) <- 0.01
+
+    expect_error(
+      calculate_travel_time(
+        friction_surface = fs,
+        points = data.frame(x = c(5, 6), y = c(5, 6))
+      ),
+      regexp = "fall within"
+    )
+  }
+)
+
+test_that(
+  desc = "warns, but does not abort, when some points fall outside the surface",
+  code = {
+    # synthetic surface, no network dependency
+    fs <- terra::rast(
+      nrow = 10,
+      ncol = 10,
+      xmin = 0,
+      xmax = 1,
+      ymin = 0,
+      ymax = 1,
+      crs = "EPSG:4326"
+    )
+    terra::values(fs) <- 0.01
+
+    # one point inside the extent, one outside (out-of-extent origin cell is NA)
+    expect_warning(
+      tt <- calculate_travel_time(
+        friction_surface = fs,
+        points = data.frame(x = c(0.5, 9), y = c(0.5, 9))
+      ),
+      regexp = "outside"
+    )
+
+    expect_s4_class(tt, "SpatRaster")
+    # cost distance from an origin cell is zero at the origin
+    expect_equal(unname(terra::minmax(tt)[1]), 0)
+  }
+)
