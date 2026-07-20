@@ -42,6 +42,8 @@ alt="Walking travel time from rail transport in Singapore" />
 in Singapore</figcaption>
 </figure>
 
+<br>
+
 > **Note:** The internals of `calculate_travel_time()` have been
 > reimplemented on `terra::costDist()`, replacing the previous `raster`
 > and `gdistance` machinery. This produces effectively the same result
@@ -49,6 +51,8 @@ in Singapore</figcaption>
 > switch is safe — and a characterisation of the small differences
 > between the two approaches — see the [validation
 > article](https://idem-lab.github.io/traveltime/articles/costdist-validation.html).
+
+<br>
 
 ## Installation
 
@@ -146,7 +150,7 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//Rtmp753fXV/gadm/gadm41_SGP_0_pk_low.rds
+#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpCLwMZu/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
