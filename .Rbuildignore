@@ -10,3 +10,5 @@
 ^docs$
 ^pkgdown$
 ^CODE_OF_CONDUCT\.md$
+^\.claude$
+^vignettes/articles$

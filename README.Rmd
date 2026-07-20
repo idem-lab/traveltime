@@ -33,6 +33,8 @@ knitr::opts_chunk$set(
 
 ![Walking travel time from rail transport in Singapore](man/figures/README-fig-result-1.png){width=60% fig-align="right"}
 
+> **Note:** The internals of `calculate_travel_time()` have been reimplemented on `terra::costDist()`, replacing the previous `raster` and `gdistance` machinery. This produces effectively the same result while dropping two superseded dependencies. For the evidence that the switch is safe --- and a characterisation of the small differences between the two approaches --- see the [validation article](https://idem-lab.github.io/traveltime/articles/costdist-validation.html).
+
 ## Installation
 
 ``` r

@@ -8,9 +8,11 @@
 #' @param points A two-column `matrix`, `data.frame`, (including `tibble` types)
 #'   with longitude (x) in the first column and latitude (y) in the second, or a
 #'   `SpatVector`, in the same coordinate reference system as
-#'   `friction_surface`.
+#'   `friction_surface`. Points that fall outside `friction_surface` are dropped
+#'   with a warning; if none fall within it, an error is raised.
 #' @param filename `character`. Output file name with extension suitable for
-#'   `terra::writeRaster`
+#'   `terra::writeRaster`. If `NULL` (default), output will be returned in
+#'   memory
 #' @param overwrite `logical`. If `TRUE` `filename` is overwritten.
 #'
 #' @details Implements methods from Weiss et al. 2018, 2020 to calculate travel
@@ -23,6 +25,23 @@
 #'   with`?get_friction_surface`. User can also provide their own friction
 #'   surface. This surface but must be in resistance units (1/conductance), e.g.
 #'   minutes/meter. See Van Etten 2017.
+#'
+#'   Note on this implementation: as of package version 1. Earlier versions of
+#'   this package  used the `raster` and `gdistance` packages. These
+#'   dependencies have been removed and now instead rely exclusively on `terra`
+#'   for spatial data handling. The two approaches use the same cost model
+#'   (eight-direction movement, edge cost `distance * mean(friction)`) and
+#'   produce effectively the same result. `terra::costDist()` computes true
+#'   geodesic inter-cell distances, so the new approach is *more* accurate than
+#'   the old `gdistance`'s distance approximation away from the equator (the
+#'   results are identical at the equator and for projected coordinate systems).
+#'   The remaining difference is a boundary convention at the origins:
+#'   `gdistance` includes half of the starting cell's own friction when leaving
+#'   a point, whereas `terra::costDist` measures cost to the border of the
+#'   origin cells and omits it. This appears as a small, near-constant offset
+#'   (about half a cell of friction) close to the origin points. See
+#'   `data-raw/costdist_migration_comparison.md` in the package source for the
+#'   full comparison.
 #'
 #'   Citations:
 #'
@@ -105,21 +124,55 @@ calculate_travel_time <- function(
     points <- terra::geom(points)[,c("x", "y")]
   }
 
-  friction <- raster::raster(friction_surface)
-
-  tsn <- gdistance::transition(friction, function(x) 1/mean(x), 8)
-
-  tgc <- gdistance::geoCorrection(tsn)
-
   xy.matrix <- as.matrix(points[,1:2])
 
-  travel_time <- gdistance::accCost(tgc, xy.matrix)
+  # Identify the cells the origin points fall in. terra::costDist computes the
+  # cost-distance to the border of cells that hold the `target` value, so the
+  # origins are flagged by burning a sentinel value into their cells. The
+  # sentinel only identifies the target cells; costDist does not charge the
+  # origin cells' own friction, so the value chosen does not affect the result
+  # as long as it does not collide with genuine friction values elsewhere.
+  origin_cells <- terra::cellFromXY(friction_surface, xy.matrix)
+
+  n_points <- nrow(xy.matrix)
+  n_outside <- sum(is.na(origin_cells))
+
+  origin_cells <- unique(origin_cells[!is.na(origin_cells)])
+
+  if (length(origin_cells) == 0) {
+    cli::cli_abort(
+      "None of {.arg points} fall within {.arg friction_surface}."
+    )
+  }
+
+  # some, but not all, points fell outside the surface: drop them and warn
+  if (n_outside > 0) {
+    n_inside <- n_points - n_outside
+    cli::cli_warn(
+      c(
+        "!" = "{n_outside} of {n_points} {.arg points} fell outside \\
+        {.arg friction_surface} and {cli::qty(n_outside)}{?was/were} \\
+        dropped.",
+        "i" = "Travel time is calculated from the remaining \\
+        {cli::qty(n_inside)}{n_inside} point{?s}."
+      )
+    )
+  }
+
+  target_value <- -1
+  friction_target <- friction_surface
+  friction_target[origin_cells] <- target_value
+
+  travel_time <- terra::costDist(
+    x = friction_target,
+    target = target_value
+  )
 
   names(travel_time) <- "travel_time"
 
   if(!is.null(filename)){
 
-    raster::writeRaster(
+    terra::writeRaster(
       travel_time,
       filename,
       overwrite = overwrite
@@ -129,7 +182,7 @@ calculate_travel_time <- function(
 
   } else {
 
-    terra::rast(travel_time)
+    travel_time
 
   }
 
