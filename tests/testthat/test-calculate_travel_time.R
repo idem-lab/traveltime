@@ -5,7 +5,7 @@ test_that("Is SpatRaster", {
   skip_if_offline()
 
   ext <- matrix(
-    data = c("111", "0", "112", 1),
+    data = c(111, 0, 112, 1),
     nrow = 2,
     ncol = 2,
     dimnames = list(
@@ -183,5 +183,77 @@ test_that(
         overwrite = TRUE
       )
     )
+  }
+)
+
+test_that(
+  desc = "accepts a single point as data.frame, matrix, or SpatVector",
+  code = {
+    fs <- terra::rast(
+      nrow = 10,
+      ncol = 10,
+      xmin = 0,
+      xmax = 1,
+      ymin = 0,
+      ymax = 1,
+      crs = "EPSG:4326",
+      vals = 0.01
+    )
+
+    tt_df <- calculate_travel_time(
+      friction_surface = fs,
+      points = data.frame(x = 0.5, y = 0.5)
+    )
+
+    tt_mat <- calculate_travel_time(
+      friction_surface = fs,
+      points = matrix(c(0.5, 0.5), ncol = 2)
+    )
+
+    tt_vect <- calculate_travel_time(
+      friction_surface = fs,
+      points = terra::vect(
+        matrix(c(0.5, 0.5), ncol = 2),
+        crs = "EPSG:4326"
+      )
+    )
+
+    expect_s4_class(tt_mat, "SpatRaster")
+    expect_s4_class(tt_vect, "SpatRaster")
+    expect_equal(terra::values(tt_mat), terra::values(tt_df))
+    expect_equal(terra::values(tt_vect), terra::values(tt_df))
+  }
+)
+
+test_that(
+  desc = "cells that cannot be reached are NA",
+  code = {
+    fs <- terra::rast(
+      nrow = 10,
+      ncol = 10,
+      xmin = 0,
+      xmax = 1,
+      ymin = 0,
+      ymax = 1,
+      crs = "EPSG:4326",
+      vals = 0.01
+    )
+
+    # a column of NA cells cuts off the right-hand side of the surface
+    fs[, 6] <- NA
+
+    tt <- calculate_travel_time(
+      friction_surface = fs,
+      points = data.frame(x = 0.1, y = 0.5)
+    )
+
+    tt_vals <- terra::values(tt)[, 1]
+    right_side <- terra::cellFromRowCol(tt, rep(1:10, each = 4), 7:10)
+
+    expect_true(all(is.na(tt_vals[right_side])))
+    expect_false(any(is.infinite(tt_vals)))
+    # cells on the origin side are all reachable
+    left_side <- terra::cellFromRowCol(tt, rep(1:10, each = 5), 1:5)
+    expect_false(anyNA(tt_vals[left_side]))
   }
 )

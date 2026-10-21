@@ -4,7 +4,7 @@ test_that("Are SpatRasters", {
   skip_on_cran()
   skip_if_offline()
   ext <- matrix(
-    data = c("111", "0", "112", 1),
+    data = c(111, 0, 112, 1),
     nrow = 2,
     ncol = 2,
     dimnames = list(
