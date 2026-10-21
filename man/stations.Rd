@@ -5,12 +5,10 @@
 \alias{stations}
 \title{Singapore MRT and LRT data}
 \format{
-\subsection{\code{stations} A data frame with 563 rows and 2 columns:}{
-
+A \code{matrix} with 563 rows and 2 columns:
 \describe{
 \item{x}{longitude}
 \item{y}{latitude}
-}
 }
 }
 \source{

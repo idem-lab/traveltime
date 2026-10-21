@@ -5,7 +5,7 @@ Authors@R: c(
     person(
       given = "Gerry", 
       family = "Ryan",
-      email = "gerard.ryan@telethonkids.org.au", 
+      email = "gerry.ryan@thekids.org.au", 
       role = c("aut", "cre"),
       comment = c(ORCID = "0000-0003-0183-7630")
       ),
@@ -23,14 +23,21 @@ Authors@R: c(
       comment = c(ORCID = "0000-0003-1460-8722")
       )
   )
-Description: Calculate travel time over a friction surface from a specified set of locations.
+Description: Calculate travel time across a landscape from a set of
+    user-specified locations, over a friction surface describing the time
+    taken to cross each cell. Implements the least-cost travel time approach
+    of Weiss et al. (2018) <doi:10.1038/nature25181> and Weiss et al. (2020)
+    <doi:10.1038/s41591-020-1059-1>, and provides convenient access to their
+    global walking and motorised friction surfaces via the 'malariaAtlas'
+    package. Travel times are computed with 'terra'. See Ryan et al. (2025)
+    <doi:10.12688/gatesopenres.16356.1> for further details.
 License: MIT + file LICENSE
 Imports:
     cli,
-    lifecycle,
     malariaAtlas,
     terra
 Encoding: UTF-8
+Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
@@ -44,6 +51,6 @@ Config/testthat/edition: 3
 Depends: 
     R (>= 4.1.0)
 LazyData: true
-URL: https://idem-lab.github.io/traveltime/
+URL: https://idem-lab.github.io/traveltime/, https://github.com/idem-lab/traveltime
 BugReports: https://github.com/idem-lab/traveltime/issues
 VignetteBuilder: knitr

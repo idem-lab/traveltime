@@ -12,11 +12,13 @@ get_friction_surface(
 )
 }
 \arguments{
-\item{surface}{\code{"motor2020"} or \verb{"walk2020}.}
+\item{surface}{\code{"motor2020"} or \code{"walk2020"}.}
 
 \item{filename}{\code{character}. File name for output layer.}
 
-\item{overwrite}{Overwrite \code{filename} if exists}
+\item{overwrite}{\code{logical}. If \code{TRUE} \code{filename} is overwritten. If \code{FALSE}
+(default) and \code{filename} already exists, the existing file is returned
+with a warning and nothing is downloaded.}
 
 \item{extent}{Spatial extent as one of:
 \itemize{
@@ -29,7 +31,8 @@ the extent will be taken, or
 See details}
 }
 \value{
-\code{SpatRaster}
+A \code{SpatRaster} friction surface with a single layer named
+\code{"friction_surface"}, or \code{NULL} (with a warning) if the download fails.
 }
 \description{
 Wrapper function to download friction surfaces via
@@ -45,9 +48,9 @@ downloaded directly from:
 Here ---
 \itemize{
 \item \code{surface = "motor2020"} will download
-\code{"Explorer__2020_motorized_friction_surface"}, and
+\code{"Accessibility__202001_Global_Motorized_Friction_Surface"}, and
 \item \code{surface = "walk2020"} will download
-\code{"Explorer__2020_walking_only_friction_surface"}.
+\code{"Accessibility__202001_Global_Walking_Only_Friction_Surface"}.
 }
 
 D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar, E.
@@ -56,30 +59,33 @@ Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi, S. H.
 Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J. J.
 Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W.
 Gething. Global maps of travel time to healthcare facilities. (2020) Nature
-Medicine. \url{https://doi.org/10.1038/s41591-020-1059-1}
+Medicine. \doi{10.1038/s41591-020-1059-1}
 
 \code{extent} is formatted and then passed through to
 \code{\link[malariaAtlas:getRaster]{malariaAtlas::getRaster()}} as a 2x2 matrix. It is converted into a matrix
 using \code{ext_matrix}. The \code{matrix} format used is as returned by
 \code{sf::st_bbox()} --- the first column has the minimum, the second the
 maximum values; rows 1 & 2 represent the x & y dimensions respectively:
-\code{matrix(c("xmin", "ymin", "xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))}. \code{NULL} extent downloads (large)
-global layer.
+\code{matrix(c("xmin", "ymin", "xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))}. \code{extent} must be supplied.
 
-Troubleshooting: if you get a warning \verb{Failed to connect to MAP geoserver},
-this is an issue with fetching the friction surface using
-\code{malariaAtlas::getRaster}, and not an issue with \code{traveltime} itself. The
-server may be down or there may be an issue with that package.
+Troubleshooting: this function requires an internet connection. If the
+download fails (e.g. a warning \verb{Failed to connect to MAP geoserver}), a
+warning is given and \code{NULL} is returned. This is an issue with fetching
+the friction surface using \code{\link[malariaAtlas:getRaster]{malariaAtlas::getRaster()}}, and not an issue
+with \code{traveltime} itself. The server may be down or there may be an issue
+with that package.
 }
 \examples{
-
-# for more examples of passing exten types see ?ext_matrix
+\donttest{
+# requires an internet connection
+# for more examples of passing extent types see ?ext_matrix
 
 ext <- c(111, 112, 0, 1)
 
- get_friction_surface(
-   surface = "motor2020",
-   extent = ext
- )
+get_friction_surface(
+  surface = "motor2020",
+  extent = ext
+)
+}
 
 }

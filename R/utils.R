@@ -1,6 +1,7 @@
 
-# warn_and_return checks if a file exists already and returns the raster
-# from the existing file with a warning that no calculation is being performed
+# warn_and_return checks if `filename` already exists and, if it does and
+# `overwrite` is FALSE, warns and returns the existing file as a SpatRaster so
+# the caller can return it without recalculating. Otherwise returns NULL.
 warn_and_return <- function(
   filename,
   overwrite
@@ -30,6 +31,6 @@ warn_and_return <- function(
 
   }
 
-  TRUE
+  NULL
 
 }

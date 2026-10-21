@@ -12,3 +12,12 @@
 ^CODE_OF_CONDUCT\.md$
 ^\.claude$
 ^vignettes/articles$
+^paper$
+^qr_code$
+^\.Rhistory$
+^\.RData$
+^\.DS_Store$
+\.DS_Store$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^vignettes/.*\.orig$

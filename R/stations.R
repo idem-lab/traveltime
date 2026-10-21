@@ -2,7 +2,7 @@
 #'
 #' Locations of all MRT and LRT station exits in Singapore.
 #'
-#' @format ## `stations` A data frame with 563 rows and 2 columns:
+#' @format A `matrix` with 563 rows and 2 columns:
 #' \describe{
 #'   \item{x}{longitude}
 #'   \item{y}{latitude}

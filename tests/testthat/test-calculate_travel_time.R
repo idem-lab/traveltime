@@ -1,5 +1,9 @@
 test_that("Is SpatRaster", {
 
+  # downloads friction surface from the Malaria Atlas Project
+  skip_on_cran()
+  skip_if_offline()
+
   ext <- matrix(
     data = c("111", "0", "112", 1),
     nrow = 2,
@@ -132,5 +136,52 @@ test_that(
     expect_s4_class(tt, "SpatRaster")
     # cost distance from an origin cell is zero at the origin
     expect_equal(unname(terra::minmax(tt)[1]), 0)
+  }
+)
+
+test_that(
+  desc = "returns existing file without recalculating if overwrite is FALSE",
+  code = {
+    fs <- terra::rast(
+      nrow = 10,
+      ncol = 10,
+      xmin = 0,
+      xmax = 1,
+      ymin = 0,
+      ymax = 1,
+      crs = "EPSG:4326"
+    )
+    terra::values(fs) <- 0.01
+
+    pts <- data.frame(x = 0.5, y = 0.5)
+    f <- tempfile(fileext = ".tif")
+
+    tt1 <- calculate_travel_time(
+      friction_surface = fs,
+      points = pts,
+      filename = f
+    )
+
+    expect_warning(
+      tt2 <- calculate_travel_time(
+        friction_surface = fs,
+        points = pts,
+        filename = f
+      ),
+      regexp = "already exists"
+    )
+
+    expect_s4_class(tt2, "SpatRaster")
+    expect_equal(terra::values(tt2), terra::values(tt1))
+
+    # overwrite = TRUE recalculates without warning
+    expect_no_warning(
+      calculate_travel_time(
+        friction_surface = fs,
+        points = pts,
+        filename = f,
+        overwrite = TRUE
+      )
+    )
   }
 )
