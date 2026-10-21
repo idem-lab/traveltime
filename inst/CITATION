@@ -1,11 +1,11 @@
 bibentry(
   bibtype  = "Article",
-  title    = "traveltime: an R package to calculate travel time across a landscape from user-specified location",
+  title    = "traveltime: an R package to calculate travel time across a landscape from user-specified locations",
   author   = c(
-    person("Gerard E. Ryan"),
-    person("Nicholas Tierney"),
-    person("Nick Golding"),
-    person("Daniel J. Weiss")
+    person(given = c("Gerard", "E."), family = "Ryan"),
+    person(given = "Nicholas", family = "Tierney"),
+    person(given = "Nick", family = "Golding"),
+    person(given = c("Daniel", "J."), family = "Weiss")
   ),
   journal  = "Gates Open Research",
   year     = 2025,

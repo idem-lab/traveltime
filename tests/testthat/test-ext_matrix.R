@@ -83,6 +83,18 @@ test_that(
 )
 
 test_that(
+  desc = "ext_matrix parses integer",
+  code = {
+
+    x <- c(111L, 112L, 0L, 1L)
+
+    y <- ext_matrix(extent = x)
+
+    expect_equal(y, ext_matrix(c(111, 112, 0, 1)))
+  }
+)
+
+test_that(
   desc = "ext_matrix parses double",
   code = {
 

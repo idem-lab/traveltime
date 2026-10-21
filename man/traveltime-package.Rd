@@ -6,18 +6,19 @@
 \alias{traveltime-package}
 \title{traveltime: Calculate Travel Times Over Space}
 \description{
-Calculate travel time over a friction surface from a specified set of locations.
+Calculate travel time across a landscape from a set of user-specified locations, over a friction surface describing the time taken to cross each cell. Implements the least-cost travel time approach of Weiss et al. (2018) \doi{10.1038/nature25181} and Weiss et al. (2020) \doi{10.1038/s41591-020-1059-1}, and provides convenient access to their global walking and motorised friction surfaces via the 'malariaAtlas' package. Travel times are computed with 'terra'. See Ryan et al. (2025) \doi{10.12688/gatesopenres.16356.1} for further details.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://idem-lab.github.io/traveltime/}
+  \item \url{https://github.com/idem-lab/traveltime}
   \item Report bugs at \url{https://github.com/idem-lab/traveltime/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Gerry Ryan \email{gerard.ryan@telethonkids.org.au} (\href{https://orcid.org/0000-0003-0183-7630}{ORCID})
+\strong{Maintainer}: Gerry Ryan \email{gerry.ryan@thekids.org.au} (\href{https://orcid.org/0000-0003-0183-7630}{ORCID})
 
 Authors:
 \itemize{

@@ -49,7 +49,7 @@ ext_matrix.SpatVector <- function(extent){
 }
 
 #' @export
-ext_matrix.double <- function(extent){
+ext_matrix.numeric <- function(extent){
   if (length(extent) != 4){
     cli::cli_abort(
       message = c(
