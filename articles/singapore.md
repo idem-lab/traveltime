@@ -44,7 +44,6 @@ class object from the package `terra`.
 ``` r
 
 library(terra)
-#> terra 1.9.34
 library(geodata)
 
 singapore_shapefile <- gadm(
@@ -53,7 +52,6 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /tmp/RtmpcGlyI0/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
@@ -95,20 +93,6 @@ friction_singapore <- get_friction_surface(
     extent = singapore_shapefile
   )|> 
   mask(singapore_shapefile)
-#> Registered S3 method overwritten by 'malariaAtlas':
-#>   method           from   
-#>   autoplot.default ggplot2
-#> Checking if the following Surface-Year combinations are available to download:
-#> 
-#>     DATASET ID  YEAR
-#>   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT
-#> 
-#> Loading required package: sf
-#> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is FALSE
-#> No encoding supplied: defaulting to UTF-8.
-#> <GMLEnvelope>
-#> ....|-- lowerCorner: 1.1664 103.6091
-#> ....|-- upperCorner: 1.4714 104.0858
 ```
 
 Thus we have our friction surface as a `SpatRaster`:
@@ -139,14 +123,6 @@ travelling across a given cell.
 ``` r
 
 library(tidyterra)
-#> Registered S3 method overwritten by 'tidyterra':
-#>   method              from        
-#>   autoplot.SpatRaster malariaAtlas
-#> 
-#> Attaching package: 'tidyterra'
-#> The following object is masked from 'package:stats':
-#> 
-#>     filter
 library(ggplot2)
 
 ggplot() +
@@ -174,15 +150,14 @@ ggplot() +
   ) +
   labs(
     fill = "Resistance",
-    x = element_blank(),
-    y = element_blank()
+    x = NULL,
+    y = NULL
   ) +
   theme_minimal()
 ```
 
 ![Friction surface raster of Singapore, showing Singapore boundary in
-grey, and station locations as grey
-points.](singapore_files/figure-html/fig-data-1.png)
+grey, and station locations as grey points.](singapore-fig-data-1.png)
 
 Friction surface raster of Singapore, showing Singapore boundary in
 grey, and station locations as grey points.
@@ -219,13 +194,13 @@ travel_time_singapore
 
 We present the resulting calculated travel times below where (as
 expected) the travel times are lowest near station exits and
-progressively higher further away. Note that the results in
-`travel_time_singapore` include infinite values (`Inf` above). The
-islands to the south and north-east are shown as filled cells in the
-figure above, i.e., they are not masked out by `singapore_shapefile`.
-But because those islands they are not connected to any cells with a
-station, the calculated travel time is infinite, and so these cells do
-not appear in the figure below.
+progressively higher further away. Note that some cells in
+`travel_time_singapore` are `NA`. The islands to the south and
+north-east are shown as filled cells in the figure above, i.e., they are
+not masked out by `singapore_shapefile`. But because those islands are
+not connected to any cells with a station, they cannot be reached, so
+their travel time is `NA` and these cells do not appear in the figure
+below.
 
 ``` r
 
@@ -248,7 +223,7 @@ ggplot() +
 ```
 
 ![Map of walking travel time in Singapore, in minutes from nearest MRT
-or LRT station.](singapore_files/figure-html/fig-result-1.png)
+or LRT station.](singapore-fig-result-1.png)
 
 Map of walking travel time in Singapore, in minutes from nearest MRT or
 LRT station.

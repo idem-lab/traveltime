@@ -25,7 +25,7 @@ ext_from_terra(r)
 ``` r
 
 library(terra)
-#> terra 1.9.34
+#> terra 1.9.50
 r <- terra::rast(
     extent = terra::ext(c(111, 112, 0, 1))
   )

@@ -295,13 +295,13 @@ travel_time_singapore
 
 We present the resulting calculated travel times below where (as
 expected) the travel times are lowest near station exits and
-progressively higher further away. Note that the results in
-`travel_time_singapore` include infinite values (`Inf` above). The
-islands to the south and north-east are shown as filled cells in the
-figure above, i.e., they are not masked out by `singapore_shapefile`.
-But because those islands they are not connected to any cells with a
-station, the calculated travel time is infinite, and so these cells do
-not appear in the figure below.
+progressively higher further away. Note that some cells in
+`travel_time_singapore` are `NA`. The islands to the south and
+north-east are shown as filled cells in the figure above, i.e., they are
+not masked out by `singapore_shapefile`. But because those islands are
+not connected to any cells with a station, they cannot be reached, so
+their travel time is `NA` and these cells do not appear in the figure
+below.
 
 ``` r
 

@@ -17,7 +17,7 @@ calculate_travel_time(
 
 - friction_surface:
 
-  A `SpatRaster` friction surface layer with in resistance units. See
+  A `SpatRaster` friction surface layer in resistance units. See
   Details.
 
 - points:
@@ -36,11 +36,17 @@ calculate_travel_time(
 
 - overwrite:
 
-  `logical`. If `TRUE` `filename` is overwritten.
+  `logical`. If `TRUE` `filename` is overwritten. If `FALSE` (default)
+  and `filename` already exists, the existing file is returned with a
+  warning and no calculation is performed.
 
 ## Value
 
-`SpatRaster`
+A `SpatRaster` of travel time (in the time units of `friction_surface`,
+e.g. minutes) from each cell to the nearest of `points`, with a single
+layer named `"travel_time"`. Cells that cannot be reached from any of
+`points` (e.g. because they are separated from them by `NA` cells in
+`friction_surface`) are `NA`.
 
 ## Details
 
@@ -50,11 +56,11 @@ from given locations over a friction surface.
 Over large areas this function can require significant RAM and will be
 slow.
 
-Pre-prepared walking or motorised friction surfaces can be obtained
-with[`?get_friction_surface`](https://idem-lab.github.io/traveltime/reference/get_friction_surface.md).
-User can also provide their own friction surface. This surface but must
-be in resistance units (1/conductance), e.g. minutes/meter. See Van
-Etten 2017.
+Pre-prepared walking or motorised friction surfaces can be obtained with
+[`get_friction_surface()`](https://idem-lab.github.io/traveltime/reference/get_friction_surface.md).
+Users can also provide their own friction surface. This surface must be
+in resistance units (1/conductance), e.g. minutes/meter. See Van Etten
+2017.
 
 Note on this implementation: as of package version 1. Earlier versions
 of this package used the `raster` and `gdistance` packages. These
@@ -72,9 +78,9 @@ cell's own friction when leaving a point, whereas
 [`terra::costDist`](https://rspatial.github.io/terra/reference/costDist.html)
 measures cost to the border of the origin cells and omits it. This
 appears as a small, near-constant offset (about half a cell of friction)
-close to the origin points. See
-`data-raw/costdist_migration_comparison.md` in the package source for
-the full comparison.
+close to the origin points. See the validation article
+<https://idem-lab.github.io/traveltime/articles/costdist-validation.html>
+for the full comparison.
 
 Citations:
 
@@ -84,7 +90,8 @@ C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi,
 S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J.
 J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W.
 Gething. Global maps of travel time to healthcare facilities. (2020)
-Nature Medicine. <https://doi.org/10.1038/s41591-020-1059-1>
+Nature Medicine.
+[doi:10.1038/s41591-020-1059-1](https://doi.org/10.1038/s41591-020-1059-1)
 
 D. J. Weiss, A. Nelson, H.S. Gibson, W. Temperley, S. Peedell, A.
 Lieber, M. Hancher, E. Poyart, S. Belchior, N. Fullman, B. Mappin, U.
@@ -92,30 +99,54 @@ Dalrymple, J. Rozier, T.C.D. Lucas, R.E. Howes, L.S. Tusting, S.Y. Kang,
 E. Cameron, D. Bisanzio, K.E. Battle, S. Bhatt, and P.W. Gething. A
 global map of travel time to cities to assess inequalities in
 accessibility in 2015. (2018). Nature.
-[https://doi:10.1038/nature25181](https://doi:10.1038/nature25181)
+[doi:10.1038/nature25181](https://doi.org/10.1038/nature25181)
 
 van Etten, J. (2017). R package gdistance: Distances and routes on
 geographical grids. Journal of Statistical Software
-<https://doi.org/10.18637/jss.v076.i13>
+[doi:10.18637/jss.v076.i13](https://doi.org/10.18637/jss.v076.i13)
 
 ## Examples
 
 ``` r
+# a small synthetic friction surface (minutes per metre), so this example
+# runs without an internet connection
+friction_surface <- terra::rast(
+  nrows = 50,
+  ncols = 50,
+  xmin = 111,
+  xmax = 112,
+  ymin = 0,
+  ymax = 1,
+  crs = "EPSG:4326",
+  vals = 0.01
+)
 
-ext <- matrix(
-  data = c("111", "0", "112", 1),
-  nrow = 2,
-  ncol = 2,
-  dimnames = list(
-    c("x", "y"),
-    c("min", "max")
-   )
- )
+from_here <- data.frame(
+  x = c(111.2, 111.9),
+  y = c(0.2, 0.35)
+)
 
- friction_surface <- get_friction_surface(
-   surface = "motor2020",
-   extent = ext
- )
+calculate_travel_time(
+  friction_surface = friction_surface,
+  points = from_here
+)
+#> class       : SpatRaster
+#> size        : 50, 50, 1  (nrow, ncol, nlyr)
+#> resolution  : 0.02, 0.02  (x, y)
+#> extent      : 111, 112, 0, 1  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326)
+#> source(s)   : memory
+#> name        : travel_time
+#> min value   :           0
+#> max value   :  961.545835
+
+# \donttest{
+# a real motorised friction surface, downloaded from the Malaria Atlas
+# Project (requires an internet connection)
+motor_surface <- get_friction_surface(
+  surface = "motor2020",
+  extent = c(111, 112, 0, 1)
+)
 #> Registered S3 methods overwritten by 'malariaAtlas':
 #>   method              from     
 #>   autoplot.SpatRaster tidyterra
@@ -132,15 +163,12 @@ ext <- matrix(
 #> ....|-- lowerCorner: 0 111
 #> ....|-- upperCorner: 1 112
 
- from_here <- data.frame(
-   x = c(111.2, 111.9),
-   y = c(0.2, 0.35)
- )
-
- calculate_travel_time(
-  friction_surface = friction_surface,
-  points = from_here
- )
+if (!is.null(motor_surface)) {
+  calculate_travel_time(
+    friction_surface = motor_surface,
+    points = from_here
+  )
+}
 #> class       : SpatRaster
 #> size        : 120, 120, 1  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
@@ -151,4 +179,5 @@ ext <- matrix(
 #> name        : travel_time
 #> min value   :           0
 #> max value   :  565.122007
+# }
 ```

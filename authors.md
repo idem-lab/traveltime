@@ -15,15 +15,15 @@
 Source:
 [`inst/CITATION`](https://github.com/idem-lab/traveltime/blob/main/inst/CITATION)
 
-Gerard E. Ryan, Nicholas Tierney, Nick Golding, Daniel J. Weiss (2025).
-“traveltime: an R package to calculate travel time across a landscape
-from user-specified location.” *Gates Open Research*, **9**(50).
+Ryan GE, Tierney N, Golding N, Weiss DJ (2025). “traveltime: an R
+package to calculate travel time across a landscape from user-specified
+locations.” *Gates Open Research*, **9**(50).
 [doi:10.12688/gatesopenres.16356.1](https://doi.org/10.12688/gatesopenres.16356.1).
 <https://doi.org/10.12688/gatesopenres.16356.1>.
 
     @Article{,
-      title = {traveltime: an R package to calculate travel time across a landscape from user-specified location},
-      author = {{Gerard E. Ryan} and {Nicholas Tierney} and {Nick Golding} and {Daniel J. Weiss}},
+      title = {traveltime: an R package to calculate travel time across a landscape from user-specified locations},
+      author = {Gerard E. Ryan and Nicholas Tierney and Nick Golding and Daniel J. Weiss},
       journal = {Gates Open Research},
       year = {2025},
       volume = {9},

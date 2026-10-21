@@ -18,7 +18,7 @@ get_friction_surface(
 
 - surface:
 
-  `"motor2020"` or `"walk2020`.
+  `"motor2020"` or `"walk2020"`.
 
 - filename:
 
@@ -26,7 +26,9 @@ get_friction_surface(
 
 - overwrite:
 
-  Overwrite `filename` if exists
+  `logical`. If `TRUE` `filename` is overwritten. If `FALSE` (default)
+  and `filename` already exists, the existing file is returned with a
+  warning and nothing is downloaded.
 
 - extent:
 
@@ -43,7 +45,8 @@ get_friction_surface(
 
 ## Value
 
-`SpatRaster`
+A `SpatRaster` friction surface with a single layer named
+`"friction_surface"`, or `NULL` (with a warning) if the download fails.
 
 ## Details
 
@@ -57,10 +60,10 @@ can be downloaded directly from:
 Here —
 
 - `surface = "motor2020"` will download
-  `"Explorer__2020_motorized_friction_surface"`, and
+  `"Accessibility__202001_Global_Motorized_Friction_Surface"`, and
 
 - `surface = "walk2020"` will download
-  `"Explorer__2020_walking_only_friction_surface"`.
+  `"Accessibility__202001_Global_Walking_Only_Friction_Surface"`.
 
 D. J. Weiss, A. Nelson, C. A. Vargas-Ruiz, K. Gligoric, S., Bavadekar,
 E. Gabrilovich, A. Bertozzi-Villa, J. Rozier, H. S. Gibson, T., Shekel,
@@ -68,7 +71,8 @@ C. Kamath, A. Lieber, K. Schulman, Y. Shao, V. Qarkaxhija, A. K. Nandi,
 S. H. Keddie, S. Rumisha, P. Amratia, R. Arambepola, E. G. Chestnutt, J.
 J. Millar, T. L. Symons, E. Cameron, K. E. Battle, S. Bhatt, and P. W.
 Gething. Global maps of travel time to healthcare facilities. (2020)
-Nature Medicine. <https://doi.org/10.1038/s41591-020-1059-1>
+Nature Medicine.
+[doi:10.1038/s41591-020-1059-1](https://doi.org/10.1038/s41591-020-1059-1)
 
 `extent` is formatted and then passed through to
 [`malariaAtlas::getRaster()`](https://rdrr.io/pkg/malariaAtlas/man/getRaster.html)
@@ -78,27 +82,29 @@ as a 2x2 matrix. It is converted into a matrix using `ext_matrix`. The
 — the first column has the minimum, the second the maximum values; rows
 1 & 2 represent the x & y dimensions respectively:
 `matrix(c("xmin", "ymin", "xmax", "ymax"), nrow = 2, ncol = 2, dimnames = list(c("x", "y"), c("min", "max")))`.
-`NULL` extent downloads (large) global layer.
+`extent` must be supplied.
 
-Troubleshooting: if you get a warning
-`Failed to connect to MAP geoserver`, this is an issue with fetching the
-friction surface using
-[`malariaAtlas::getRaster`](https://rdrr.io/pkg/malariaAtlas/man/getRaster.html),
+Troubleshooting: this function requires an internet connection. If the
+download fails (e.g. a warning `Failed to connect to MAP geoserver`), a
+warning is given and `NULL` is returned. This is an issue with fetching
+the friction surface using
+[`malariaAtlas::getRaster()`](https://rdrr.io/pkg/malariaAtlas/man/getRaster.html),
 and not an issue with `traveltime` itself. The server may be down or
 there may be an issue with that package.
 
 ## Examples
 
 ``` r
-
-# for more examples of passing exten types see ?ext_matrix
+# \donttest{
+# requires an internet connection
+# for more examples of passing extent types see ?ext_matrix
 
 ext <- c(111, 112, 0, 1)
 
- get_friction_surface(
-   surface = "motor2020",
-   extent = ext
- )
+get_friction_surface(
+  surface = "motor2020",
+  extent = ext
+)
 #> Checking if the following Surface-Year combinations are available to download:
 #> 
 #>     DATASET ID  YEAR 
@@ -114,4 +120,5 @@ ext <- c(111, 112, 0, 1)
 #> coord. ref. : lon/lat WGS 84 (EPSG:4326)
 #> source      : Accessibility__202001_Global_Motorized_Friction_Surface_0,111,1,112.tif
 #> name        : friction_surface
+# }
 ```
