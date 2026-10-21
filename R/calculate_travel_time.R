@@ -3,7 +3,7 @@
 #'   surface.
 #'
 #'
-#' @param friction_surface A `SpatRaster` friction surface layer with in
+#' @param friction_surface A `SpatRaster` friction surface layer in
 #'   resistance units. See Details.
 #' @param points A two-column `matrix`, `data.frame`, (including `tibble` types)
 #'   with longitude (x) in the first column and latitude (y) in the second, or a
@@ -71,7 +71,9 @@
 #'
 #' @return A `SpatRaster` of travel time (in the time units of
 #'   `friction_surface`, e.g. minutes) from each cell to the nearest of
-#'   `points`, with a single layer named `"travel_time"`.
+#'   `points`, with a single layer named `"travel_time"`. Cells that cannot
+#'   be reached from any of `points` (e.g. because they are separated from
+#'   them by `NA` cells in `friction_surface`) are `NA`.
 #' @export
 #'
 #' @examples
@@ -143,10 +145,10 @@ calculate_travel_time <- function(
   }
 
   if(inherits(points, "SpatVector")){
-    points <- terra::geom(points)[,c("x", "y")]
+    points <- terra::geom(points)[, c("x", "y"), drop = FALSE]
   }
 
-  xy.matrix <- as.matrix(points[,1:2])
+  xy.matrix <- as.matrix(points[, 1:2, drop = FALSE])
 
   # Identify the cells the origin points fall in. terra::costDist computes the
   # cost-distance to the border of cells that hold the `target` value, so the

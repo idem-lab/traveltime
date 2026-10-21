@@ -12,7 +12,7 @@ calculate_travel_time(
 )
 }
 \arguments{
-\item{friction_surface}{A \code{SpatRaster} friction surface layer with in
+\item{friction_surface}{A \code{SpatRaster} friction surface layer in
 resistance units. See Details.}
 
 \item{points}{A two-column \code{matrix}, \code{data.frame}, (including \code{tibble} types)
@@ -32,7 +32,9 @@ with a warning and no calculation is performed.}
 \value{
 A \code{SpatRaster} of travel time (in the time units of
 \code{friction_surface}, e.g. minutes) from each cell to the nearest of
-\code{points}, with a single layer named \code{"travel_time"}.
+\code{points}, with a single layer named \code{"travel_time"}. Cells that cannot
+be reached from any of \code{points} (e.g. because they are separated from
+them by \code{NA} cells in \code{friction_surface}) are \code{NA}.
 }
 \description{
 Calculate the travel time from a set of points over a friction

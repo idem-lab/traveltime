@@ -8,22 +8,20 @@
 [![traveltime status
 badge](https://idem-lab.r-universe.dev/badges/traveltime)](https://idem-lab.r-universe.dev/traveltime)
 [![R-CMD-check](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/idem-lab/traveltime/actions/workflows/R-CMD-check.yaml)
-![GitHub
-License](https://img.shields.io/github/license/geryan/traveltime)
+[![License:
+MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/idem-lab/traveltime/blob/main/LICENSE.md)
 ![GitHub commit
-activity](https://img.shields.io/github/commit-activity/w/geryan/traveltime)
+activity](https://img.shields.io/github/commit-activity/w/idem-lab/traveltime)
 ![GitHub last
-commit](https://img.shields.io/github/last-commit/geryan/traveltime)
+commit](https://img.shields.io/github/last-commit/idem-lab/traveltime)
 ![GitHub commits since latest
-release](https://img.shields.io/github/commits-since/geryan/traveltime/latest)
+release](https://img.shields.io/github/commits-since/idem-lab/traveltime/latest)
 [![Codecov test
 coverage](https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/idem-lab/traveltime/blob/main/CODE_OF_CONDUCT.md)
-![GitHub Downloads (all assets, latest
-release)](https://img.shields.io/github/downloads/idem-lab/traveltime/latest/total)
 <!-- badges: end -->
 
 `traveltime` enables a user to create a map of travel time over an area
@@ -314,13 +312,13 @@ travel_time_singapore
 
 We present the resulting calculated travel times below where (as
 expected) the travel times are lowest near station exits and
-progressively higher further away. Note that the results in
-`travel_time_singapore` include infinite values (`Inf` above). The
-islands to the south and north-east are shown as filled cells in the
-figure above, i.e., they are not masked out by `singapore_shapefile`.
-But because those islands they are not connected to any cells with a
-station, the calculated travel time is infinite, and so these cells do
-not appear in the figure below.
+progressively higher further away. Note that some cells in
+`travel_time_singapore` are `NA`. The islands to the south and
+north-east are shown as filled cells in the figure above, i.e., they are
+not masked out by `singapore_shapefile`. But because those islands are
+not connected to any cells with a station, they cannot be reached, so
+their travel time is `NA` and these cells do not appear in the figure
+below.
 
 ``` r
 ggplot() +
