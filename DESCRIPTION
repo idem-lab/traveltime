@@ -32,6 +32,9 @@ Description: Calculate travel time across a landscape from a set of
     package. Travel times are computed with 'terra'. See Ryan et al. (2025)
     <doi:10.12688/gatesopenres.16356.1> for further details.
 License: MIT + file LICENSE
+Copyright: The 'stations' data contains information from the Land
+    Transport Authority of Singapore, made available under the Singapore
+    Open Data Licence version 1.0; see ?stations.
 Imports:
     cli,
     malariaAtlas,
