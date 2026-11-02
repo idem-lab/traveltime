@@ -157,7 +157,7 @@ motor_surface <- get_friction_surface(
 #>   - Accessibility__202001_Global_Motorized_Friction_Surface:  DEFAULT 
 #> 
 #> Loading required package: sf
-#> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is FALSE
+#> Linking to GEOS 3.14.1, GDAL 3.12.2, PROJ 9.7.1; sf_use_s2() is FALSE
 #> No encoding supplied: defaulting to UTF-8.
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 0 111

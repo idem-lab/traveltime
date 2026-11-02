@@ -2,6 +2,8 @@
 
 ## traveltime 1.0.0
 
+CRAN release: 2026-10-31
+
 - First CRAN release.
 - [`calculate_travel_time()`](https://idem-lab.github.io/traveltime/reference/calculate_travel_time.md)
   now uses
