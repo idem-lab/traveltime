@@ -42,10 +42,22 @@ knitr::opts_chunk$set(
 
 ## Installation
 
+### Stable version from CRAN
+
+```r
+install("traveltime")
+```
+
+### Development version
+
+#### R-Universe
+
 ``` r
 install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 ```
-or 
+
+#### GitHub
+
 ```r
 remotes::install_github("idem-lab/traveltime")
 ```

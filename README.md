@@ -58,11 +58,21 @@ in Singapore</figcaption>
 
 ## Installation
 
+### Stable version from CRAN
+
+``` r
+install("traveltime")
+```
+
+### Development version
+
+#### R-Universe
+
 ``` r
 install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 ```
 
-or
+#### GitHub
 
 ``` r
 remotes::install_github("idem-lab/traveltime")
@@ -152,7 +162,7 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//Rtmp2YOcRS/gadm/gadm41_SGP_0_pk_low.rds
+#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpErdewx/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
