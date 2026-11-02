@@ -69,11 +69,28 @@ Walking travel time from rail transport in Singapore
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
+<div class="section level3">
+<h3 id="stable-version-from-cran">Stable version from CRAN<a class="anchor" aria-label="anchor" href="#stable-version-from-cran"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"traveltime"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://idem-lab.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>or</p>
+<code class="sourceCode R"><span><span class="fu">install</span><span class="op">(</span><span class="st">"traveltime"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
+</h3>
+<div class="section level4">
+<h4 id="r-universe">R-Universe<a class="anchor" aria-label="anchor" href="#r-universe"></a>
+</h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"traveltime"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://idem-lab.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="github">GitHub<a class="anchor" aria-label="anchor" href="#github"></a>
+</h4>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"idem-lab/traveltime"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
@@ -118,7 +135,7 @@ Walking travel time from rail transport in Singapore
 <h5 id="points">Points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h5>
 <p>Our points of interest will be the <code>stations</code> data set included in <code>traveltime</code>; a 563 row, 2 column <code>matrix</code> containing the longitude (<code>x</code>) and latitude (<code>y</code>) of all LRT and MRT station exits in Singapore from <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Land Transport Authority. (2019). LTA MRT Station Exit (GEOJSON) (2024) [Dataset]. data.gov.sg. Retrieved December 10, 2024 from &lt;a href=&quot;https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view&quot; class=&quot;external-link uri&quot;&gt;https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view&lt;/a&gt;.&lt;/p&gt;"><sup>2</sup></a>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://idem-lab.github.io/traveltime/">traveltime</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">stations</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             x        y</span></span>
@@ -133,9 +150,9 @@ Walking travel time from rail transport in Singapore
 <h5 id="area-of-interest">Area of interest<a class="anchor" aria-label="anchor" href="#area-of-interest"></a>
 </h5>
 <p>To obtain our area of interest, we download a national-level polygon boundary of Singapore using the <code>geodata</code> package. Here we download only the national boundary (<code>level = 0</code>) at a low resolution (<code>resolution = 2</code>). Our boundary <code>singapore_shapefile</code> is a <code>SpatVector</code> class object from the package <code>terra</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; terra 1.9.38</span></span>
+<span><span class="co">#&gt; terra 1.9.46</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.github.io/geodata/" class="external-link">geodata</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">singapore_shapefile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/geodata/reference/gadm.html" class="external-link">gadm</a></span><span class="op">(</span></span>
@@ -144,7 +161,7 @@ Walking travel time from rail transport in Singapore
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  resolution <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpCLwMZu/gadm/gadm41_SGP_0_pk_low.rds</span></span>
+<span><span class="co">#&gt; Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpErdewx/gadm/gadm41_SGP_0_pk_low.rds</span></span>
 <span></span>
 <span><span class="va">singapore_shapefile</span></span>
 <span><span class="co">#&gt; class       : SpatVector</span></span>
@@ -164,7 +181,7 @@ Walking travel time from rail transport in Singapore
 <p>We can pass in our basemap <code>singapore_shapefile</code>, a <code>SpatVector</code>, directly as the <code>extent</code>. We’re interested in walking time from a station, so we’ll download the walking friction surface by specifying <code>surface = "walk2020"</code>.</p>
 <p>(Alternatively, we could use <code>surface = "motor2020"</code> for motorised travel).</p>
 <p>We’re only interested in walking <em>on land</em>, so we then mask out areas outside of the land boundary of <code>singapore_shapefile</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">friction_singapore</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_friction_surface.html">get_friction_surface</a></span><span class="op">(</span></span>
 <span>    surface <span class="op">=</span> <span class="st">"walk2020"</span>,</span>
 <span>    extent <span class="op">=</span> <span class="va">singapore_shapefile</span></span>
@@ -179,13 +196,13 @@ Walking travel time from rail transport in Singapore
 <span><span class="co">#&gt;   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Loading required package: sf</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.14.1, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE</span></span>
 <span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
 <span><span class="co">#&gt; &lt;GMLEnvelope&gt;</span></span>
 <span><span class="co">#&gt; ....|-- lowerCorner: 1.1664 103.6091</span></span>
 <span><span class="co">#&gt; ....|-- upperCorner: 1.4714 104.0858</span></span></code></pre></div>
 <p>Thus we have our friction surface as a <code>SpatRaster</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">friction_singapore</span></span>
 <span><span class="co">#&gt; class       : SpatRaster</span></span>
 <span><span class="co">#&gt; size        : 37, 57, 1  (nrow, ncol, nlyr)</span></span>
@@ -202,7 +219,7 @@ Walking travel time from rail transport in Singapore
 <h5 id="input-data">Input data<a class="anchor" aria-label="anchor" href="#input-data"></a>
 </h5>
 <p>Below we plot the friction surface raster <code>friction_singapore</code>, with the vector boundary <code>singapore_shapefile</code> as a grey line, and <code>stations</code> as grey points. <code>traveltime</code> takes resistance values of friction (see paper for more details), so higher values of friction indicate more time travelling across a given cell.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Registered S3 method overwritten by 'tidyterra':</span></span>
 <span><span class="co">#&gt;   method              from        </span></span>
@@ -254,7 +271,7 @@ Friction surface raster of Singapore, showing Singapore boundary in grey, and st
 <h4 id="calculate-travel-time">Calculate travel time<a class="anchor" aria-label="anchor" href="#calculate-travel-time"></a>
 </h4>
 <p>With all the data collected, the function <code><a href="reference/calculate_travel_time.html">calculate_travel_time()</a></code> takes the friction surface <code>friction_singapore</code> and the points of interest in <code>stations</code>, and returns a <code>SpatRaster</code> of walking time in minutes to each cell from the nearest station:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">travel_time_singapore</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/calculate_travel_time.html">calculate_travel_time</a></span><span class="op">(</span></span>
 <span>  friction_surface <span class="op">=</span> <span class="va">friction_singapore</span>,</span>
 <span>  points <span class="op">=</span> <span class="va">stations</span></span>
@@ -275,7 +292,7 @@ Friction surface raster of Singapore, showing Singapore boundary in grey, and st
 <h5 id="plot-results">Plot results<a class="anchor" aria-label="anchor" href="#plot-results"></a>
 </h5>
 <p>We present the resulting calculated travel times below where (as expected) the travel times are lowest near station exits and progressively higher further away. Note that some cells in <code>travel_time_singapore</code> are <code>NA</code>. The islands to the south and north-east are shown as filled cells in the figure above, i.e., they are not masked out by <code>singapore_shapefile</code>. But because those islands are not connected to any cells with a station, they cannot be reached, so their travel time is <code>NA</code> and these cells do not appear in the figure below.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">travel_time_singapore</span></span>
@@ -363,6 +380,8 @@ Map of walking travel time in Singapore, in minutes from nearest MRT or LRT stat
 <li><a href="https://app.codecov.io/gh/idem-lab/traveltime" class="external-link"><img src="https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://github.com/idem-lab/traveltime/blob/main/CODE_OF_CONDUCT.md" class="external-link"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg" alt="Contributor Covenant"></a></li>
+<li><a href="https://CRAN.R-project.org/package=traveltime" class="external-link"><img src="https://www.r-pkg.org/badges/version/traveltime" alt="CRAN status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=traveltime" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/traveltime" alt="CRAN downloads"></a></li>
 </ul>
 </div>
 

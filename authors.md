@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/idem-lab/traveltime/blob/v6/inst/CITATION)
+[`inst/CITATION`](https://github.com/idem-lab/traveltime/blob/main/inst/CITATION)
 
 Ryan GE, Tierney N, Golding N, Weiss DJ (2025). “traveltime: an R
 package to calculate travel time across a landscape from user-specified

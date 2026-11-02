@@ -30,12 +30,23 @@ Walking travel time from rail transport in Singapore
 
 ## Installation
 
+### Stable version from CRAN
+
+``` r
+
+install("traveltime")
+```
+
+### Development version
+
+#### R-Universe
+
 ``` r
 
 install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 ```
 
-or
+#### GitHub
 
 ``` r
 
@@ -120,7 +131,7 @@ class object from the package `terra`.
 ``` r
 
 library(terra)
-#> terra 1.9.38
+#> terra 1.9.46
 library(geodata)
 
 singapore_shapefile <- gadm(
@@ -129,7 +140,7 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpCLwMZu/gadm/gadm41_SGP_0_pk_low.rds
+#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpErdewx/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
@@ -180,7 +191,7 @@ friction_singapore <- get_friction_surface(
 #>   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT
 #> 
 #> Loading required package: sf
-#> Linking to GEOS 3.14.1, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
+#> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
 #> No encoding supplied: defaulting to UTF-8.
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 1.1664 103.6091
