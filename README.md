@@ -22,6 +22,10 @@ coverage](https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg)](https://ap
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/idem-lab/traveltime/blob/main/CODE_OF_CONDUCT.md)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/traveltime)](https://CRAN.R-project.org/package=traveltime)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/traveltime)](https://CRAN.R-project.org/package=traveltime)
 <!-- badges: end -->
 
 `traveltime` enables a user to create a map of travel time over an area
@@ -54,11 +58,21 @@ in Singapore</figcaption>
 
 ## Installation
 
+### Stable version from CRAN
+
+``` r
+install("traveltime")
+```
+
+### Development version
+
+#### R-Universe
+
 ``` r
 install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 ```
 
-or
+#### GitHub
 
 ``` r
 remotes::install_github("idem-lab/traveltime")
@@ -139,7 +153,7 @@ class object from the package `terra`.
 
 ``` r
 library(terra)
-#> terra 1.9.38
+#> terra 1.9.46
 library(geodata)
 
 singapore_shapefile <- gadm(
@@ -148,7 +162,7 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpCLwMZu/gadm/gadm41_SGP_0_pk_low.rds
+#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpErdewx/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
@@ -197,7 +211,7 @@ friction_singapore <- get_friction_surface(
 #>   - Accessibility__202001_Global_Walking_Only_Friction_Surface:  DEFAULT
 #> 
 #> Loading required package: sf
-#> Linking to GEOS 3.14.1, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
+#> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
 #> No encoding supplied: defaulting to UTF-8.
 #> <GMLEnvelope>
 #> ....|-- lowerCorner: 1.1664 103.6091

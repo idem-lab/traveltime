@@ -26,6 +26,8 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/idem-lab/traveltime/graph/badge.svg)](https://app.codecov.io/gh/idem-lab/traveltime)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/idem-lab/traveltime/blob/main/CODE_OF_CONDUCT.md)
+[![CRAN status](https://www.r-pkg.org/badges/version/traveltime)](https://CRAN.R-project.org/package=traveltime)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/traveltime)](https://CRAN.R-project.org/package=traveltime)
 <!-- badges: end -->
 
 `traveltime` enables a user to create a map of travel time over an area of interest from a user-specified set of geographic coordinates and friction surface. The package provides convenient access to global friction surfaces for walking and motorised travel for the year 2020. The final result is a raster of the area of interest where the value in each cell is the lowest travel time in minutes to any of the specified locations.
@@ -40,10 +42,22 @@ knitr::opts_chunk$set(
 
 ## Installation
 
+### Stable version from CRAN
+
+```r
+install("traveltime")
+```
+
+### Development version
+
+#### R-Universe
+
 ``` r
 install.packages("traveltime", repos = c("https://idem-lab.r-universe.dev"))
 ```
-or 
+
+#### GitHub
+
 ```r
 remotes::install_github("idem-lab/traveltime")
 ```
