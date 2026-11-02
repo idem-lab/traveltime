@@ -72,6 +72,11 @@ remotes::install_github("idem-lab/traveltime")
 
 Ryan, G.E., Tierney, N., Golding, N., and Weiss, D.J (2025). [traveltime: an R package to calculate travel time across a landscape from user-specified locations](https://doi.org/10.12688/gatesopenres.16356.1){target="_blank"}. Gates Open Research 9:50
 
+### CRAN
+
+<https://doi.org/10.32614/CRAN.package.traveltime>
+
+
 ## What does this thing do?
 
 The `traveltime` workflow starts with:

@@ -91,6 +91,10 @@ Ryan, G.E., Tierney, N., Golding, N., and Weiss, D.J (2025).
 target="_blank">traveltime: an R package to calculate travel time across
 a landscape from user-specified locations</a>. Gates Open Research 9:50
 
+### CRAN
+
+<https://doi.org/10.32614/CRAN.package.traveltime>
+
 ## What does this thing do?
 
 The `traveltime` workflow starts with:
@@ -162,7 +166,7 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpErdewx/gadm/gadm41_SGP_0_pk_low.rds
+#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpfjNoYw/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
