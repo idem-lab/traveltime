@@ -67,6 +67,10 @@ from user-specified
 locations](https://doi.org/10.12688/gatesopenres.16356.1). Gates Open
 Research 9:50
 
+### CRAN
+
+<https://doi.org/10.32614/CRAN.package.traveltime>
+
 ## What does this thing do?
 
 The `traveltime` workflow starts with:
@@ -140,7 +144,7 @@ singapore_shapefile <- gadm(
   path = tempdir(),
   resolution = 2
 )
-#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpErdewx/gadm/gadm41_SGP_0_pk_low.rds
+#> Cached as: /var/folders/fy/q_4bsfgn7l97_fd57hmxml3h0000gp/T//RtmpfjNoYw/gadm/gadm41_SGP_0_pk_low.rds
 
 singapore_shapefile
 #> class       : SpatVector
