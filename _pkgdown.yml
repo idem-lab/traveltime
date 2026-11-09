@@ -3,4 +3,9 @@ template:
   bootstrap: 5
   bootswatch: litera
 
-
+home:
+  links:
+  - text: Infectious Disease Ecology and Modelling on GitHub
+    href: https://github.com/idem-lab
+  - text: Gerry Ryan's homepage
+    href: https://geryan.github.io
